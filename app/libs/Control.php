@@ -6,7 +6,32 @@ class Control {
 
     function __construct() {
         $url = $this->separarURL();
-        Helper::mostrar($url);
+        
+        if($url != "" && file_exists("../app/controllers/".ucwords($url[0]).".php")) {
+            $this->controlador = ucwords($url[0]);
+            // se elimina el primer elemento del url
+            unset($url[0]);
+        }
+
+        // cargar la clase controlador
+        require_once("../app/controllers/".ucwords($this->controlador).".php");
+        
+        // instancia de la clase
+        $this->controlador = new $this->controlador;
+
+        // método
+        if(isset($url[1])) {
+            if(method_exists($this->controlador, $url[1])) {
+                $this->metodo = $url[1];
+                unset($url[1]);
+            }
+        }
+
+        // parámetros
+        $this->parametros = $url ? array_values($url) : [];
+
+        // ejecutar método
+        call_user_func_array([$this->controlador, $this->metodo], $this->parametros);
     }
 
     public function separarURL() {
