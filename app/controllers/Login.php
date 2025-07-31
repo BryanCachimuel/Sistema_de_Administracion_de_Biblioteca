@@ -33,14 +33,20 @@ class Login extends Controlador{
             }
 
             if(empty($errores)){
-                Helper::mostrar($usuario);
+                // enviando los datos
+                if($this->modelo->buscarCorreo($usuario)){
+                    Helper::mostrar("Si se encontró el correo");
+                }else{
+                    Helper::mostrar("No se encontró el correo");
+                }
             }
-            Helper::mostrar($errores);
 
         }
        $datos = [
         "titulo" => "Olvido de Contraseña",
-        "subtitulo" => "¿Olvidaste tu contraseña?"
+        "subtitulo" => "¿Olvidaste tu contraseña?",
+        "errores" => $errores,
+        "data" => []
        ];
        $this->vista("loginOlvidoVista", $datos);
     }
