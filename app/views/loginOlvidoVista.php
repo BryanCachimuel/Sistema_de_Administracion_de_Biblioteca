@@ -1,10 +1,10 @@
 <?php include("encabezado.php"); ?>
 
-<form action="<?php print RUTA; ?>login/olvidoVerificar" method="POST">
+<form action="<?php print RUTA; ?>login/olvidoVerificar" method="POST" autocomplete="off">
 
     <div class="form-group text-left">
-        <label for="correo">* Correo:</label>
-        <input type="email" class="form-control" name="correo" placeholder="Escribe tu correo electrónico">
+        <label for="usuario">* Correo:</label>
+        <input type="email" class="form-control" name="usuario" placeholder="Escribe tu correo electrónico" required>
     </div>
 
     <div class="form-group text-left mt-2">
