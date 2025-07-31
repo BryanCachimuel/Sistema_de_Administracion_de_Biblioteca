@@ -21,7 +21,7 @@
         <input type="submit" value="Iniciar Sesión" class="btn btn-success">
     </div>
 
-    <a href="#">¿Olvidaste tu clave de acceso?</a><br>
+    <a href="login/olvido">¿Olvidaste tu clave de acceso?</a><br>
     <a href="#">Registrarse</a>
 </form>
 
