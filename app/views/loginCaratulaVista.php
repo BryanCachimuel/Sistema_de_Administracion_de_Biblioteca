@@ -19,29 +19,38 @@
         <div class="row content">
             <div class="col-sm-1"></div>
             <div class="col-sm-10">
-                <table>
-                    <tr>
-                        <td>Usuario: </td>
-                        <td>
-                            <input type="text" name="usuario" id="usuario">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Clave: </td>
-                        <td>
-                            <input type="password" name="clave" id="clave">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="submit" value="Enviar">
-                        </td>
-                    </tr>
-                </table>
+                <div class="card p-4 mt-3 bg-light">
+                    
+                    <form action="" method="POST">
+
+                        <div class="form-group text-left">
+                            <label for="usuario">* Usuario:</label>
+                            <input type="text" class="form-control" name="usuario" placeholder="Escribe tu usuario (correo electrónico)">
+                        </div>
+
+                        <div class="form-group text-left">
+                            <label for="clave">* Clave:</label>
+                            <input type="password" class="form-control" name="clave" placeholder="Escribe tu clave de acceso">
+                        </div>
+
+                        <div class="form-group text-left mt-2">
+							<input type="checkbox" name="recordar">
+							<label for="recordar">Recordar</label>
+						</div>
+
+                        <div class="form-group text-left mt-2">
+							<input type="submit" value="Iniciar Sesión" class="btn btn-success">
+						</div>
+
+						<a href="#">¿Olvidaste tu clave de acceso?</a><br>
+						<a href="#">Registrarse</a>
+                    </form>
+                </div>
             </div>
             <div class="col-sm-1"></div>
         </div>
     </div>
 
 </body>
+
 </html>
