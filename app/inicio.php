@@ -5,6 +5,7 @@ define("RUTA", "/biblioteca/");
 // Llaves para encriptación de datos del usuario
 define("LLAVE1","Hombresneciosque");
 define("LLAVE2","acusaisalamujer");
+define("CLAVE","clavesecretamaxima");
 
 require_once("libs/MySQLdb.php");
 require_once("libs/Helper.php");
