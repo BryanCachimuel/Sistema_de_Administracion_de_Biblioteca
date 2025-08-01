@@ -83,4 +83,8 @@ class Login extends Controlador
         ];
         $this->vista("loginOlvidoVista", $datos);
     }
+
+    public function cambiarclave($id='') {
+        Helper::mostrar(Helper::desencriptar($id));
+    }
 }
