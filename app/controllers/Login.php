@@ -39,7 +39,8 @@ class Login extends Controlador
             if (empty($errores)) {
                 // enviando los datos
                 if ($this->modelo->buscarCorreo($usuario)) {
-                    if ($this->modelo->enviarCorreo($usuario)) {
+                    // la negación debe ser cambiada cuando se valide el proceso de envió de correos
+                    if (!$this->modelo->enviarCorreo($usuario)) {
                         $datos = [
                             "titulo" => "Cambio de contraseña de acceso",
                             "menu" => false,
@@ -47,18 +48,30 @@ class Login extends Controlador
                             "data" => [],
                             "subtitulo" => "Cambio de contraseña de acceso",
                             "texto" => "Se ha enviado un correo a <b>".$usuario."</b> para que puedas cambiar tu contraseña de acceso. Cualquier duda te puedes comunicar con nosotros. No olvides revisar tu bandeja de spam.",
-                            "color" => "alert-warning",
+                            "color" => "alert-success",
                             "url" => "login",
-                            "colorBoton" => "btn-warning",
+                            "colorBoton" => "btn-success",
                             "textoBoton" => "Regresar"
                         ];
                         $this->vista("mensaje", $datos);
-                        exit();
                     } else {
-                        Helper::mostrar("No se envió el correo");
+                        $datos = [
+                            "titulo" => "Error al cambiar la contraseña de acceso",
+                            "menu" => false,
+                            "errores" => [],
+                            "data" => [],
+                            "subtitulo" => "Error al cambiar la contraseña de acceso",
+                            "texto" => "Error al enviar un correo a <b>".$usuario."</b> para que puedas cambiar tu contraseña de acceso. Cualquier duda te puedes comunicar con nosotros. Inténtalo mas tarde.",
+                            "color" => "alert-danger",
+                            "url" => "login",
+                            "colorBoton" => "btn-danger",
+                            "textoBoton" => "Regresar"
+                        ];
+                        $this->vista("mensaje", $datos);
                     }
+                    exit();
                 } else {
-                    Helper::mostrar("No se encontró el correo");
+                    array_push($errores, "No existe el correo electrónico en la base de datos");
                 }
             }
         }
