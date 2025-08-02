@@ -25,4 +25,10 @@ class MySQLdb {
         $stmt = $this->conn->query($sql);
         return $stmt->fetch();
     }
+
+    // Update, Delete, Insert => para regresar un true o false
+    public function queryNoSelect($sql, $data) {
+        return $this->conn->prepare($sql)->execute($data);
+    }
+
 }
