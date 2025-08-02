@@ -10,7 +10,7 @@ class LoginModelo {
 
     public function buscarCorreo($usuario='') {
         if(empty($usuario)) return false;
-        $sql = "SELECT id,nombre,apellidoPaterno,apellidoMaterno FROM usuarios WHERE correo='".$usuario."'";
+        $sql = "SELECT id, nombre, apellidoPaterno, apellidoMaterno, clave, correo FROM usuarios WHERE correo='".$usuario."'";
         return $this->db->query($sql);
     }
 
