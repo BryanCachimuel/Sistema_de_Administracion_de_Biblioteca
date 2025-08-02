@@ -104,7 +104,6 @@ class Login extends Controlador
             if(count($errores) == 0) {
                 $clave = hash_hmac("sha512", $clave1, CLAVE);
                 $data = ["clave"=>$clave, "id"=>$id];
-                Helper::mostrar($data);
                 if($this->modelo->actualizarClaveAcceso($data)) {
                     $datos = [
                         "titulo" => "Cambio de contraseña de acceso",
@@ -112,7 +111,7 @@ class Login extends Controlador
                         "errores" => [],
                         "data" => [],
                         "subtitulo" => "Cambio de contraseña de acceso",
-                        "texto" => "La contraseña de acceso se mddificó correctamente",
+                        "texto" => "La contraseña de acceso se modificó correctamente",
                         "color" => "alert-success",
                         "url" => "login",
                         "colorBoton" => "btn-success",
@@ -144,5 +143,49 @@ class Login extends Controlador
             "data" => $id
         ];
         $this->vista("loginCambiarVista", $datos);
+    }
+
+    public function verificar() {
+        $errores = [];
+        if($_SERVER["REQUEST_METHOD"] == "POST"){
+            $id = $_POST["id"] ?? "";
+            $usuario = $_POST['usuario'] ?? "";
+            $clave = $_POST['clave'] ?? "";
+
+            if(empty($clave)){
+                array_push($errores, "La clave de acceso es requerida");
+            }
+
+            if(empty($usuario)) {
+                array_push($errores, "La usuario es requerido");
+            }
+
+            if(count($errores) == 0) {
+                $clave = hash_hmac("sha512", $clave, CLAVE);
+                $data = $this->modelo->buscarCorreo($usuario);
+
+                if($data && $data["clave"] == $clave) {
+                    //$sesion = new Sesion();
+                    //$sesion->iniciarLogin($data);
+                    //header("location:".RUTA."tablero");
+                    Helper::mostrar("Bienvenid@");
+                }else {
+                    $datos = [
+                        "titulo" => "Sistema de Biblioteca",
+                        "menu" => false,
+                        "errores" => [],
+                        "data" => [],
+                        "subtitulo" => "Sistema de Biblioteca",
+                        "texto" => "Existió un error al entrar al sistema. Favor de intentar nuevamente",
+                        "color" => "alert-danger",
+                        "url" => "login",
+                        "colorBoton" => "btn-danger",
+                        "textoBoton" => "Regresar"
+                    ];
+                    $this->vista("mensaje",$datos);
+                }
+                exit;
+            }
+        }
     }
 }
