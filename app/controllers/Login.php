@@ -165,10 +165,10 @@ class Login extends Controlador
                 $data = $this->modelo->buscarCorreo($usuario);
 
                 if($data && $data["clave"] == $clave) {
-                    //$sesion = new Sesion();
-                    //$sesion->iniciarLogin($data);
+                    $sesion = new Sesion();
+                    $sesion->iniciarLogin($data);
                     //header("location:".RUTA."tablero");
-                    Helper::mostrar("Bienvenid@");
+                    Helper::mostrar($sesion->getLogin());
                 }else {
                     $datos = [
                         "titulo" => "Sistema de Biblioteca",
