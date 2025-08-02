@@ -10,7 +10,7 @@ class LoginModelo {
 
     public function buscarCorreo($usuario='') {
         if(empty($usuario)) return false;
-        $sql = "SELECT * FROM usuarios WHERE correo='".$usuario."'";
+        $sql = "SELECT id,nombre,apellidoPaterno,apellidoMaterno FROM usuarios WHERE correo='".$usuario."'";
         return $this->db->query($sql);
     }
 
@@ -19,11 +19,11 @@ class LoginModelo {
         if($email == ""){
             return false;
         }else{
-            $data = ["id"=>1]; // $this->validarCorreo($email);
+            $data = $this->buscarCorreo($email);
             if(!empty($data)){
-                $id = $data["id"];
+                $id = Helper::encriptar($data["id"]);
                 $msg = "Entra a el siguiente enlace para cambiar tu contraseña de acceso al sistema de biblioteca...<br>";
-				$msg.= "<a href='".RUTA."login/cambiarclave/".$id."'>Cambiar tu contraseña de acceso</a>";
+				$msg.= "<a href='".RUTA."login/cambiarClave/".$id."'>Cambiar tu contraseña de acceso</a>";
 
                 $headers = "MIME-Version: 1.0\r\n"; 
 				$headers.= "Content-type:text/html; charset=UTF-8\r\n"; 
@@ -31,9 +31,9 @@ class LoginModelo {
 				$headers.= "Reply-to: bryanloyo56@gmail.com\r\n";
 
                 $asunto = "Cambiar Contraseña de Acceso";
-                //var_dump($msg);
-                //return true;
-                return @mail($email,$asunto,$msg,$headers);
+                Helper::mostrar($msg);
+                return true;
+                //return @mail($email,$asunto,$msg,$headers);
             }else{
 
             }
