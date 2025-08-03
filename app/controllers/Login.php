@@ -13,11 +13,22 @@ class Login extends Controlador
         $this->modelo = $this->modelo("LoginModelo");
     }
 
-    public function caratula()
-    {
+    public function caratula() {
+        if (isset($_COOKIE['datos'])) {
+            $datos_array = explode("|",$_COOKIE['datos']);
+            $usuario = $datos_array[0];
+            $clave = Helper::desencriptar($datos_array[1]);
+            $data = [
+                "usuario" => $usuario,
+                "clave" => $clave
+            ];
+        }else {
+            $data = [];
+        }
         $datos = [
             "titulo" => "Entrada a la Biblioteca",
-            "subtitulo" => "Sistema de Biblioteca"
+            "subtitulo" => "Sistema de Biblioteca",
+            "data" => $data
         ];
         $this->vista("loginCaratulaVista", $datos);
     }
@@ -154,6 +165,15 @@ class Login extends Controlador
             $id = $_POST["id"] ?? "";
             $usuario = $_POST['usuario'] ?? "";
             $clave = $_POST['clave'] ?? "";
+            $recordar = isset($_POST['recordar'])?"on":"off";
+            // recordar
+            $valor = $usuario."|".Helper::encriptar($clave);
+            if($recordar == "on") {
+                $fecha = time()+(60*60*24*7);
+            }else {
+                 $fecha = time() - 1;
+            }
+            setcookie("datos",$valor,$fecha,RUTA);
 
             if(empty($clave)){
                 array_push($errores, "La clave de acceso es requerida");
