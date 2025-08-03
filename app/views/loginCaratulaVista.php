@@ -4,16 +4,16 @@
 
     <div class="form-group text-left">
         <label for="usuario">* Usuario:</label>
-        <input type="text" class="form-control" name="usuario" placeholder="Escribe tu usuario (correo electrónico)">
+        <input type="text" name="usuario" class="form-control" placeholder="Escribe tu usuario (correo electrónico)" value="<?php print isset($datos['data']['usuario'])?$datos['data']['usuario']:''; ?>">
     </div>
 
     <div class="form-group text-left">
         <label for="clave">* Clave:</label>
-        <input type="password" class="form-control" name="clave" placeholder="Escribe tu clave de acceso">
+        <input type="password" name="clave" class="form-control" placeholder="Escribe tu clave de acceso" value="<?php print isset($datos['data']['clave'])?$datos['data']['clave']:''; ?>">
     </div>
 
     <div class="form-group text-left mt-2">
-        <input type="checkbox" name="recordar">
+        <input type="checkbox" name="recordar" <?php print isset($datos['data']['usuario'])?'checked':''; ?> >
         <label for="recordar">Recordar</label>
     </div>
 
