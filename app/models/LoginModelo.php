@@ -40,10 +40,16 @@ class LoginModelo {
         }
     }
 
-    public function actualizarClaveAcceso($data=''){
+    public function actualizarClaveAcceso($data='',$tipo=''){
         if($data != "") {
-            $sql = "UPDATE usuarios SET clave=:clave WHERE id=:id";
-            return $this->db->queryNoSelect($sql, $data);
+            if($tipo == "p") {
+                $sql = "UPDATE profesores SET clave=:clave WHERE id=:id";
+            }else if($tipo == "a") {
+                $sql = "UPDATE alumnos SET clave=:clave WHERE id=:id";
+            }else {
+                return false;
+            }
+            return $this->db->queryNoSelect($sql,$data);
         }
         return false;
     }
