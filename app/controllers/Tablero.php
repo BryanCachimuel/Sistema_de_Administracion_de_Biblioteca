@@ -27,4 +27,11 @@ class Tablero extends Controlador {
         ];
         $this->vista("tableroCaratulaVista",$datos);
     }
+
+    public function logout() {
+        if(isset($_SESSION['usuario'])) {
+            $this->sesion->finalizarLogin();
+        }
+        header("location:".RUTA);
+    }
 }
