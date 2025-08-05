@@ -26,6 +26,21 @@ class MySQLdb {
         return $stmt->fetch();
     }
 
+    public function querySelect($sql='') {
+		if (empty($sql)) return false;
+		$data = [];
+		$stmt = $this->conn->query($sql);
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		   do {
+		       array_push($data,$row);
+		   } while ($row = $stmt->fetch(PDO::FETCH_ASSOC));
+		if (!$data[0]) {
+			$data = [];
+		}
+		return $data;
+	}
+
+
     // Update, Delete, Insert => para regresar un true o false
     public function queryNoSelect($sql, $data) {
         return $this->conn->prepare($sql)->execute($data);
