@@ -40,7 +40,6 @@ class MySQLdb {
 		return $data;
 	}
 
-
     // Update, Delete, Insert => para regresar un true o false
     public function queryNoSelect($sql, $data) {
         return $this->conn->prepare($sql)->execute($data);
