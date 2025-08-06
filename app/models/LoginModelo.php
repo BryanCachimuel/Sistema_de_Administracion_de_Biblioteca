@@ -1,8 +1,8 @@
 <?php
 
-class LoginModelo {
+class LoginModelo extends Llaves{
 
-    private $db = "";
+    protected $db = "";
 
     function __construct() {
         $this->db = new MySQLdb();
