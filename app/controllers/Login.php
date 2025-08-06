@@ -37,6 +37,22 @@ class Login extends Controlador {
 	   //Definir los arreglos
 	    $data = array();
 	    $errores = array(); 
+
+		// se recibe la información de la vista
+		if($_SERVER['REQUEST_METHOD'] == "POST") {
+			$idTipoUsuario = Helper::cadena($_POST['idTipoUsuario'] ?? "");
+			$correo = Helper::cadena($_POST['correo'] ?? "");
+			$verificarCorreo = Helper::cadena($_POST['verificarCorreo'] ?? "");
+			$nombre = Helper::cadena($_POST['nombre'] ?? "");
+			$apellidoPaterno = Helper::cadena($_POST['apellidoPaterno'] ?? "");
+			$apellidoMaterno = Helper::cadena($_POST['apellidoMaterno'] ?? "");
+			$genero = Helper::cadena($_POST['genero'] ?? "");
+			$telefono = Helper::cadena($_POST['telefono'] ?? "");
+			$fechaNacimiento = Helper::cadena($_POST['fechaNacimiento'] ?? "");
+			$estado = USUARIO_INACTIVO;
+			Helper::mostrar($_POST);
+		}
+
 	    if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST" ){
 	    	//Vista Auto registro
 	    	$genero = $this->modelo->getCatalogo("genero");
