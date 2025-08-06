@@ -22,7 +22,7 @@
     </div>
 
     <a href="<?php print RUTA; ?>login/olvidoVerificar">¿Olvidaste tu clave de acceso?</a><br>
-    <a href="#">Registrarse</a>
+    <a href="<?php print RUTA; ?>login/registrar">Registrarse</a>
 </form>
 
 <?php include("piePagina.php"); ?>
