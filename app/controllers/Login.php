@@ -46,7 +46,7 @@ class Login extends Controlador {
 		      "activo" => "login",
 		      "menu" => false,
 		      "admon" => "admon",
-		      "genero" => $genero,
+		      "genero" => $genero,  
 		      "estado" => USUARIO_INACTIVO,
 		      "errores" => $errores,
 		      "data" => []
