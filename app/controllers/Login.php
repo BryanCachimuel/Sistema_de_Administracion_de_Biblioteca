@@ -62,7 +62,42 @@ class Login extends Controlador {
 				array_push($errores, "El correo ya existe en la base de datos");
 			}
 
-			
+			if(Helper::correo($verificarCorreo) == false) {
+				array_push($errores, "El correo de verificación no tiene el formato correcto");
+			}
+			if($correo != $verificarCorreo) {
+				array_push($errores, "Los correos no coinciden");
+			}
+
+			if(empty($nombre)) {
+				array_push($errores, "El nombre es requerido");
+			}
+
+			if(empty($apellidoPaterno)) {
+				array_push($errores, "El apellido paterno es requerido");
+			}
+
+			if(Helper::fecha($fechaNacimiento) == false) {
+				array_push($errores, "El formato de la fecha de nacimiento no es correcto");
+			}
+
+			if(empty($errores)) {
+				// crear arreglo de datos
+				//$clave = Helper::generarClave(10);
+				$data = [
+					"idTipoUsuario" => $idTipoUsuario,
+					"correo" => $correo,
+					"nombre" => $nombre,
+					"clave" => $clave,
+					"apellidoPaterno" => $apellidoPaterno,
+					"apellidoMaterno" => $apellidoMaterno,
+					"genero" => $genero,
+					"telefono" => $telefono,
+					"fechaNacimiento" => $fechaNacimiento,
+					"estado" => USUARIO_INACTIVO  
+				];
+				Helper::mostrar($data);
+			}
 		}
 
 	    if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST" ){
