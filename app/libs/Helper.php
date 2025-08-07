@@ -20,4 +20,13 @@ class Helper {
         return str_replace(LLAVE2,"",$cadena);
     }
 
+    public static function cadena($cadena) {
+        // si se ingresan estas palabras se las reemplaza por las de la siguiente línea
+        $buscar = array('^','delete','drop','truncate','exec','system');
+        $reemplazar = array('-','dele*te','dr*op','trun*cate','ex*ec','syst*em');
+        $cadena = trim(str_replace($buscar,$reemplazar,$cadena));
+        $cadena = addslashes(htmlentities($cadena));
+        return $cadena;
+    }
+
 }
