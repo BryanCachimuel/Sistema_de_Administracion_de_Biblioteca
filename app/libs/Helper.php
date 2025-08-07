@@ -39,4 +39,8 @@ class Helper {
         return $salida;
     }
 
+    public static function correo($correo = "") {
+        return filter_var($correo, FILTER_VALIDATE_EMAIL);
+    } 
+
 }
