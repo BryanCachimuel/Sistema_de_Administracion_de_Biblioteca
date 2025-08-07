@@ -29,4 +29,14 @@ class Helper {
         return $cadena;
     }
 
+    public static function fecha($cadena="") {
+        // formato de fecha ISO AAAA-MM-DD
+        $salida = false;
+        if($cadena != "") {
+            $fecha_array = explode("-", $cadena);
+            $salida = checkdate($fecha_array[1], $fecha_array[2], $fecha_array[0]);
+        }
+        return $salida;
+    }
+
 }
