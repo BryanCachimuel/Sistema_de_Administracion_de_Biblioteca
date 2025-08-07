@@ -50,7 +50,19 @@ class Login extends Controlador {
 			$telefono = Helper::cadena($_POST['telefono'] ?? "");
 			$fechaNacimiento = Helper::cadena($_POST['fechaNacimiento'] ?? "");
 			$estado = USUARIO_INACTIVO;
-			Helper::mostrar($_POST);
+			
+			// validar la información
+			if(Helper::correo($correo) == false) {
+				array_push($errores, "El correo no tiene un formato correcto");
+			}
+			if(empty($correo)) {
+				array_push($errores, "El correo es requerido");
+			}
+			if($this->modelo->buscarCorreo($correo)) {
+				array_push($errores, "El correo ya existe en la base de datos");
+			}
+
+			
 		}
 
 	    if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST" ){
