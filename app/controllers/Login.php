@@ -137,6 +137,33 @@ class Login extends Controlador
 		}
 	}
 
+	public function registroConfirmar($data='') {
+		$id = Helper::desencriptar($data);
+		$errores=[];
+		if ($_SERVER["REQUEST_METHOD"]=="POST") {
+			$id=$_POST["id"]??"";
+			$clave=$_POST['clave']??"";
+			
+			if (empty($id)) {
+				array_push($errores, "El número de usuario es requerido.");
+			}
+			if (empty($clave)) {
+				array_push($errores, "La clave de acceso es requerida.");
+			}
+			if (count($errores)==0) {
+			}
+			Helper::mostrar($errores);
+		}
+		$datos = [
+			"titulo" => "Confirmar registro",
+			"subtitulo" => "Confirmar registro",
+			"errores" => $errores,
+			"menu" => false,
+			"data" => $id
+		];
+		$this->vista("loginRegistroConfirmarVista",$datos);
+	}
+
 	public function olvidoVerificar()
 	{
 		$errores = [];
