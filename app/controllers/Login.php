@@ -1,8 +1,9 @@
-<?php  
+<?php
 
-class Login extends Controlador {
+class Login extends Controlador
+{
 	private $modelo = "";
-	
+
 	function __construct()
 	{
 		$this->sesion = new Sesion();
@@ -15,7 +16,7 @@ class Login extends Controlador {
 	public function caratula()
 	{
 		if (isset($_COOKIE['datos'])) {
-			$datos_array = explode("|",$_COOKIE['datos']);
+			$datos_array = explode("|", $_COOKIE['datos']);
 			$usuario = $datos_array[0];
 			$clave = Helper::desencriptar($datos_array[1]);
 			$data = [
@@ -30,16 +31,17 @@ class Login extends Controlador {
 			"subtitulo" => "Sistema de biblioteca",
 			"data" => $data
 		];
-		$this->vista("loginCaratulaVista",$datos);
+		$this->vista("loginCaratulaVista", $datos);
 	}
 
-	public function registrar(){
-	   //Definir los arreglos
-	    $data = array();
-	    $errores = array(); 
+	public function registrar()
+	{
+		//Definir los arreglos
+		$data = array();
+		$errores = array();
 
 		// se recibe la información de la vista
-		if($_SERVER['REQUEST_METHOD'] == "POST") {
+		if ($_SERVER['REQUEST_METHOD'] == "POST") {
 			$idTipoUsuario = Helper::cadena($_POST['idTipoUsuario'] ?? "");
 			$correo = Helper::cadena($_POST['correo'] ?? "");
 			$verificarCorreo = Helper::cadena($_POST['verificarCorreo'] ?? "");
@@ -50,40 +52,40 @@ class Login extends Controlador {
 			$telefono = Helper::cadena($_POST['telefono'] ?? "");
 			$fechaNacimiento = Helper::cadena($_POST['fechaNacimiento'] ?? "");
 			$estado = USUARIO_INACTIVO;
-			
+
 			// validar la información
-			if(Helper::correo($correo) == false) {
+			if (Helper::correo($correo) == false) {
 				array_push($errores, "El correo no tiene un formato correcto");
 			}
-			if(empty($correo)) {
+			if (empty($correo)) {
 				array_push($errores, "El correo es requerido");
 			}
-			if($this->modelo->buscarCorreo($correo)) {
+			if ($this->modelo->buscarCorreo($correo)) {
 				array_push($errores, "El correo ya existe en la base de datos");
 			}
 
-			if(Helper::correo($verificarCorreo) == false) {
+			if (Helper::correo($verificarCorreo) == false) {
 				array_push($errores, "El correo de verificación no tiene el formato correcto");
 			}
-			if($correo != $verificarCorreo) {
+			if ($correo != $verificarCorreo) {
 				array_push($errores, "Los correos no coinciden");
 			}
 
-			if(empty($nombre)) {
+			if (empty($nombre)) {
 				array_push($errores, "El nombre es requerido");
 			}
 
-			if(empty($apellidoPaterno)) {
+			if (empty($apellidoPaterno)) {
 				array_push($errores, "El apellido paterno es requerido");
 			}
 
-			if(Helper::fecha($fechaNacimiento) == false) {
+			if (Helper::fecha($fechaNacimiento) == false) {
 				array_push($errores, "El formato de la fecha de nacimiento no es correcto");
 			}
 
-			if(empty($errores)) {
+			if (empty($errores)) {
 				// crear arreglo de datos
-				//$clave = Helper::generarClave(10);
+				$clave = Helper::generarClave(10);
 				$data = [
 					"idTipoUsuario" => $idTipoUsuario,
 					"correo" => $correo,
@@ -94,39 +96,56 @@ class Login extends Controlador {
 					"genero" => $genero,
 					"telefono" => $telefono,
 					"fechaNacimiento" => $fechaNacimiento,
-					"estado" => USUARIO_INACTIVO  
+					"estado" => USUARIO_INACTIVO
 				];
-				Helper::mostrar($data);
+				//Enviamos al modelo
+				//Alta
+				if ($this->modelo->registrar($data)) {
+
+					if($this->modelo->enviarCorreoRegistro($data, $clave)) {
+						$this->mensaje("Registro del usuario", "Registro del usuario", "Se envió un correo a " . $data["correo"] . " favor de verificarlo, también el buzón de 'span'.", "login", "success");
+					}else {
+						$this->mensaje("Registro del usuario", "Registro del usuario", "Error al enviar el correo a " . $data["correo"] . " favor de verificarlo.", "login", "danger");
+					}
+				} else {
+					$this->mensaje(
+						"Error al registrar un usuario.",
+						"Error al registrar un usuario.",
+						"Error al registrar el usuario: " . $nombre . " " . $apellidoPaterno,
+						"login",
+						"danger"
+					);
+				}
 			}
 		}
 
-	    if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST" ){
-	    	//Vista Auto registro
-	    	$genero = $this->modelo->getCatalogo("genero");
-		    $datos = [
-		      "titulo" => "Auto registro de un usuario",
-		      "subtitulo" => "Auto registro de un usuario",
-		      "activo" => "login",
-		      "menu" => false,
-		      "admon" => "admon",
-		      "genero" => $genero,  
-		      "estado" => USUARIO_INACTIVO,
-		      "errores" => $errores,
-		      "data" => []
-		    ];
-		    $this->vista("loginRegistrarUsuarioVista",$datos);
-	    }
-  	}
+		if (!empty($errores) || $_SERVER['REQUEST_METHOD'] != "POST") {
+			//Vista Auto registro
+			$genero = $this->modelo->getCatalogo("genero");
+			$datos = [
+				"titulo" => "Auto registro de un usuario",
+				"subtitulo" => "Auto registro de un usuario",
+				"activo" => "login",
+				"menu" => false,
+				"admon" => "admon",
+				"genero" => $genero,
+				"estado" => USUARIO_INACTIVO,
+				"errores" => $errores,
+				"data" => []
+			];
+			$this->vista("loginRegistrarUsuarioVista", $datos);
+		}
+	}
 
 	public function olvidoVerificar()
 	{
 		$errores = [];
-		if ($_SERVER['REQUEST_METHOD']=="POST") {
-			$usuario = $_POST['usuario']??"";
+		if ($_SERVER['REQUEST_METHOD'] == "POST") {
+			$usuario = $_POST['usuario'] ?? "";
 			if (empty($usuario)) {
 				array_push($errores, "El correo electrónico es requerido.");
 			}
-			if (filter_var($usuario,FILTER_VALIDATE_EMAIL)==false) {
+			if (filter_var($usuario, FILTER_VALIDATE_EMAIL) == false) {
 				array_push($errores, "El correo electrónico no está bien escrito.");
 			}
 			if (empty($errores)) {
@@ -139,13 +158,13 @@ class Login extends Controlador {
 							"errores" => [],
 							"data" => [],
 							"subtitulo" => "Cambio de clave de acceso",
-							"texto" => "Se ha enviado un correo a <b>".$usuario."</b> para que puedas cambiar tu clave de acceso. Cualquier duda te puedes comunicar con nosotros. No olvides revisar tu bandeja de spam.",
+							"texto" => "Se ha enviado un correo a <b>" . $usuario . "</b> para que puedas cambiar tu clave de acceso. Cualquier duda te puedes comunicar con nosotros. No olvides revisar tu bandeja de spam.",
 							"color" => "alert-success",
 							"url" => "login",
 							"colorBoton" => "btn-success",
 							"textoBoton" => "Regresar"
 						];
-						$this->vista("mensaje",$datos);
+						$this->vista("mensaje", $datos);
 					} else {
 						$datos = [
 							"titulo" => "Error al cambiar la clave de acceso",
@@ -153,13 +172,13 @@ class Login extends Controlador {
 							"errores" => [],
 							"data" => [],
 							"subtitulo" => "Error al cambiar la clave de acceso",
-							"texto" => "Error al enviar el correo a <b>".$usuario."</b> para que puedas cambiar tu clave de acceso. Cualquier duda te puedes comunicar con nosotros. Inténtalo más tarde.",
+							"texto" => "Error al enviar el correo a <b>" . $usuario . "</b> para que puedas cambiar tu clave de acceso. Cualquier duda te puedes comunicar con nosotros. Inténtalo más tarde.",
 							"color" => "alert-danger",
 							"url" => "login",
 							"colorBoton" => "btn-danger",
 							"textoBoton" => "Regresar"
 						];
-						$this->vista("mensaje",$datos);
+						$this->vista("mensaje", $datos);
 					}
 					exit;
 				} else {
@@ -173,59 +192,59 @@ class Login extends Controlador {
 			"errores" => $errores,
 			"data" => []
 		];
-		$this->vista("loginOlvidoVista",$datos);
+		$this->vista("loginOlvidoVista", $datos);
 	}
 
-	public function cambiarClave($id='')
+	public function cambiarClave($id = '')
 	{
-		$id=Helper::desencriptar($id);
-		$errores=[];
-		if ($_SERVER['REQUEST_METHOD']=="POST") {
-			$clave1 = $_POST['clave']??"";
-			$clave2 = $_POST['verifica']??"";
-			$id = $_POST['id']??"";
+		$id = Helper::desencriptar($id);
+		$errores = [];
+		if ($_SERVER['REQUEST_METHOD'] == "POST") {
+			$clave1 = $_POST['clave'] ?? "";
+			$clave2 = $_POST['verifica'] ?? "";
+			$id = $_POST['id'] ?? "";
 			//
 			if (empty($clave1)) {
-				array_push($errores,"La clave de acceso es requerida.");
+				array_push($errores, "La clave de acceso es requerida.");
 			}
 			if (empty($clave2)) {
-				array_push($errores,"La clave de acceso de verificación es requerida.");
+				array_push($errores, "La clave de acceso de verificación es requerida.");
 			}
-			if ($clave1!=$clave2) {
-				array_push($errores,"Las claves de acceso no coinciden.");
+			if ($clave1 != $clave2) {
+				array_push($errores, "Las claves de acceso no coinciden.");
 			}
 			//
-			if (count($errores)==0) {
+			if (count($errores) == 0) {
 				$clave = hash_hmac("sha512", $clave1, CLAVE);
-				$data = ["clave"=>$clave, "id"=>$id];
+				$data = ["clave" => $clave, "id" => $id];
 				if ($this->modelo->actualizarClaveAcceso($data)) {
 					$datos = [
-					"titulo" => "Cambio de clave de acceso",
-					"menu" => false,
-					"errores" => [],
-					"data" => [],
-					"subtitulo" => "Cambio de clave de acceso",
-					"texto" => "La clave de acceso se modificó correctamente.",
-					"color" => "alert-success",
-					"url" => "login",
-					"colorBoton" => "btn-success",
-					"textoBoton" => "Regresar"
+						"titulo" => "Cambio de clave de acceso",
+						"menu" => false,
+						"errores" => [],
+						"data" => [],
+						"subtitulo" => "Cambio de clave de acceso",
+						"texto" => "La clave de acceso se modificó correctamente.",
+						"color" => "alert-success",
+						"url" => "login",
+						"colorBoton" => "btn-success",
+						"textoBoton" => "Regresar"
 					];
-					$this->vista("mensaje",$datos);
+					$this->vista("mensaje", $datos);
 				} else {
 					$datos = [
-					"titulo" => "Cambio de clave de acceso",
-					"menu" => false,
-					"errores" => [],
-					"data" => [],
-					"subtitulo" => "Cambio de clave de acceso",
-					"texto" => "Existió un error al actualizar la clave de acceso. Favor de intentarlo más tarde o reportarlo a soporte técnico.",
-					"color" => "alert-danger",
-					"url" => "login",
-					"colorBoton" => "btn-danger",
-					"textoBoton" => "Regresar"
+						"titulo" => "Cambio de clave de acceso",
+						"menu" => false,
+						"errores" => [],
+						"data" => [],
+						"subtitulo" => "Cambio de clave de acceso",
+						"texto" => "Existió un error al actualizar la clave de acceso. Favor de intentarlo más tarde o reportarlo a soporte técnico.",
+						"color" => "alert-danger",
+						"url" => "login",
+						"colorBoton" => "btn-danger",
+						"textoBoton" => "Regresar"
 					];
-					$this->vista("mensaje",$datos);
+					$this->vista("mensaje", $datos);
 				}
 				exit;
 			}
@@ -236,25 +255,25 @@ class Login extends Controlador {
 			"errores" => $errores,
 			"data" => $id
 		];
-		$this->vista("loginCambiarVista",$datos);
+		$this->vista("loginCambiarVista", $datos);
 	}
 
 	public function verificar()
 	{
-		$errores=[];
-		if ($_SERVER["REQUEST_METHOD"]=="POST") {
-			$id=$_POST["id"]??"";
-			$usuario=$_POST['usuario']??"";
-			$clave=$_POST['clave']??"";
-			$recordar = isset($_POST['recordar'])?"on":"off";
+		$errores = [];
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			$id = $_POST["id"] ?? "";
+			$usuario = $_POST['usuario'] ?? "";
+			$clave = $_POST['clave'] ?? "";
+			$recordar = isset($_POST['recordar']) ? "on" : "off";
 			//Recordar
-			$valor = $usuario."|".Helper::encriptar($clave);
-			if ($recordar=="on") {
-				$fecha = time()+(60*60*24*7);
+			$valor = $usuario . "|" . Helper::encriptar($clave);
+			if ($recordar == "on") {
+				$fecha = time() + (60 * 60 * 24 * 7);
 			} else {
-				$fecha = time()-1;
+				$fecha = time() - 1;
 			}
-			setcookie("datos",$valor,$fecha,RUTA);
+			setcookie("datos", $valor, $fecha, RUTA);
 			//
 			if (empty($clave)) {
 				array_push($errores, "La clave de acceso es requerida.");
@@ -262,31 +281,30 @@ class Login extends Controlador {
 			if (empty($usuario)) {
 				array_push($errores, "El usuario es requerido.");
 			}
-			if (count($errores)==0) {
+			if (count($errores) == 0) {
 				$clave = hash_hmac("sha512", $clave, CLAVE);
 				$data = $this->modelo->buscarCorreo($usuario);
-				if ($data && $data["clave"]==$clave) {
+				if ($data && $data["clave"] == $clave) {
 					$sesion = new Sesion();
 					$sesion->iniciarLogin($data);
-					header("location:".RUTA."tablero");
+					header("location:" . RUTA . "tablero");
 				} else {
 					$datos = [
-					"titulo" => "Sistema de biblioteca",
-					"menu" => false,
-					"errores" => [],
-					"data" => [],
-					"subtitulo" => "Sistema de biblioteca",
-					"texto" => "Existió un error al entrar al sistema. Favor de intentarlo nuevamente.",
-					"color" => "alert-danger",
-					"url" => "login",
-					"colorBoton" => "btn-danger",
-					"textoBoton" => "Regresar"
+						"titulo" => "Sistema de biblioteca",
+						"menu" => false,
+						"errores" => [],
+						"data" => [],
+						"subtitulo" => "Sistema de biblioteca",
+						"texto" => "Existió un error al entrar al sistema. Favor de intentarlo nuevamente.",
+						"color" => "alert-danger",
+						"url" => "login",
+						"colorBoton" => "btn-danger",
+						"textoBoton" => "Regresar"
 					];
-					$this->vista("mensaje",$datos);
+					$this->vista("mensaje", $datos);
 				}
 				exit;
 			}
 		}
 	}
 }
-
