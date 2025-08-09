@@ -71,5 +71,24 @@ class LoginModelo extends Llaves{
         return $this->db->queryNoSelect($sql);
 	 }
 
+     public function enviarCorreoRegistro($data="",$clave="") {
+        if(!empty($data)) {
+            $datos = $this->buscarCorreo($data["correo"]);
+            $id = Helper::encriptar($datos["id"]);
+            $msg = "Entre en el siguiente enlace para confirmar su acceso al sistema de la biblioteca. Tu clave de acceso es: ".$clave."<br>";
+            $msg.= "<a href='".RUTA."login/registroConfirmar/".$id."'>Confirmar su registro</a>";
+            $headers = "MIME-Version: 1.0\r\n";
+            $headers .= "Content-type:text/html; charset=UTF-8\r\n";
+            $headers .= "FROM: Biblioteca\r\n";
+            $headers .= "Reply-to: bryanloyo56@gmail.com\r\n";
+            $asunto = "Confirmar su registro";
+            var_dump($msg);
+            //exit;
+            return @mail($email,$asunto,$msg,$headers);
+        }else {
+            return false;
+        }
+     }
+
 
 }
