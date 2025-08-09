@@ -41,12 +41,14 @@ class MySQLdb {
 	}
 
     // Update, Delete, Insert => para regresar un true o false
-    public function queryNoSelect($sql, $data) {
-        if($data == "") {
-            return $this->conn->query($sql);
-        }else {
-            return $this->conn->prepare($sql)->execute($data);
-        }
-    }
+    public function queryNoSelect($sql,$data="")
+	{
+		if ($data=="") {
+			return $this->conn->query($sql);
+		} else {
+			return $this->conn->prepare($sql)->execute($data);
+		}
+	}
+
 
 }
