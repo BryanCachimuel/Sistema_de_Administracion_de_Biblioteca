@@ -48,14 +48,12 @@ class LoginModelo extends Llaves{
 		return false;
 	}
 
-    public function usuarioAutorizar($id='',$clave='') {
-        if($id == "") return false;
-        $sql = "UPDATE usuario SET ";
-        $sql .= "estado=".USUARIO_ACTIVO."',";
-        $sql .= "clave=".$clave."',";
-        $sql .= "WHERE id=".$id;
-        return $this->db->queryNoSelect($sql);
-    }
+    public function getUsuarioId($id='') {
+		if(empty($id)) return false;
+		$sql = "SELECT * FROM usuarios WHERE id='".$id."'";
+		return $this->db->query($sql);
+	}
+
 
     public function registrar($data){
 
@@ -79,6 +77,17 @@ class LoginModelo extends Llaves{
         $sql.= "'')";                            //16. fecha modificado                        
         return $this->db->queryNoSelect($sql);
 	 }
+
+    public function usuarioAutorizar($id='',$clave='') {
+		if($id=="") return false;
+		$sql = "UPDATE usuarios SET ";
+		$sql.= "estado='".USUARIO_ACTIVO."',";
+		$sql.= "clave='".$clave."',";
+		$sql.= "modifica_dt=NOW() ";
+		$sql.= "WHERE id=".$id;
+		return $this->db->queryNoSelect($sql);
+	}
+
 
      public function enviarCorreoRegistro($data="",$clave="") {
         if(!empty($data)) {
