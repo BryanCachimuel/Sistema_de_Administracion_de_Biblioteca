@@ -48,6 +48,15 @@ class LoginModelo extends Llaves{
 		return false;
 	}
 
+    public function usuarioAutorizar($id='',$clave='') {
+        if($id == "") return false;
+        $sql = "UPDATE usuario SET ";
+        $sql .= "estado=".USUARIO_ACTIVO."',";
+        $sql .= "clave=".$clave."',";
+        $sql .= "WHERE id=".$id;
+        return $this->db->queryNoSelect($sql);
+    }
+
     public function registrar($data){
 
 		if(empty($data)) return false;
