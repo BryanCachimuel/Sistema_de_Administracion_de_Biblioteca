@@ -143,7 +143,7 @@ class Login extends Controlador
 		if ($_SERVER["REQUEST_METHOD"]=="POST") {
 			$id=$_POST["id"]??"";
 			$clave=$_POST['clave']??"";
-			
+
 			if (empty($id)) {
 				array_push($errores, "El número de usuario es requerido.");
 			}
@@ -151,8 +151,24 @@ class Login extends Controlador
 				array_push($errores, "La clave de acceso es requerida.");
 			}
 			if (count($errores)==0) {
+				// clave sin encriptar
+				$data = $this->modelo->getUsuarioId($id);
+				if($data) {
+					if($data["clave"] == $clave) {
+						$clave = hash_hmac("sha512",$clave,CLAVE);
+						if($this->modelo->usuarioAutorizar($id,$clave)) {
+							$this->mensaje("Actualizar Registro","Actualizar Registro","El registro se actualizo correctamente, bienvenido(a)","login","success");
+						}else {
+							$this->mensaje("Error al actualizar el usuario","Error al actualizar el usuario","Error al actualizar el usuario","login","danger");
+						}
+					}else {
+						$this->mensaje("Error al actualizar el usuario","Error al actualizar el usuario","La contraseña de acceso no coincide","login","danger");
+					}	
+				}else {
+					$this->mensaje("Error al actualizar el usuario","Error al actualizar el usuario","Existio un error al actualizar la contraseña de acceso. Favor intentarlo más tarde o cuminicarse a soporte técnico","login","danger");
+				}
+				exit;
 			}
-			Helper::mostrar($errores);
 		}
 		$datos = [
 			"titulo" => "Confirmar registro",
