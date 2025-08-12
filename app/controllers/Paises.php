@@ -15,20 +15,12 @@ class Paises extends Controlador
 
 	public function caratula()
 	{
-		if (isset($_COOKIE['datos'])) {
-			$datos_array = explode("|", $_COOKIE['datos']);
-			$usuario = $datos_array[0];
-			$clave = Helper::desencriptar($datos_array[1]);
-			$data = [
-				"usuario" => $usuario,
-				"clave" => $clave
-			];
-		} else {
-			$data = [];
-		}
+		$data = $this->modelo->getTabla();
 		$datos = [
-			"titulo" => "Paises",
-			"subtitulo" => "Paises",
+			"titulo" => "PaÍses",
+			"subtitulo" => "PaÍses",
+			"activo" => "paises",
+			"menu" => true,
 			"data" => $data
 		];
 		$this->vista("paisesCaratulaVista", $datos);
