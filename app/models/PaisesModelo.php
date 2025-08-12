@@ -9,6 +9,14 @@ class PaisesModelo extends Llaves{
     }
 
     public function alta($data='') {
+       $sql = "INSERT INTO paises VALUES(0,"; //1. id 
+	   $sql.= "'".$data['pais']."', "; //2. país
+	   //
+	   $sql.= "0, ";                   //3. baja
+	   $sql.= "NOW(), ";               //4. fecha alta
+	   $sql.= "'', ";                  //. fecha baja 
+	   $sql.= "'')";                   //8. fecha cambio
+	   return $this->db->queryNoSelect($sql);
 
     }
 
