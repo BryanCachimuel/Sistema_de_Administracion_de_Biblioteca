@@ -27,30 +27,85 @@ class Paises extends Controlador
 	}
 
 	public function alta() {
-		// definir arreglos
-		$data = array();
-		$errores = array();
+	   //Definir los arreglos
+	    $data = array();
+	    $errores = array();
 
-		// recibir la información de la vista
-		if($_SERVER['REQUEST_METHOD']!="POST") {
-			$id = $_POST["id"]??"";
-			$pais = Helper::cadena($_POST['pais']??"");
-			Helper::mostrar($pais);
-		}
+	    //Recibimos la información de la vista
+	    if ($_SERVER['REQUEST_METHOD']=="POST") {
+	      //
+	      $id = $_POST['id'] ?? "";
+	      $pais = Helper::cadena($_POST['pais'] ?? "");
+	      //
+	      // Validamos la información
+	      // 
+	      if(empty($pais)){
+	        array_push($errores,"EL nombre del país es requerido.");
+	      }
 
-		if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST") {
-			//Vista de alta
-			$datos = [
-				"titulo" => "Alta de un País",
-				"subtitulo" => "Alta de un País",
-				"activo" => "paises",
-				"menu" => true,
-				"admon" => "admon",
-				"errores" => $errores,
-				"data" => []
-			];
-			$this->vista("paisesAltaVista", $datos);
-		}
-	}
+	      if (empty($errores)) { 
+			// Crear arreglo de datos
+			//
+			$data = [
+			 "id" => $id,
+			 "pais"=>$pais
+			];      
+	        //Enviamos al modelo
+	        if(trim($id)===""){
+	          //Alta
+	          if ($this->modelo->alta($data)) {
+	            $this->mensaje(
+	          		"Alta de un país", 
+	          		"Alta de un país", 
+	          		"Se añadió correctamente el país: ".$pais, 
+	          		"paises", 
+	          		"success"
+	          	);
+	          } else {
+	          	$this->mensaje(
+	          		"Error al añadir un país.", 
+	          		"Error al añadir un país.", 
+	          		"Error al modificar un país: ".$pais, 
+	          		"paises", 
+	          		"danger"
+	          	);
+	          }
+	        } else {
+	          //Modificar
+	          if ($this->modelo->modificar($data)) {
+	            $this->mensaje(
+	          		"Modificar el país", 
+	          		"Modificar el país", 
+	          		"Se modificó correctamente el país: ".$pais,
+	          		"paises", 
+	          		"success"
+	          	);
+	          } else {
+	          	$this->mensaje(
+	          		"Error al modificar el país.", 
+	          		"Error al modificar el país.", 
+	          		"Error al modificar el país: ".$pais, 
+	          		"paises", 
+	          		"danger"
+	          	);
+	          }
+	        }
+	      }
+	    } 
+	    if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST" ){
+	    	//Vista Alta
+		    $datos = [
+		      "titulo" => "Alta de un país",
+		      "subtitulo" => "Alta de un país",
+		      "activo" => "paises",
+		      "menu" => true,
+		      "admon" => "admon",
+		      "errores" => $errores,
+		      "data" => []
+		    ];
+		    $this->vista("paisesAltaVista",$datos);
+	    }
+  	}
+
 
 }
