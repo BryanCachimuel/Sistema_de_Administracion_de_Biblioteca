@@ -26,7 +26,7 @@ class PaisesModelo extends Llaves{
 
     public function getPaisId($id='') {
 		if(empty($id)) return false;
-		$sql = "SELECT * FROM paises WHERE id='".$id."'";
+		$sql = "SELECT id,pais FROM paises WHERE id='".$id."'";
 		return $this->db->query($sql);
 	}
 
@@ -41,26 +41,16 @@ class PaisesModelo extends Llaves{
     }
 
     public function modificar($data){
-
-		if(empty($data)) return false;
-        $sql = "INSERT INTO paises VALUES(0,"; //1. id 
-        $sql.= "'".$data['idTipoUsuario']."', "; //2. tipo
-        $sql.= "'".$data['nombre']."', ";    	//3. nombre
-        $sql.= "'".$data['apellidoPaterno']."', "; //4. apellido paterno
-        $sql.= "'".$data['apellidoMaterno']."', "; //5. Apellido Materno	   
-        $sql.= "'".$data['correo']."', ";    	//6. correo
-        $sql.= "'".$data['clave']."', ";     	//7. clave de acceso
-        $sql.= "'".$data['genero']."', ";    	//8. genero
-        $sql.= "'".$data['telefono']."', ";    	//9. telefono
-        $sql.= "'".$data['fechaNacimiento']."', ";  //10. fecha nacimieto
-        $sql.= "'".$data['estado']."', ";    	//11. estado
-        //
-        $sql.= "'0', ";                          //12. baja lógica
-        $sql.= "'', ";                           //13. fecha login
-        $sql.= "NOW(),";                         //14. fecha alta-creado
-        $sql.= "'', ";                           //15. fecha baja
-        $sql.= "'')";                            //16. fecha modificado                        
-        return $this->db->queryNoSelect($sql);
+        $salida = false;
+        if(!empty($data["id"])) {
+            $sql = "UPDATE paises SET ";
+            $sql .= "pais='".$data['pais']."', ";
+            $sql .= "modifica_dt=(NOW()) ";
+            $sql .= "WHERE id=".$data['id'];
+            // envio hacia la base de datos
+            $salida = $this->db->queryNoSelect($sql);
+        }
+        return $salida;
 	 }
 
 }
