@@ -20,8 +20,11 @@ class PaisesModelo extends Llaves{
 
     }
 
-    public function bajaLogica($id='') {
-
+    public function bajaLogica($id) {
+        $salida = true;
+        $sql = "UPDATE paises SET baja=1, baja_dt=(NOW()) WHERE id=".$id;
+        $salida = $this->db->queryNoSelect($sql);
+        return $salida;
     }
 
     public function getPaisId($id='') {
