@@ -33,6 +33,12 @@ class PaisesModelo extends Llaves{
 		return $this->db->query($sql);
 	}
 
+    public function getNumRegistros() {
+        $sql = "SELECT COUNT(*) FROM paises WHERE baja=0";
+        $salida = $this->db->query($sql);
+        return $salida["COUNT(*)"];
+    }
+
     public function getTabla($inicio = 1, $tamano = 0) {
         $sql = "SELECT id,pais ";
         $sql .= "FROM paises ";
