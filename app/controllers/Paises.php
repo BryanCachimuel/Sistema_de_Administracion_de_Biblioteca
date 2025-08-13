@@ -107,5 +107,18 @@ class Paises extends Controlador
 	    }
   	}
 
+	public function modificar($id) {
+		// leemos los datos de la tabla
+		$data = $this->modelo->getPaisId($id);
+		$datos = [
+			"titulo" => "Modificar País",
+			"subtitulo" => "Modificar País",
+			"menu" => true,
+			"admon" => "admon",
+			"activo" => "paises",
+			"data" => $data
+		];
+		$this->vista("paisesAltaVista", $datos);
+	}
 
 }
