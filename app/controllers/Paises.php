@@ -107,6 +107,23 @@ class Paises extends Controlador
 	    }
   	}
 
+	public function borrar($id="") {
+		// leemos los datos del registro del id
+		$data = $this->modelo->getPaisId($id);
+		// vista baja
+		$datos = [
+			"titulo" => "Baja de un País",
+			"subtitulo" => "Baja de un País",
+			"menu" => true,
+			"admon" => "admon",
+			"errores" => [],
+			"activo" => "paises",
+			"data" => $data,
+			"baja" => true
+		];
+		$this->vista("paisesAltaVista", $datos);
+	}
+
 	public function modificar($id) {
 		// leemos los datos de la tabla
 		$data = $this->modelo->getPaisId($id);
