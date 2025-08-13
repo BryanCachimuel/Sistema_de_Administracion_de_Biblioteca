@@ -113,7 +113,7 @@ class Paises extends Controlador
 		// vista baja
 		$datos = [
 			"titulo" => "Baja de un País",
-			"subtitulo" => "Baja de un País",
+			"subtitulo" => "Baja del País",
 			"menu" => true,
 			"admon" => "admon",
 			"errores" => [],
@@ -122,6 +122,28 @@ class Paises extends Controlador
 			"baja" => true
 		];
 		$this->vista("paisesAltaVista", $datos);
+	}
+
+	public function bajaLogica($id="") {
+		if(isset($id) && $id != "") {
+			if($this->modelo->bajaLogica($id)) {
+				$this->mensaje(
+	          		"Borrar el país.", 
+	          		"Borrar el país.", 
+	          		"Se borro correctamente el país", 
+	          		"paises", 
+	          		"success"
+	          	);
+			}else {
+				$this->mensaje(
+	          		"Error al borrar el país.", 
+	          		"Error al borrar el país.", 
+	          		"Error al borrar el país.", 
+	          		"paises", 
+	          		"danger"
+	          	);
+			}
+		}
 	}
 
 	public function modificar($id) {
