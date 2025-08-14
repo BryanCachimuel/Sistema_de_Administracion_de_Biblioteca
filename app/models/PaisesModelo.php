@@ -39,7 +39,7 @@ class PaisesModelo extends Llaves{
         return $salida["COUNT(*)"];
     }
 
-    public function getTabla($inicio = 1, $tamano = 0) {
+    public function getTabla($inicio=1, $tamano=0) {
         $sql = "SELECT id,pais ";
         $sql .= "FROM paises ";
         $sql .= "WHERE baja=0";

@@ -1,7 +1,7 @@
 <?php
 $totalPaginas = $datos["pag"]["totalPaginas"];
 $pagina = $datos["pag"]["pagina"];
-$regresa = $datos["pag"]["regresar"];
+$regresa = $datos["pag"]["regresa"];
 
 if($totalPaginas>1) {
     print '<nav>';
