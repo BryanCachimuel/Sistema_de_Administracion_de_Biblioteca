@@ -1,11 +1,9 @@
 <?php
 
-class Paises extends Controlador
-{
+class Paises extends Controlador {
 	private $modelo = "";
-
-	function __construct()
-	{
+	
+	function __construct() {
 		$this->sesion = new Sesion();
 		if ($this->sesion->getLogin()) {
 			$this->sesion->finalizarLogin();
@@ -25,7 +23,7 @@ class Paises extends Controlador
 			"menu" => true,
 			"pag" => [
 				"totalPaginas" => $totalPaginas,
-				"regresar" => "paises",
+				"regresa" => "paises",
 				"pagina" => $pagina
 			],
 			"data" => $data
@@ -33,22 +31,22 @@ class Paises extends Controlador
 		$this->vista("paisesCaratulaVista",$datos);
 	}
 
-
 	public function alta() {
 	   //Definir los arreglos
 	    $data = array();
 	    $errores = array();
+	    $pag = 1;
 
 	    //Recibimos la información de la vista
 	    if ($_SERVER['REQUEST_METHOD']=="POST") {
-	      //
+
 	      $id = $_POST['id'] ?? "";
 	      $pais = Helper::cadena($_POST['pais'] ?? "");
-	      //
+	      $pag = $_POST['pag'] ?? "1";
+
 	      // Validamos la información
-	      // 
 	      if(empty($pais)){
-	        array_push($errores,"EL nombre del país es requerido.");
+	        array_push($errores,"El nombre del país es requerido.");
 	      }
 
 	      if (empty($errores)) { 
@@ -66,7 +64,7 @@ class Paises extends Controlador
 	          		"Alta de un país", 
 	          		"Alta de un país", 
 	          		"Se añadió correctamente el país: ".$pais, 
-	          		"paises", 
+	          		"paises/".$pag, 
 	          		"success"
 	          	);
 	          } else {
@@ -74,7 +72,7 @@ class Paises extends Controlador
 	          		"Error al añadir un país.", 
 	          		"Error al añadir un país.", 
 	          		"Error al modificar un país: ".$pais, 
-	          		"paises", 
+	          		"paises/".$pag, 
 	          		"danger"
 	          	);
 	          }
@@ -85,7 +83,7 @@ class Paises extends Controlador
 	          		"Modificar el país", 
 	          		"Modificar el país", 
 	          		"Se modificó correctamente el país: ".$pais,
-	          		"paises", 
+	          		"paises/".$pag, 
 	          		"success"
 	          	);
 	          } else {
@@ -93,7 +91,7 @@ class Paises extends Controlador
 	          		"Error al modificar el país.", 
 	          		"Error al modificar el país.", 
 	          		"Error al modificar el país: ".$pais, 
-	          		"paises", 
+	          		"paises/".$pag, 
 	          		"danger"
 	          	);
 	          }
@@ -108,6 +106,7 @@ class Paises extends Controlador
 		      "activo" => "paises",
 		      "menu" => true,
 		      "admon" => "admon",
+		      "pag" => $pag,
 		      "errores" => $errores,
 		      "data" => []
 		    ];
@@ -115,57 +114,59 @@ class Paises extends Controlador
 	    }
   	}
 
-	public function borrar($id="") {
-		// leemos los datos del registro del id
-		$data = $this->modelo->getPaisId($id);
-		// vista baja
-		$datos = [
-			"titulo" => "Baja de un País",
-			"subtitulo" => "Baja del País",
-			"menu" => true,
-			"admon" => "admon",
-			"errores" => [],
-			"activo" => "paises",
-			"data" => $data,
-			"baja" => true
-		];
-		$this->vista("paisesAltaVista", $datos);
+  	public function borrar($id="",$pag=1) {
+	    //Leemos los datos del registro del id
+	    $data = $this->modelo->getId($id);
+    	//Vista baja
+	    $datos = [
+	      "titulo" => "Baja de un país",
+	      "subtitulo" => "Baja del país",
+	      "menu" => true,
+	      "admon" => "admon",
+	      "errores" => [],
+	      "activo" => 'paises',
+	      "pag" => $pag,
+	      "data" => $data,
+	      "baja" => true
+	    ];
+	    $this->vista("paisesAltaVista",$datos);
+	  }
+
+	public function bajaLogica($id='',$pag=1) {
+	   if (isset($id) && $id!="") {
+	     if ($this->modelo->bajaLogica($id)) {
+        	$this->mensaje(
+        		"Borrar el país", 
+        		"Borrar el país", 
+        		"Se borró correctamente el país.", 
+        		"paises/".$pag, 
+        		"success"
+        	);
+        } else {
+        	$this->mensaje(
+        		"Error al borrar el país", 
+        		"Error al borrar el país", 
+        		"Error al borrar el país.", 
+        		"paises/".$pag, 
+        		"danger"
+        	);
+        }
+	   }
 	}
 
-	public function bajaLogica($id="") {
-		if(isset($id) && $id != "") {
-			if($this->modelo->bajaLogica($id)) {
-				$this->mensaje(
-	          		"Borrar el país.", 
-	          		"Borrar el país.", 
-	          		"Se borro correctamente el país", 
-	          		"paises", 
-	          		"success"
-	          	);
-			}else {
-				$this->mensaje(
-	          		"Error al borrar el país.", 
-	          		"Error al borrar el país.", 
-	          		"Error al borrar el país.", 
-	          		"paises", 
-	          		"danger"
-	          	);
-			}
-		}
-	}
-
-	public function modificar($id) {
-		// leemos los datos de la tabla
+  	public function modificar($id,$pag) {
+		//Leemos los datos de la tabla
 		$data = $this->modelo->getPaisId($id);
+
 		$datos = [
-			"titulo" => "Modificar País",
-			"subtitulo" => "Modificar País",
+			"titulo" => "Modificar país",
+			"subtitulo" =>"Modificar país",
 			"menu" => true,
+			"pag" => $pag,
 			"admon" => "admon",
 			"activo" => "paises",
 			"data" => $data
 		];
-		$this->vista("paisesAltaVista", $datos);
+		$this->vista("paisesAltaVista",$datos);
 	}
-
 }
