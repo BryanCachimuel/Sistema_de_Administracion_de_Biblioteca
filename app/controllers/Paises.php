@@ -13,24 +13,26 @@ class Paises extends Controlador
 		$this->modelo = $this->modelo("PaisesModelo");
 	}
 
-	public function caratula($pagina=1)
-	{
-		// para la paginación
+	public function caratula($pagina=1) {
 		$num = $this->modelo->getNumRegistros();
 		$inicio = ($pagina-1)*TAMANO_PAGINA;
 		$totalPaginas = ceil($num/TAMANO_PAGINA);
-		$data = $this->modelo->getTabla($inicio,TAMANO_PAGINA);
-
-		$data = $this->modelo->getTabla();
+		$data = $this->modelo->getTabla($inicio,TAMANO_PAGINA);	
 		$datos = [
-			"titulo" => "Paises",
-			"subtitulo" => "Paises",
+			"titulo" => "Países",
+			"subtitulo" => "Países",
 			"activo" => "paises",
 			"menu" => true,
+			"pag" => [
+				"totalPaginas" => $totalPaginas,
+				"regresar" => "paises",
+				"pagina" => $pagina
+			],
 			"data" => $data
 		];
-		$this->vista("paisesCaratulaVista", $datos);
+		$this->vista("paisesCaratulaVista",$datos);
 	}
+
 
 	public function alta() {
 	   //Definir los arreglos
