@@ -7,6 +7,10 @@ define("LLAVE1","Hombresneciosque");
 define("LLAVE2","acusaisalamujer");
 define("CLAVE","clavesecretamaxima");
 
+// paginanción
+define("TAMANO_PAGINA",6);
+define("PAGINAS_MAXIMAS",4);
+
 //
 define('ADMON',1);
 define('PROFESOR',2);
