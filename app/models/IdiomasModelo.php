@@ -21,10 +21,8 @@ class IdiomasModelo extends Llaves{
     }
 
     public function bajaLogica($id) {
-        $salida = true;
         $sql = "UPDATE idiomas SET baja=1, baja_dt=(NOW()) WHERE id=".$id;
-        $salida = $this->db->queryNoSelect($sql);
-        return $salida;
+        return $this->db->queryNoSelect($sql);
     }
 
     public function getIdiomaId($id='') {
