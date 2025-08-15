@@ -40,12 +40,16 @@ class Categorias extends Controlador {
 	    if ($_SERVER['REQUEST_METHOD']=="POST") {
 
 	      $id = $_POST['id'] ?? "";
-	      $idioma = Helper::cadena($_POST['idioma'] ?? "");
+          $clave = Helper::cadena($_POST['clave'] ?? "");
+	      $categoria = Helper::cadena($_POST['categoria'] ?? "");
 	      $pag = $_POST['pag'] ?? "1";
 
 	      // Validamos la información
-	      if(empty($idioma)){
-	        array_push($errores,"El idioma es requerido.");
+	      if($clave==""){
+	        array_push($errores,"La clave es requerida.");
+	      }
+          if(empty($categoria)){
+	        array_push($errores,"La categoria es requerida.");
 	      }
 
 	      if (empty($errores)) { 
@@ -53,25 +57,26 @@ class Categorias extends Controlador {
 			//
 			$data = [
 			 "id" => $id,
-			 "idioma"=>$idioma
+			 "clave"=>$clave,
+             "categoria"=>$categoria
 			];      
 	        //Enviamos al modelo
 	        if(trim($id)===""){
 	          //Alta
 	          if ($this->modelo->alta($data)) {
 	            $this->mensaje(
-	          		"Alta de un idioma", 
-	          		"Alta de un idioma", 
-	          		"Se añadió correctamente el idioma: ".$idioma, 
-	          		"idiomas/".$pag, 
+	          		"Alta de una categoría", 
+	          		"Alta de una categoría", 
+	          		"Se añadió correctamente la categoría: ".$categoria, 
+	          		"categorias/".$pag, 
 	          		"success"
 	          	);
 	          } else {
 	          	$this->mensaje(
-	          		"Error al añadir un idioma.", 
-	          		"Error al añadir un idioma.", 
-	          		"Error al modificar el idioma: ".$idioma, 
-	          		"idiomas/".$pag, 
+	          		"Error al añadir una categoría.", 
+	          		"Error al añadir una categoría.", 
+	          		"Error al modificar la categoría: ".$categoria, 
+	          		"categorias/".$pag, 
 	          		"danger"
 	          	);
 	          }
@@ -100,16 +105,16 @@ class Categorias extends Controlador {
 	    if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST" ){
 	    	//Vista Alta
 		    $datos = [
-		      "titulo" => "Alta de un idioma",
-		      "subtitulo" => "Alta de un idioma",
-		      "activo" => "idiomas",
+		      "titulo" => "Alta de una categoría",
+		      "subtitulo" => "Alta de una categoría",
+		      "activo" => "categorias",
 		      "menu" => true,
 		      "admon" => "admon",
 		      "pag" => $pag,
 		      "errores" => $errores,
 		      "data" => []
 		    ];
-		    $this->vista("idiomasAltaVista",$datos);
+		    $this->vista("categoriasAltaVista",$datos);
 	    }
   	}
 
