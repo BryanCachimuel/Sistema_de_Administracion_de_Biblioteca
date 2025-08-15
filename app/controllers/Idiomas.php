@@ -122,6 +122,19 @@ class Idiomas extends Controlador {
 	}
 
   	public function modificar($id,$pag) {
-		
+		//Leemos los datos de la tabla
+		$data = $this->modelo->getIdiomaId($id);
+
+		$datos = [
+			"titulo" => "Modificar idioma",
+			"subtitulo" =>"Modificar idioma",
+			"menu" => true,
+			"idiomas/" => $pag,
+			"admon" => "admon",
+			"pag" => $pag,
+			"activo" => "idiomas",
+			"data" => $data
+		];
+		$this->vista("idiomasAltaVista",$datos);
 	}
 }
