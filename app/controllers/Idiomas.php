@@ -114,11 +114,43 @@ class Idiomas extends Controlador {
   	}
 
   	public function borrar($id="",$pag=1) {
-	  
+	  //Leemos los datos del registro del id
+	    $data = $this->modelo->getIdiomaId($id);
+    	//Vista baja
+	    $datos = [
+	      "titulo" => "Baja de un idioma",
+	      "subtitulo" => "Baja del idioma",
+	      "menu" => true,
+	      "admon" => "admon",
+	      "errores" => [],
+	      "activo" => 'idiomas',
+	      "pag" => $pag,
+	      "data" => $data,
+	      "baja" => true
+	    ];
+	    $this->vista("idiomasAltaVista",$datos);
 	}
 
 	public function bajaLogica($id='',$pag=1) {
-	  
+	   if (isset($id) && $id!="") {
+	     if ($this->modelo->bajaLogica($id)) {
+        	$this->mensaje(
+        		"Borrar el idioma", 
+        		"Borrar el idioma", 
+        		"Se borró correctamente el idioma.", 
+        		"idiomas/".$pag, 
+        		"success"
+        	);
+        } else {
+        	$this->mensaje(
+        		"Error al borrar el idioma", 
+        		"Error al borrar el idioma", 
+        		"Error al borrar el idioma.", 
+        		"idiomas/".$pag, 
+        		"danger"
+        	);
+        }
+	   }
 	}
 
   	public function modificar($id,$pag) {
