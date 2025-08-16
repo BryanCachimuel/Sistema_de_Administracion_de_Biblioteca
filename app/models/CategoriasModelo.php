@@ -41,7 +41,8 @@ class CategoriasModelo extends Llaves{
     public function getTabla($inicio=1, $tamano=0) {
         $sql = "SELECT id,clave,categoria ";
         $sql .= "FROM categorias ";
-        $sql .= "WHERE baja=0";
+        $sql .= "WHERE baja=0 ";
+        $sql .= "ORDER BY clave";
         if($tamano>0) {
             $sql .= " LIMIT ".$inicio.", ".$tamano;
         }
@@ -53,6 +54,7 @@ class CategoriasModelo extends Llaves{
         if(!empty($data["id"])) {
             $sql = "UPDATE categorias SET ";
             $sql .= "categoria='".$data['categoria']."', ";
+            $sql .= "clave='".$data['clave']."', ";
             $sql .= "modifica_dt=(NOW()) ";
             $sql .= "WHERE id=".$data['id'];
             // envio hacia la base de datos
