@@ -3,6 +3,11 @@
   <form action="<?php print RUTA; ?>categorias/alta/" method="POST">
 
     <div class="form-group text-left">
+      <label for="clave">* Clave:</label>
+      <input type="text" name="clave" id="clave" class="form-control" required value="<?php print isset($datos['data']['clave'])?$datos['data']['clave']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
+    </div>
+
+     <div class="form-group text-left">
       <label for="categoria">* Categoria:</label>
       <input type="text" name="categoria" id="categoria" class="form-control" required value="<?php print isset($datos['data']['categoria'])?$datos['data']['categoria']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
     </div>
