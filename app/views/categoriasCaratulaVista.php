@@ -5,6 +5,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Clave</th>
                 <th>Categoría</th>
                 <th>Modificar</th>
                 <th>Borrar</th>
@@ -15,7 +16,8 @@
                 for($i=0; $i<count($datos['data']); $i++){
                 print "<tr>";
                 print "<td class='text-left'>".$datos["data"][$i]['id']."</td>";
-                print "<td class='text-left'>".$datos["data"][$i]['idioma']."</td>";
+                print "<td class='text-left'>".$datos["data"][$i]['clave']."</td>";
+                print "<td class='text-left'>".$datos["data"][$i]['categoria']."</td>";
                 print "<td><a href='".RUTA."categorias/modificar/".$datos["data"][$i]["id"]."/".$datos["pag"]["pagina"]."' class='btn btn-info'>Modificar</a></td>";
                 print "<td><a href='".RUTA."categorias/borrar/".$datos["data"][$i]["id"]."/".$datos["pag"]["pagina"]."' class='btn btn-danger'>Borrar</a></td>";
                 print "</tr>";
