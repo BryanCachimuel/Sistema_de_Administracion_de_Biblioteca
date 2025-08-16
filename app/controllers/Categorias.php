@@ -84,18 +84,18 @@ class Categorias extends Controlador {
 	          //Modificar
 	          if ($this->modelo->modificar($data)) {
 	            $this->mensaje(
-	          		"Modificar el idioma", 
-	          		"Modificar el idioma", 
-	          		"Se modificó correctamente el idioma: ".$idioma,
-	          		"idiomas/".$pag, 
+	          		"Modificar la categoría", 
+	          		"Modificar la categoría", 
+	          		"Se modificó correctamente la categoría: ".$categoria,
+	          		"categorias/".$pag, 
 	          		"success"
 	          	);
 	          } else {
 	          	$this->mensaje(
-	          		"Error al modificar el idioma.", 
-	          		"Error al modificar el idioma.", 
-	          		"Error al modificar el idioma: ".$idioma, 
-	          		"idiomas/".$pag, 
+	          		"Error al modificar la categoría.", 
+	          		"Error al modificar la categoría.", 
+	          		"Error al modificar la categoría: ".$categoria, 
+	          		"categorias/".$pag, 
 	          		"danger"
 	          	);
 	          }
@@ -158,20 +158,19 @@ class Categorias extends Controlador {
 	   }
 	}
 
-  	public function modificar($id,$pag) {
+  	public function modificar($id,$pag=1) {
 		//Leemos los datos de la tabla
-		$data = $this->modelo->getIdiomaId($id);
+		$data = $this->modelo->getCategoriaId($id);
 
 		$datos = [
-			"titulo" => "Modificar idioma",
-			"subtitulo" =>"Modificar idioma",
+			"titulo" => "Modificar categoría",
+			"subtitulo" =>"Modificar categoría",
 			"menu" => true, 
-			"idiomas/" => $pag,
 			"admon" => "admon",
 			"pag" => $pag,
-			"activo" => "idiomas",
+			"activo" => "categorias",
 			"data" => $data
 		];
-		$this->vista("idiomasAltaVista",$datos);
+		$this->vista("categoriasAltaVista",$datos);
 	}
 }
