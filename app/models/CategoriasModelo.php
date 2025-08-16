@@ -10,12 +10,13 @@ class CategoriasModelo extends Llaves{
 
     public function alta($data='') {
        $sql = "INSERT INTO categorias VALUES(0,"; //1. id 
-	   $sql.= "'".$data['categoria']."', "; //2. país
+	   $sql.= "'".$data['categoria']."', "; //2. categoria
+       $sql.= "'".$data['clave']."', "; //3. clave
 	   //
-	   $sql.= "0, ";                   //3. baja
-	   $sql.= "NOW(), ";               //4. fecha alta
-	   $sql.= "'', ";                  //. fecha baja 
-	   $sql.= "'')";                   //8. fecha cambio
+	   $sql.= "0, ";                   //4. baja
+	   $sql.= "NOW(), ";               //5. fecha alta
+	   $sql.= "'', ";                  //6. fecha baja 
+	   $sql.= "'')";                   //7. fecha cambio
 	   return $this->db->queryNoSelect($sql);
 
     }
@@ -38,7 +39,7 @@ class CategoriasModelo extends Llaves{
     }
 
     public function getTabla($inicio=1, $tamano=0) {
-        $sql = "SELECT id,categoria ";
+        $sql = "SELECT id,clave,categoria ";
         $sql .= "FROM categorias ";
         $sql .= "WHERE baja=0";
         if($tamano>0) {
