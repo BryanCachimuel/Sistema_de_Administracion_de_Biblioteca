@@ -10,8 +10,8 @@ class TemasModelo extends Llaves{
 
     public function alta($data='') {
        $sql = "INSERT INTO temas VALUES(0,"; //1. id 
-	   $sql.= "'".$data['categoria']."', "; //2. categoria
-       $sql.= "'".$data['clave']."', "; //3. clave
+	   $sql.= "'".$data['idCategoria']."', "; //2. categoria
+       $sql.= "'".$data['tema']."', "; //3. clave
 	   //
 	   $sql.= "0, ";                   //4. baja
 	   $sql.= "NOW(), ";               //5. fecha alta
@@ -50,7 +50,7 @@ class TemasModelo extends Llaves{
         $sql .= "FROM temas as t, categorias as c ";
         $sql .= "WHERE t.baja=0 AND ";
         $sql .= "t.idCategoria=c.id ";
-        $sql .= "ORDER BY c.clave";
+        $sql .= "ORDER BY c.clave, t.tema";
         if($tamano>0) {
             $sql .= " LIMIT ".$inicio.", ".$tamano;
         }
