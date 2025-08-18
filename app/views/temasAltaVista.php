@@ -16,7 +16,7 @@
               if(isset($datos["data"]["idCategoria"]) && $datos["data"]["idCategoria"]==$datos["categorias"][$i]["id"]){
                 print " selected ";
               }
-            print ">".$datos["categorias"][$i]["clave"]." ".$datos["categorias"][$i]["categoria"]."</option>";
+            print ">".$datos["categorias"][$i]["clave"].": ".$datos["categorias"][$i]["categoria"]."</option>";
           } 
 
         ?>
