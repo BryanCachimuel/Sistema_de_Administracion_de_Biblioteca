@@ -121,11 +121,45 @@ class Temas extends Controlador {
   	}
 
   	public function borrar($id="",$pag=1) {
-
+		//Leemos los datos del registro del id
+	    $data = $this->modelo->getTemasId($id);
+		$categorias = $this->modelo->getCategorias();
+    	//Vista baja
+	    $datos = [
+	      "titulo" => "Baja de un tema",
+	      "subtitulo" => "Baja de un tema",
+	      "menu" => true,
+	      "admon" => "admon",
+	      "errores" => [],
+	      "activo" => 'temas',
+	      "pag" => $pag,
+		  "categorias" => $categorias,
+	      "data" => $data,
+	      "baja" => true
+	    ];
+	    $this->vista("temasAltaVista",$datos);
 	}
 
 	public function bajaLogica($id='',$pag=1) {
-	   
+	   if (isset($id) && $id!="") {
+	     if ($this->modelo->bajaLogica($id)) {
+        	$this->mensaje(
+        		"Borrar un tema", 
+        		"Borrar un tema", 
+        		"Se borró correctamente el tema.", 
+        		"temas/".$pag, 
+        		"success"
+        	);
+        } else {
+        	$this->mensaje(
+        		"Error al borrar un tema", 
+        		"Error al borrar un tema", 
+        		"Error al borrar un tema.", 
+        		"temas/".$pag, 
+        		"danger"
+        	);
+        }
+	   }
 	}
 
   	public function modificar($id,$pag=1) {
