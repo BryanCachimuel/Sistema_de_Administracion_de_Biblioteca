@@ -38,6 +38,13 @@ class TemasModelo extends Llaves{
         return $salida["COUNT(*)"];
     }
 
+    public function getCategorias() {
+        $sql = "SELECT id, clave, categoria ";
+        $sql .= "FROM categorias WHERE baja=0 ";
+        $sql .= "ORDER BY clave, categoria";
+        return $this->db->querySelect($sql);
+    }
+
     public function getTabla($inicio=1, $tamano=0) {
         $sql = "SELECT t.id, c.categoria, t.tema ";
         $sql .= "FROM temas as t, categorias as c ";
