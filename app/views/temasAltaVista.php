@@ -2,15 +2,32 @@
 
   <form action="<?php print RUTA; ?>temas/alta/" method="POST">
 
+  <div class="form-group text-left">
+    <label for="idCategoria">* Categoria:</label>
+    <select class="form-control" name="idCategoria" id="idCategoria" 
+        <?php if(isset($datos["baja"])) {
+            print "disabled";
+        } ?>
+        >
+        <option value="void">---Selecciona una categoría---</option>
+        <?php
+            for ($i=0; $i < count($datos["categorias"]); $i++) { 
+            print "<option value='".$datos["categorias"][$i]["id"]."'";
+              if(isset($datos["data"]["idCategoria"]) && $datos["data"]["idCategoria"]==$datos["categorias"][$i]["id"]){
+                print " selected ";
+              }
+            print ">".$datos["categorias"][$i]["clave"]." ".$datos["categorias"][$i]["categoria"]."</option>";
+          } 
+
+        ?>
+    </select>
+  </div>
+
     <div class="form-group text-left">
-      <label for="clave">* Clave:</label>
-      <input type="text" name="clave" id="clave" class="form-control" required value="<?php print isset($datos['data']['clave'])?$datos['data']['clave']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
+      <label for="tema">* Nombre del Tema:</label>
+      <input type="text" name="tema" id="tema" class="form-control" required value="<?php print isset($datos['data']['tema'])?$datos['data']['tema']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
     </div>
 
-     <div class="form-group text-left">
-      <label for="categoria">* Categoria:</label>
-      <input type="text" name="categoria" id="categoria" class="form-control" required value="<?php print isset($datos['data']['categoria'])?$datos['data']['categoria']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
-    </div>
 
     <div class="form-group text-left mt-3">
       <input type="hidden" name="id" id="id" value="<?php if (isset($datos['data']['id'])) { print $datos['data']['id']; } else { print ""; } ?>">
