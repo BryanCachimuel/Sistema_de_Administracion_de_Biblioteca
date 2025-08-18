@@ -59,25 +59,24 @@ class Temas extends Controlador {
 			 "id" => $id,
 			 "idCategoria"=>$idCategoria,
              "tema"=>$tema
-			];   
-			Helper::mostrar($data);   
+			];    
 	        //Enviamos al modelo
 	        if(trim($id)===""){
 	          //Alta
 	          if ($this->modelo->alta($data)) {
 	            $this->mensaje(
-	          		"Alta de una categoría", 
-	          		"Alta de una categoría", 
-	          		"Se añadió correctamente la categoría: ".$categoria, 
-	          		"categorias/".$pag, 
+	          		"Alta de un tema", 
+	          		"Alta de un tema", 
+	          		"Se añadió correctamente el tema: ".$tema, 
+	          		"temas/".$pag, 
 	          		"success"
 	          	);
 	          } else {
 	          	$this->mensaje(
-	          		"Error al añadir una categoría.", 
-	          		"Error al añadir una categoría.", 
-	          		"Error al modificar la categoría: ".$categoria, 
-	          		"categorias/".$pag, 
+	          		"Error al añadir el tema.", 
+	          		"Error al añadir el tema.", 
+	          		"Error al modificar el tema: ".$tema, 
+	          		"temas/".$pag, 
 	          		"danger"
 	          	);
 	          }
