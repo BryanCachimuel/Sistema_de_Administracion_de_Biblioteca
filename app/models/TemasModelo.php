@@ -61,8 +61,8 @@ class TemasModelo extends Llaves{
         $salida = false;
         if(!empty($data["id"])) {
             $sql = "UPDATE temas SET ";
-            $sql .= "categoria='".$data['categoria']."', ";
-            $sql .= "clave='".$data['clave']."', ";
+            $sql .= "idCategoria='".$data['idCategoria']."', ";
+            $sql .= "tema='".$data['tema']."', ";
             $sql .= "modifica_dt=(NOW()) ";
             $sql .= "WHERE id=".$data['id'];
             // envio hacia la base de datos
