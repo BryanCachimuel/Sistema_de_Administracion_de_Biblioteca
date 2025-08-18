@@ -84,18 +84,18 @@ class Temas extends Controlador {
 	          //Modificar
 	          if ($this->modelo->modificar($data)) {
 	            $this->mensaje(
-	          		"Modificar la categoría", 
-	          		"Modificar la categoría", 
-	          		"Se modificó correctamente la categoría: ".$categoria,
-	          		"categorias/".$pag, 
+	          		"Modificar un tema", 
+	          		"Modificar un tema", 
+	          		"Se modificó correctamente el tema: ".$tema,
+	          		"temas/".$pag, 
 	          		"success"
 	          	);
 	          } else {
 	          	$this->mensaje(
-	          		"Error al modificar la categoría.", 
-	          		"Error al modificar la categoría.", 
-	          		"Error al modificar la categoría: ".$categoria, 
-	          		"categorias/".$pag, 
+	          		"Error al modificar un tema.", 
+	          		"Error al modificar un tema.", 
+	          		"Error al modificar el tema: ".$tema, 
+	          		"temas/".$pag, 
 	          		"danger"
 	          	);
 	          }
@@ -129,6 +129,19 @@ class Temas extends Controlador {
 	}
 
   	public function modificar($id,$pag=1) {
-		
+		//Leemos los datos de la tabla
+		$data = $this->modelo->getTemasId($id);
+		$categorias = $this->modelo->getCategorias();
+		$datos = [
+			"titulo" => "Modificar un tema",
+			"subtitulo" =>"Modificar un tema",
+			"menu" => true, 
+			"admon" => "admon",
+			"pag" => $pag,
+			"categorias" => $categorias,
+			"activo" => "temas",
+			"data" => $data
+		];
+		$this->vista("temasAltaVista",$datos);
 	}
 }
