@@ -26,7 +26,7 @@
         </tbody>
     </table>
     <?php include("paginacion.php"); ?>
-    <a href="<?php print RUTA; ?>tema/alta" class="btn btn-success">Dar de alta un tema</a>
+    <a href="<?php print RUTA; ?>temas/alta" class="btn btn-success">Dar de alta un tema</a>
 </div>
 
 <?php include("piePagina.php"); ?>
