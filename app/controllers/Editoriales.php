@@ -40,16 +40,17 @@ class Editoriales extends Controlador {
 	    if ($_SERVER['REQUEST_METHOD']=="POST") {
 
 	      $id = $_POST['id'] ?? "";
-          $idCategoria = Helper::cadena($_POST['idCategoria'] ?? "");
-	      $tema = Helper::cadena($_POST['tema'] ?? "");
+          $idPais = Helper::cadena($_POST['idPais'] ?? "");
+	      $editorial = Helper::cadena($_POST['editorial'] ?? "");
+          $pagina = Helper::cadena($_POST['pagina'] ?? "");
 	      $pag = $_POST['pag'] ?? "1";
 
 	      // Validamos la información
-	      if($idCategoria=="void"){
-	        array_push($errores,"La categoria es requerida.");
+	      if($idPais=="void"){
+	        array_push($errores,"El país es requerido.");
 	      }
-          if(empty($tema)){
-	        array_push($errores,"El tema es requerido.");
+          if(empty($editorial)){
+	        array_push($errores,"La editorial es requerida.");
 	      }
 
 	      if (empty($errores)) { 
@@ -57,9 +58,11 @@ class Editoriales extends Controlador {
 			//
 			$data = [
 			 "id" => $id,
-			 "idCategoria"=>$idCategoria,
-             "tema"=>$tema
-			];    
+			 "idPais"=>$idPais,
+             "editorial"=>$editorial,
+             "pagina"=>$pagina
+			];   
+            Helper::mostrar($data); 
 	        //Enviamos al modelo
 	        if(trim($id)===""){
 	          //Alta
@@ -104,19 +107,19 @@ class Editoriales extends Controlador {
 	    } 
 	    if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST" ){
 	    	//Vista Alta
-			$categorias = $this->modelo->getCategorias();
+			$paises = $this->modelo->getPaises();
 		    $datos = [
-		      "titulo" => "Alta de un tema",
-		      "subtitulo" => "Alta de un tema",
-		      "activo" => "temas",
+		      "titulo" => "Alta de una editorial",
+		      "subtitulo" => "Alta de una editorial",
+		      "activo" => "editoriales",
 		      "menu" => true,
 		      "admon" => "admon",
-			  "categorias" => $categorias,
+			  "paises" => $paises,
 		      "pag" => $pag,
 		      "errores" => $errores,
 		      "data" => []
 		    ];
-		    $this->vista("temasAltaVista",$datos);
+		    $this->vista("editorialesAltaVista",$datos);
 	    }
   	}
 
