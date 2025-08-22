@@ -69,7 +69,18 @@ class EditorialesModelo extends Llaves
 
 	public function modificar($data)
 	{
-	
+		$salida = false;
+	    if (!empty($data["id"])) {
+	     $sql = "UPDATE editoriales SET "; 
+	     $sql.= "idPais='".$data['idPais']."', ";
+	     $sql.= "editorial='".$data['editorial']."', ";
+	     $sql.= "pagina='".$data['pagina']."', ";
+	     $sql.= "modifica_dt=(NOW()) ";
+	     $sql.= "WHERE id=".$data['id'];
+	     //Enviamos a la base de datos
+	     $salida = $this->db->queryNoSelect($sql);
+	    }
+	    return $salida;
 	}
 
 }
