@@ -15,8 +15,7 @@ class Editoriales extends Controlador
 		$this->modelo = $this->modelo("EditorialesModelo");
 	}
 
-	public function caratula($pagina=1)
-	{
+	public function caratula($pagina=1) {
 		$num = $this->modelo->getNumRegistros();
 		$inicio = ($pagina-1)*TAMANO_PAGINA;
 		$totalPaginas = ceil($num/TAMANO_PAGINA);
@@ -129,7 +128,7 @@ class Editoriales extends Controlador
 	    }
   	}
 
-  	public function borrar($id="",$pag=1){
+  	public function borrar($id="",$pag=1) {
 	    //Leemos los datos del registro del id
 	    $data = $this->modelo->getId($id);
 	    $categorias = $this->modelo->getCategorias();
@@ -149,7 +148,7 @@ class Editoriales extends Controlador
 	    $this->vista("temasAltaVista",$datos);
 	  }
 
-	public function bajaLogica($id='',$pag=1){
+	public function bajaLogica($id='',$pag=1) {
 	   if (isset($id) && $id!="") {
 	     if ($this->modelo->bajaLogica($id)) {
         	$this->mensaje(
@@ -171,9 +170,21 @@ class Editoriales extends Controlador
 	   }
 	}
 
-  	public function modificar($id,$pag=1)
-	{
-		
+  	public function modificar($id,$pag=1) {
+		//Leemos los datos de la tabla
+		$data = $this->modelo->getId($id);
+		$paises = $this->modelo->getPaises();
+		$datos = [
+			"titulo" => "Modificar una editorial",
+			"subtitulo" =>"Modificar una editorial",
+			"menu" => true,
+			"admon" => "admon",
+			"pag" => $pag,
+			"paises" => $paises,
+			"activo" => "editoriales",
+			"data" => $data
+		];
+		$this->vista("editorialesAltaVista",$datos);
 	}
 }
 ?>
