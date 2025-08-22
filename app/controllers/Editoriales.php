@@ -1,9 +1,13 @@
-<?php
-
-class Editoriales extends Controlador {
+<?php  
+/**
+ * 
+ */
+class Editoriales extends Controlador
+{
 	private $modelo = "";
 	
-	function __construct() {
+	function __construct()
+	{
 		$this->sesion = new Sesion();
 		if ($this->sesion->getLogin()) {
 			$this->sesion->finalizarLogin();
@@ -11,7 +15,8 @@ class Editoriales extends Controlador {
 		$this->modelo = $this->modelo("EditorialesModelo");
 	}
 
-	public function caratula($pagina=1) {
+	public function caratula($pagina=1)
+	{
 		$num = $this->modelo->getNumRegistros();
 		$inicio = ($pagina-1)*TAMANO_PAGINA;
 		$totalPaginas = ceil($num/TAMANO_PAGINA);
@@ -31,55 +36,56 @@ class Editoriales extends Controlador {
 		$this->vista("editorialesCaratulaVista",$datos);
 	}
 
-	public function alta() {
-		//Definir los arreglos
+	public function alta(){
+	   //Definir los arreglos
 	    $data = [];
 	    $errores = array();
 	    $pag = 1;
-		 //Recibimos la información de la vista
+
+	    //Recibimos la información de la vista
 	    if ($_SERVER['REQUEST_METHOD']=="POST") {
-
+	      //
 	      $id = $_POST['id'] ?? "";
-          $idPais = Helper::cadena($_POST['idPais'] ?? "");
-	      $editorial = Helper::cadena($_POST['editorial'] ?? "");
-          $pagina = Helper::cadena($_POST['pagina'] ?? "");
+		  $editorial = Helper::cadena($_POST['editorial'] ?? "");
+	      $idPais = Helper::cadena($_POST['idPais'] ?? "");
+	      $pagina = Helper::cadena($_POST['pagina'] ?? "");
 	      $pag = $_POST['pag'] ?? "1";
-
+	      //
 	      // Validamos la información
+	      // 
 	      if($idPais=="void"){
 	        array_push($errores,"El país es requerido.");
 	      }
-          if(empty($editorial)){
-	        array_push($errores,"La editorial es requerida.");
+	      if(empty($editorial)){
+	        array_push($errores,"El nombre de la editorial es requerido.");
 	      }
-
 	      if (empty($errores)) { 
 			// Crear arreglo de datos
 			//
 			$data = [
 			 "id" => $id,
+			 "editorial"=>$editorial,
 			 "idPais"=>$idPais,
-             "editorial"=>$editorial,
-             "pagina"=>$pagina
-			];   
-            Helper::mostrar($data); 
+			 "pagina" => $pagina,
+			 "estado" => 0
+			];
 	        //Enviamos al modelo
 	        if(trim($id)===""){
 	          //Alta
 	          if ($this->modelo->alta($data)) {
 	            $this->mensaje(
-	          		"Alta de un tema", 
-	          		"Alta de un tema", 
-	          		"Se añadió correctamente el tema: ".$tema, 
-	          		"temas/".$pag, 
+	          		"Alta de una editorial", 
+	          		"Alta de una editorial", 
+	          		"Se añadió correctamente la editorial: ".$editorial, 
+	          		"editoriales/".$pag, 
 	          		"success"
 	          	);
 	          } else {
 	          	$this->mensaje(
-	          		"Error al añadir el tema.", 
-	          		"Error al añadir el tema.", 
-	          		"Error al modificar el tema: ".$tema, 
-	          		"temas/".$pag, 
+	          		"Error al añadir una editorial.", 
+	          		"Error al añadir una editorial.", 
+	          		"Error al modificar una editorial: ".$editorial, 
+	          		"editoriales/".$pag, 
 	          		"danger"
 	          	);
 	          }
@@ -87,18 +93,18 @@ class Editoriales extends Controlador {
 	          //Modificar
 	          if ($this->modelo->modificar($data)) {
 	            $this->mensaje(
-	          		"Modificar un tema", 
-	          		"Modificar un tema", 
-	          		"Se modificó correctamente el tema: ".$tema,
-	          		"temas/".$pag, 
+	          		"Modificar una editorial", 
+	          		"Modificar una editorial", 
+	          		"Se modificó correctamente la editorial: ".$editorial,
+	          		"editoriales/".$pag, 
 	          		"success"
 	          	);
 	          } else {
 	          	$this->mensaje(
-	          		"Error al modificar un tema.", 
-	          		"Error al modificar un tema.", 
-	          		"Error al modificar el tema: ".$tema, 
-	          		"temas/".$pag, 
+	          		"Error al modificar una editorial.", 
+	          		"Error al modificar una editorial.", 
+	          		"Error al modificar una editorial: ".$editorial, 
+	          		"editoriales/".$pag, 
 	          		"danger"
 	          	);
 	          }
@@ -107,14 +113,14 @@ class Editoriales extends Controlador {
 	    } 
 	    if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST" ){
 	    	//Vista Alta
-			$paises = $this->modelo->getPaises();
+	    	$paises = $this->modelo->getPaises();
 		    $datos = [
 		      "titulo" => "Alta de una editorial",
 		      "subtitulo" => "Alta de una editorial",
 		      "activo" => "editoriales",
 		      "menu" => true,
 		      "admon" => "admon",
-			  "paises" => $paises,
+		      "paises" => $paises,
 		      "pag" => $pag,
 		      "errores" => $errores,
 		      "data" => []
@@ -123,10 +129,10 @@ class Editoriales extends Controlador {
 	    }
   	}
 
-  	public function borrar($id="",$pag=1) {
-		//Leemos los datos del registro del id
-	    $data = $this->modelo->getTemasId($id);
-		$categorias = $this->modelo->getCategorias();
+  	public function borrar($id="",$pag=1){
+	    //Leemos los datos del registro del id
+	    $data = $this->modelo->getId($id);
+	    $categorias = $this->modelo->getCategorias();
     	//Vista baja
 	    $datos = [
 	      "titulo" => "Baja de un tema",
@@ -134,16 +140,16 @@ class Editoriales extends Controlador {
 	      "menu" => true,
 	      "admon" => "admon",
 	      "errores" => [],
-	      "activo" => 'temas',
 	      "pag" => $pag,
-		  "categorias" => $categorias,
+	      "categorias" => $categorias,
+	      "activo" => 'temas',
 	      "data" => $data,
 	      "baja" => true
 	    ];
 	    $this->vista("temasAltaVista",$datos);
-	}
+	  }
 
-	public function bajaLogica($id='',$pag=1) {
+	public function bajaLogica($id='',$pag=1){
 	   if (isset($id) && $id!="") {
 	     if ($this->modelo->bajaLogica($id)) {
         	$this->mensaje(
@@ -165,20 +171,9 @@ class Editoriales extends Controlador {
 	   }
 	}
 
-  	public function modificar($id,$pag=1) {
-		//Leemos los datos de la tabla
-		$data = $this->modelo->getTemasId($id);
-		$categorias = $this->modelo->getCategorias();
-		$datos = [
-			"titulo" => "Modificar un tema",
-			"subtitulo" =>"Modificar un tema",
-			"menu" => true, 
-			"admon" => "admon",
-			"pag" => $pag,
-			"categorias" => $categorias,
-			"activo" => "temas",
-			"data" => $data
-		];
-		$this->vista("temasAltaVista",$datos);
+  	public function modificar($id,$pag=1)
+	{
+		
 	}
 }
+?>
