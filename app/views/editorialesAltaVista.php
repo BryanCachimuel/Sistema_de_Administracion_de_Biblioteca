@@ -29,7 +29,7 @@
     </div>
 
 
-    <div class="form-group text-left">
+    <div class="form-group text-left mb-4">
       <label for="pagina">Página web:</label>
       <input type="text" name="pagina" id="pagina" class="form-control" value="<?php print isset($datos['data']['pagina'])?$datos['data']['pagina']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?> placeholder="www.paginaweb.com">
     </div>
