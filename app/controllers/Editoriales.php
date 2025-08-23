@@ -130,40 +130,40 @@ class Editoriales extends Controlador
 
   	public function borrar($id="",$pag=1) {
 	    //Leemos los datos del registro del id
-	    $data = $this->modelo->getId($id);
-	    $categorias = $this->modelo->getCategorias();
+	    $data = $this->modelo->getEditorialId($id);
+	    $paises = $this->modelo->getPaises();
     	//Vista baja
 	    $datos = [
-	      "titulo" => "Baja de un tema",
-	      "subtitulo" => "Baja de un tema",
+	      "titulo" => "Baja de una editorial",
+	      "subtitulo" => "Baja de una editorial",
 	      "menu" => true,
 	      "admon" => "admon",
 	      "errores" => [],
 	      "pag" => $pag,
-	      "categorias" => $categorias,
-	      "activo" => 'temas',
+	      "paises" => $paises,
+	      "activo" => 'editoriales',
 	      "data" => $data,
 	      "baja" => true
 	    ];
-	    $this->vista("temasAltaVista",$datos);
+	    $this->vista("editorialesAltaVista",$datos);
 	  }
 
 	public function bajaLogica($id='',$pag=1) {
 	   if (isset($id) && $id!="") {
 	     if ($this->modelo->bajaLogica($id)) {
         	$this->mensaje(
-        		"Borrar un tema", 
-        		"Borrar un tema", 
-        		"Se borró correctamente el tema.", 
-        		"temas/".$pag, 
+        		"Borrar una editorial", 
+        		"Borrar una editorial", 
+        		"Se borró correctamente la editorial.", 
+        		"editoriales/".$pag, 
         		"success"
         	);
         } else {
         	$this->mensaje(
-        		"Error al borrar un tema", 
-        		"Error al borrar un tema", 
-        		"Error al borrar un tema.", 
-        		"temas/".$pag, 
+        		"Error al borrar una editorial", 
+        		"Error al borrar una editorial", 
+        		"Error al borrar una editorial.", 
+        		"editoriales/".$pag, 
         		"danger"
         	);
         }
@@ -172,7 +172,7 @@ class Editoriales extends Controlador
 
   	public function modificar($id,$pag=1) {
 		//Leemos los datos de la tabla
-		$data = $this->modelo->getId($id);
+		$data = $this->modelo->getEditorialId($id);
 		$paises = $this->modelo->getPaises();
 		$datos = [
 			"titulo" => "Modificar una editorial",
