@@ -31,7 +31,7 @@ class EditorialesModelo extends Llaves
 		return $this->db->queryNoSelect($sql);
 	}
 
-	public function getId($id='')
+	public function getEditorialId($id='')
 	{
 		if(empty($id)) return false;
 		$sql = "SELECT * FROM editoriales WHERE id='".$id."'";
