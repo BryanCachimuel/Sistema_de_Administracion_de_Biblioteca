@@ -49,16 +49,17 @@ class UsuariosModelo extends Llaves
 
 	public function getTabla($inicio=1, $tamano=0) {
 		$sql = "SELECT u.id, tu.tipoUsuario, eu.estado, ";
-		$sql.= "CONCAT(u.apellidoPaterno,' ',u.apellidoMaterno,', ',u.nombre) ";
-		$sql.= "FROM usuarios as u, tipousuarios as tu, estadosUsuario as eu ";
+		$sql.= "CONCAT(u.apellidoPaterno,' ',u.apellidoMaterno,', ',u.nombre) as nombre ";
+		$sql.= "FROM usuarios as u, tipousuarios as tu, estadosusuario as eu ";
 		$sql.= "WHERE u.baja=0 AND ";
 		$sql.= "u.idTipoUsuario=tu.id AND ";
-		$sql.= "u.estado=eu.id ";
+		$sql.= "u.estado=eu.id";
 		if ($tamano>0) {
 			$sql.= " LIMIT ".$inicio.", ".$tamano;
 		}
 		return $this->db->querySelect($sql);
 	}
+
 
 	public function modificar($data)
 	{
