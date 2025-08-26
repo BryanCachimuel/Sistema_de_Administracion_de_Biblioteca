@@ -8,12 +8,6 @@ class LoginModelo extends Llaves{
         $this->db = new MySQLdb();
     }
 
-    public function buscarCorreo($usuario='') {
-        if(empty($usuario)) return false;
-        $sql = "SELECT id, nombre, apellidoPaterno, apellidoMaterno, clave, correo FROM usuarios WHERE correo='".$usuario."'";
-        return $this->db->query($sql);
-    }
-
     public function enviarCorreo($email=''){
         $data = [];
         if($email == ""){
@@ -56,7 +50,6 @@ class LoginModelo extends Llaves{
 
 
     public function registrar($data){
-
 		if(empty($data)) return false;
         $sql = "INSERT INTO usuarios VALUES(0,"; //1. id 
         $sql.= "'".$data['idTipoUsuario']."', "; //2. tipo
