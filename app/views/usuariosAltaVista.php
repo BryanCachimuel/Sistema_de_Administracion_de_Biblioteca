@@ -1,5 +1,5 @@
 <?php include_once("encabezado.php"); ?>
-  <form action="<?php print RUTA; ?>usuarios/registrar/" method="POST">
+  <form action="<?php print RUTA; ?>usuarios/alta/" method="POST">
 
     <div class="form-group text-left">
       <label for="correo">* Correo (usuario):</label>
