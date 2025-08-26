@@ -13,4 +13,10 @@ class Llaves {
 	    $data = $this->db->querySelect($sql);
 	    return $data;
 	}
+
+	public function buscarCorreo($usuario='') {
+        if(empty($usuario)) return false;
+        $sql = "SELECT id, nombre, apellidoPaterno, apellidoMaterno, clave, correo FROM usuarios WHERE correo='".$usuario."'";
+        return $this->db->query($sql);
+    }
 }
