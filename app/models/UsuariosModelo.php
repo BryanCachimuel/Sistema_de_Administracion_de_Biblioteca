@@ -11,19 +11,26 @@ class UsuariosModelo extends Llaves
 		$this->db = new MySQLdb();
 	}
 
-	public function alta($data='')
-	{
-	   $sql = "INSERT INTO usuarios VALUES(0,"; //1. id 
-	   $sql.= "'".$data['editorial']."', "; //3. editorial
-	   $sql.= "'".$data['idPais']."', "; //2. país
-	   $sql.= "'".$data['pagina']."', "; //4. pagina web
-	   $sql.= "'".$data['estado']."', "; //5. estado
-	   //
-	   $sql.= "0, ";                   //6. baja
-	   $sql.= "NOW(), ";               //7. fecha alta
-	   $sql.= "'', ";                  //8. fecha baja 
-	   $sql.= "'')";                   //9. fecha cambio
-	   return $this->db->queryNoSelect($sql);
+	public function alta($data='') {
+	  if(empty($data)) return false;
+        $sql = "INSERT INTO usuarios VALUES(0,"; //1. id 
+        $sql.= "'".$data['idTipoUsuario']."', "; //2. tipo
+        $sql.= "'".$data['nombre']."', ";    	//3. nombre
+        $sql.= "'".$data['apellidoPaterno']."', "; //4. apellido paterno
+        $sql.= "'".$data['apellidoMaterno']."', "; //5. Apellido Materno	   
+        $sql.= "'".$data['correo']."', ";    	//6. correo
+        $sql.= "'".$data['clave']."', ";     	//7. clave de acceso
+        $sql.= "'".$data['genero']."', ";    	//8. genero
+        $sql.= "'".$data['telefono']."', ";    	//9. telefono
+        $sql.= "'".$data['fechaNacimiento']."', ";  //10. fecha nacimieto
+        $sql.= "'".$data['estado']."', ";    	//11. estado
+        //
+        $sql.= "'0', ";                          //12. baja lógica
+        $sql.= "'', ";                           //13. fecha login
+        $sql.= "NOW(),";                         //14. fecha alta-creado
+        $sql.= "'', ";                           //15. fecha baja
+        $sql.= "'')";                            //16. fecha modificado                        
+        return $this->db->queryNoSelect($sql);
 	}
 
 	public function bajaLogica($id){
