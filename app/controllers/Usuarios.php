@@ -32,7 +32,6 @@ class Usuarios extends Controlador
 			],
 			"data" => $data
 		];
-        Helper::mostrar($data);
 		$this->vista("usuariosCaratulaVista",$datos);
 	}
 
@@ -113,19 +112,23 @@ class Usuarios extends Controlador
 	    } 
 	    if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST" ){
 	    	//Vista Alta
-	    	$paises = $this->modelo->getPaises();
+	    	$tipoUsuarios = $this->modelo->getCatalogo("tipoUsuarios");
+			$estadosUsuario = $this->modelo->getCatalogo("estadosUsuario");
+			$genero = $this->modelo->getCatalogo("genero");
 		    $datos = [
-		      "titulo" => "Alta de una editorial",
-		      "subtitulo" => "Alta de una editorial",
-		      "activo" => "editoriales",
+		      "titulo" => "Alta de un usuario",
+		      "subtitulo" => "Alta de un usuario",
+		      "activo" => "usuarios",
 		      "menu" => true,
 		      "admon" => "admon",
-		      "paises" => $paises,
+		      "tipoUsuarios" => $tipoUsuarios,
+			  "estadosUsuario" => $estadosUsuario,
+			  "genero" => $genero,
 		      "pag" => $pag,
 		      "errores" => $errores,
 		      "data" => []
 		    ];
-		    $this->vista("editorialesAltaVista",$datos);
+		    $this->vista("usuariosAltaVista",$datos);
 	    }
   	}
 
