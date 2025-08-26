@@ -45,46 +45,76 @@ class Usuarios extends Controlador
 	    if ($_SERVER['REQUEST_METHOD']=="POST") {
 	      //
 	      $id = $_POST['id'] ?? "";
-		  $editorial = Helper::cadena($_POST['editorial'] ?? "");
-	      $idPais = Helper::cadena($_POST['idPais'] ?? "");
-	      $pagina = Helper::cadena($_POST['pagina'] ?? "");
 	      $pag = $_POST['pag'] ?? "1";
-	      //
-	      // Validamos la información
-	      // 
-	      if($idPais=="void"){
-	        array_push($errores,"El país es requerido.");
-	      }
-	      if(empty($editorial)){
-	        array_push($errores,"El nombre de la editorial es requerido.");
-	      }
+	      $idTipoUsuario = Helper::cadena($_POST['idTipoUsuario'] ?? "");
+		  $correo = Helper::cadena($_POST['correo'] ?? "");
+		  $nombre = Helper::cadena($_POST['nombre'] ?? "");
+		  $apellidoPaterno = Helper::cadena($_POST['apellidoPaterno'] ?? "");
+		  $apellidoMaterno = Helper::cadena($_POST['apellidoMaterno'] ?? "");
+		  $genero = Helper::cadena($_POST['genero'] ?? "");
+		  $telefono = Helper::cadena($_POST['telefono'] ?? "");
+		  $fechaNacimiento = Helper::cadena($_POST['fechaNacimiento'] ?? "");
+		  $estado = Helper::cadena($_POST['estado'] ?? "");
+
+			// validar la información
+			if (Helper::correo($correo) == false) {
+				array_push($errores, "El correo no tiene un formato correcto");
+			}
+			if (empty($correo)) {
+				array_push($errores, "El correo es requerido");
+			}
+			if ($this->modelo->buscarCorreo($correo)) {
+				array_push($errores, "El correo ya existe en la base de datos");
+			}
+
+			if (empty($nombre)) {
+				array_push($errores, "El nombre es requerido");
+			}
+
+			if (empty($apellidoPaterno)) {
+				array_push($errores, "El apellido paterno es requerido");
+			}
+
+			if (Helper::fecha($fechaNacimiento) == false) {
+				array_push($errores, "El formato de la fecha de nacimiento no es correcto");
+			}
+
+			if($genero == "void") {
+				array_push($errores, "El genero es requerido");
+			}
+
 	      if (empty($errores)) { 
 			// Crear arreglo de datos
-			//
+			$clave = Helper::generarClave(10);
 			$data = [
-			 "id" => $id,
-			 "editorial"=>$editorial,
-			 "idPais"=>$idPais,
-			 "pagina" => $pagina,
-			 "estado" => 0
+			 "idTipoUsuario" => $idTipoUsuario,
+			 "correo" => $correo,
+			 "nombre" => $nombre,
+			 "clave" => $clave,
+			 "apellidoPaterno" => $apellidoPaterno,
+			 "apellidoMaterno" => $apellidoMaterno,
+			 "genero" => $genero,
+			 "telefono" => $telefono,
+			 "fechaNacimiento" => $fechaNacimiento,
+			 "estado" => $estado
 			];
 	        //Enviamos al modelo
 	        if(trim($id)===""){
 	          //Alta
 	          if ($this->modelo->alta($data)) {
 	            $this->mensaje(
-	          		"Alta de una editorial", 
-	          		"Alta de una editorial", 
-	          		"Se añadió correctamente la editorial: ".$editorial, 
-	          		"editoriales/".$pag, 
+	          		"Alta de un usuario", 
+	          		"Alta de un usuario", 
+	          		"Se añadió correctamente el usuario: ".$correo, 
+	          		"usuarios/".$pag, 
 	          		"success"
 	          	);
 	          } else {
 	          	$this->mensaje(
-	          		"Error al añadir una editorial.", 
-	          		"Error al añadir una editorial.", 
-	          		"Error al modificar una editorial: ".$editorial, 
-	          		"editoriales/".$pag, 
+	          		"Error al añadir un usuario.", 
+	          		"Error al añadir un usuario.", 
+	          		"Error al modificar un usuario: ".$correo, 
+	          		"usuarios/".$pag, 
 	          		"danger"
 	          	);
 	          }
