@@ -3,25 +3,25 @@
 
     <div class="form-group text-left">
       <label for="correo">* Correo (usuario):</label>
-      <input type="email" name="correo" id="correo" class="form-control" required >
+      <input type="email" name="correo" id="correo" class="form-control" required value="<?php print isset($datos['data']['correo'])?$datos['data']['correo']:''; ?>">
     </div>
 
     <div class="form-group text-left">
       <label for="nombre">* Nombre(s):</label>
       <input type="text" name="nombre" id="nombre" class="form-control"
-      placeholder="Escribe el nombre del usuario." required >
+      placeholder="Escribe el nombre del usuario." required value="<?php print isset($datos['data']['nombre'])?$datos['data']['nombre']:''; ?>">
     </div>
 
     <div class="form-group text-left">
       <label for="apellidoPaterno">* Apellido paterno:</label>
       <input type="text" name="apellidoPaterno" id="apellidoPaterno" class="form-control"
-      placeholder="Escribe el apellido paterno del usuario." required >
+      placeholder="Escribe el apellido paterno del usuario." required value="<?php print isset($datos['data']['apellidoPaterno'])?$datos['data']['apellidoPaterno']:''; ?>">
     </div>
 
     <div class="form-group text-left">
       <label for="apellidoMaterno">Apellido materno:</label>
       <input type="text" name="apellidoMaterno" id="apellidoMaterno" class="form-control"
-      placeholder="Escribe el apellido paterno del usuario.">
+      placeholder="Escribe el apellido paterno del usuario." value="<?php print isset($datos['data']['apellidoMaterno'])?$datos['data']['apellidoMaterno']:''; ?>">
     </div>
 
     <div class="form-group text-left">
@@ -43,16 +43,16 @@
     <div class="form-group text-left">
       <label for="telefono">Teléfono:</label>
       <input type="text" name="telefono" id="telefono" class="form-control"
-      placeholder="Escribe el telefono del usuario." >
+      placeholder="Escribe el telefono del usuario." value="<?php print isset($datos['data']['telefono'])?$datos['data']['telefono']:''; ?>" >
     </div>
 
     <div class="form-group text-left">
       <label for="fechaNacimiento">Fecha nacimiento:</label>
-      <input type="date" name="fechaNacimiento" id="fechaNacimiento" class="form-control"
-      placeholder="Seleccione la fecha de nacimiento del usuario." >
+       <input type="date" name="fechaNacimiento" id="fechaNacimiento" class="form-control"
+      placeholder="Seleccione la fecha de nacimiento del usuario." value="<?php print isset($datos['data']['fechaNacimiento'])?$datos['data']['fechaNacimiento']:''; ?>">
     </div>
 
-    <div class="form-group text-left">
+     <div class="form-group text-left">
       <label for="idTipoUsuario">* Tipo de usuario:</label>
       <select class="form-control" name="idTipoUsuario" id="idTipoUsuario">
       <option value="void">---Selecciona un tipo de usuario---</option>
@@ -68,7 +68,7 @@
       </select>
     </div>
 
-    <div class="form-group text-left mb-3">
+    <div class="form-group text-left">
       <label for="estado">* Estado usuario:</label>
       <select class="form-control" name="estado" id="estado">
       <option value="void">---Selecciona un estado de usuario---</option>
@@ -85,8 +85,18 @@
     </div>
 
     <div class="form-group text-left">
+      <input type="hidden" name="id" id="id" value="<?php if (isset($datos['data']['id'])) { print $datos['data']['id']; } else { print ""; } ?>">
+      <input type="hidden" name="pag" id="id" value="<?php if (isset($datos['pag'])) { print $datos['pag']; } else { print "1"; } ?>">
+
+      <?php
+      if (isset($datos["baja"])) { ?>
+        <a href="<?php print RUTA; ?>usuarios/bajaLogica/<?php print $datos['data']['id'].'/'.$datos['pag']; ?>" class="btn btn-danger">Borrar</a>
+        <a href="<?php print RUTA.'usuarios/'.$datos['pag'];?>" class="btn btn-danger">Regresar</a>
+        <p><b>Advertencia: una vez borrado el registro, no podrá recuperar la información</b></p>
+      <?php } else { ?> 
       <input type="submit" value="Enviar" class="btn btn-success">
-      <a href="<?php print RUTA; ?>usuarios" class="btn btn-info">Regresar</a>
+      <a href="<?php print RUTA.'usuarios/'.$datos['pag']; ?>" class="btn btn-success">Regresar</a>
+    <?php } ?> 
     </div>
   </form>
 <?php include_once("piepagina.php"); ?>
