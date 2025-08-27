@@ -209,6 +209,53 @@ class Usuarios extends Controlador
 	   }
 	}
 
+	public function estadoActualizar() {
+
+		$errores = [];
+
+		if ($_SERVER['REQUEST_METHOD']=="POST") {
+	      $id = $_POST['id'] ?? "";
+	      $pag = $_POST['pag'] ?? "1";
+		  $estado = $_POST['estado'] ?? "void";
+
+		  if($estado == "void") {
+				array_push($errores, "El estado es requerido");
+		  }
+
+		  if($id == 1) {
+				$this->mensaje(
+					"Error al actualizar el estado del usuario", 
+	          		"Error al actualizar el estado del usuario", 
+					"No se puede cambiar el estado del admistrador original", 
+					"usuarios/".$pag, 
+					"danger"
+        		);
+				array_push($errores, "");
+		  }
+
+		  if(empty($errores)) {
+			if($this->modelo->estadoActualizar($id,$estado)) {
+				$this->mensaje(
+					"Actualizar el estado del usuario", 
+					"Actualizar el estado del usuario", 
+					"Se actualizó correctamente el estado del usuario", 
+					"usuarios/".$pag, 
+					"success"
+        		);
+			}else {
+			 $this->mensaje(
+	          		"Error al actualizar el estado del usuario", 
+	          		"Error al actualizar el estado del usuario", 
+	          		"Error al actualizar el estado del usuario", 
+	          		"usuarios/".$pag, 
+	          		"danger"
+	          	);
+			}
+			
+		  }
+		}
+	}
+
 	public function estadoCambiar($id,$pag=1) {
 		//Leemos los datos de la tabla
 		$data = $this->modelo->getUsuarioId($id);
