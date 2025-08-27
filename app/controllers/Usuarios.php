@@ -165,40 +165,44 @@ class Usuarios extends Controlador
 
   	public function borrar($id="",$pag=1) {
 	    //Leemos los datos del registro del id
-	    $data = $this->modelo->getEditorialId($id);
-	    $paises = $this->modelo->getPaises();
+	    $data = $this->modelo->getUsuarioId($id);
+	    $tipoUsuarios = $this->modelo->getCatalogo("tipoUsuarios");
+		$estadosUsuario = $this->modelo->getCatalogo("estadosUsuario");
+		$genero = $this->modelo->getCatalogo("genero");
     	//Vista baja
 	    $datos = [
-	      "titulo" => "Baja de una editorial",
-	      "subtitulo" => "Baja de una editorial",
+	      "titulo" => "Baja de un usuario",
+	      "subtitulo" => "Baja de un usuario",
 	      "menu" => true,
 	      "admon" => "admon",
 	      "errores" => [],
 	      "pag" => $pag,
-	      "paises" => $paises,
-	      "activo" => 'editoriales',
+	      "tipoUsuarios" => $tipoUsuarios,
+		  "estadosUsuario" => $estadosUsuario,
+		  "genero" => $genero,
+	      "activo" => 'usuarios',
 	      "data" => $data,
 	      "baja" => true
 	    ];
-	    $this->vista("editorialesAltaVista",$datos);
+	    $this->vista("usuariosAltaVista",$datos);
 	  }
 
 	public function bajaLogica($id='',$pag=1) {
 	   if (isset($id) && $id!="") {
 	     if ($this->modelo->bajaLogica($id)) {
         	$this->mensaje(
-        		"Borrar una editorial", 
-        		"Borrar una editorial", 
-        		"Se borró correctamente la editorial.", 
-        		"editoriales/".$pag, 
+        		"Borrar un usuario", 
+        		"Borrar un usuario", 
+        		"Se borró correctamente el usuario.", 
+        		"usuarios/".$pag, 
         		"success"
         	);
         } else {
         	$this->mensaje(
-        		"Error al borrar una editorial", 
-        		"Error al borrar una editorial", 
-        		"Error al borrar una editorial.", 
-        		"editoriales/".$pag, 
+        		"Error al borrar un usuario", 
+        		"Error al borrar un usuario", 
+        		"Error al borrar un usuario.", 
+        		"usuarios/".$pag, 
         		"danger"
         	);
         }
