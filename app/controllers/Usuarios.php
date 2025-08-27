@@ -209,6 +209,24 @@ class Usuarios extends Controlador
 	   }
 	}
 
+	public function estadoCambiar($id,$pag=1) {
+		//Leemos los datos de la tabla
+		$data = $this->modelo->getUsuarioId($id);
+		$estadosUsuario = $this->modelo->getCatalogo("estadosUsuario");
+		$datos = [
+		      "titulo" => "Modificar el estado de un usuario",
+		      "subtitulo" => "Modificar el estado de un usuario",
+		      "activo" => "usuarios",
+		      "menu" => true,
+		      "admon" => "admon",
+			  "estadosUsuario" => $estadosUsuario,
+		      "pag" => $pag,
+		      "errores" => [],
+		      "data" => $data
+		    ];
+		$this->vista("usuariosEstadoCambiarVista",$datos);
+	}
+
   	public function modificar($id,$pag=1) {
 		//Leemos los datos de la tabla
 		$data = $this->modelo->getUsuarioId($id);
