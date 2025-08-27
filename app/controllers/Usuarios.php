@@ -63,7 +63,7 @@ class Usuarios extends Controlador
 			if (empty($correo)) {
 				array_push($errores, "El correo es requerido");
 			}
-			if ($this->modelo->buscarCorreo($correo)) {
+			if (trim($id)==="" && $this->modelo->buscarCorreo($correo)) {
 				array_push($errores, "El correo ya existe en la base de datos");
 			}
 
@@ -87,6 +87,7 @@ class Usuarios extends Controlador
 			// Crear arreglo de datos
 			$clave = Helper::generarClave(10);
 			$data = [
+			 "id" => $id,
 			 "idTipoUsuario" => $idTipoUsuario,
 			 "correo" => $correo,
 			 "nombre" => $nombre,
@@ -122,18 +123,18 @@ class Usuarios extends Controlador
 	          //Modificar
 	          if ($this->modelo->modificar($data)) {
 	            $this->mensaje(
-	          		"Modificar una editorial", 
-	          		"Modificar una editorial", 
-	          		"Se modificó correctamente la editorial: ".$editorial,
-	          		"editoriales/".$pag, 
+	          		"Modificar un usuario", 
+	          		"Modificar un usuario", 
+	          		"Se modificó correctamente el usuario: ".$correo,
+	          		"usuarios/".$pag, 
 	          		"success"
 	          	);
 	          } else {
 	          	$this->mensaje(
-	          		"Error al modificar una editorial.", 
-	          		"Error al modificar una editorial.", 
-	          		"Error al modificar una editorial: ".$editorial, 
-	          		"editoriales/".$pag, 
+	          		"Error al modificar un usuario.", 
+	          		"Error al modificar un usuario.", 
+	          		"Error al modificar un usuario: ".$correo, 
+	          		"usuarios/".$pag, 
 	          		"danger"
 	          	);
 	          }
@@ -206,19 +207,24 @@ class Usuarios extends Controlador
 
   	public function modificar($id,$pag=1) {
 		//Leemos los datos de la tabla
-		$data = $this->modelo->getEditorialId($id);
-		$paises = $this->modelo->getPaises();
+		$data = $this->modelo->getUsuarioId($id);
+		$tipoUsuarios = $this->modelo->getCatalogo("tipoUsuarios");
+		$estadosUsuario = $this->modelo->getCatalogo("estadosUsuario");
+		$genero = $this->modelo->getCatalogo("genero");
 		$datos = [
-			"titulo" => "Modificar una editorial",
-			"subtitulo" =>"Modificar una editorial",
-			"menu" => true,
-			"admon" => "admon",
-			"pag" => $pag,
-			"paises" => $paises,
-			"activo" => "editoriales",
-			"data" => $data
-		];
-		$this->vista("editorialesAltaVista",$datos);
+		      "titulo" => "Modificar un usuario",
+		      "subtitulo" => "Modificar un usuario",
+		      "activo" => "usuarios",
+		      "menu" => true,
+		      "admon" => "admon",
+		      "tipoUsuarios" => $tipoUsuarios,
+			  "estadosUsuario" => $estadosUsuario,
+			  "genero" => $genero,
+		      "pag" => $pag,
+		      "errores" => [],
+		      "data" => $data
+		    ];
+		$this->vista("usuariosAltaVista",$datos);
 	}
 }
 ?>
