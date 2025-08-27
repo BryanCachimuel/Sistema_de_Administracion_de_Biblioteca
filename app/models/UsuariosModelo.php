@@ -68,14 +68,20 @@ class UsuariosModelo extends Llaves
 	}
 
 
-	public function modificar($data)
-	{
+	public function modificar($data) {
 		$salida = false;
 	    if (!empty($data["id"])) {
 	     $sql = "UPDATE usuarios SET "; 
-	     $sql.= "idPais='".$data['idPais']."', ";
-	     $sql.= "editorial='".$data['editorial']."', ";
-	     $sql.= "pagina='".$data['pagina']."', ";
+	     $sql.= "idTipoUsuario='".$data['idTipoUsuario']."', ";
+	     $sql.= "correo='".$data['correo']."', ";
+	     $sql.= "nombre='".$data['nombre']."', ";
+	     $sql.= "clave='".$data['clave']."', ";
+	     $sql.= "apellidoPaterno='".$data['apellidoPaterno']."', ";
+	     $sql.= "apellidoMaterno='".$data['apellidoMaterno']."', ";
+		 $sql.= "genero='".$data['genero']."', ";
+	     $sql.= "telefono='".$data['telefono']."', ";
+	     $sql.= "fechaNacimiento='".$data['fechaNacimiento']."', ";
+	     $sql.= "estado='".$data['estado']."', ";	
 	     $sql.= "modifica_dt=(NOW()) ";
 	     $sql.= "WHERE id=".$data['id'];
 	     //Enviamos a la base de datos
