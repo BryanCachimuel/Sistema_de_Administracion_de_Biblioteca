@@ -38,6 +38,19 @@ class UsuariosModelo extends Llaves
 		return $this->db->queryNoSelect($sql);
 	}
 
+	public function estadoActualizar($id, $estado) {
+		$salida = false;
+	    if (!empty("id")) {
+	     $sql = "UPDATE usuarios SET "; 
+	     $sql.= "estado='".$estado."', ";	
+	     $sql.= "modifica_dt=(NOW()) ";
+	     $sql.= "WHERE id=".$id;
+	     //Enviamos a la base de datos
+	     $salida = $this->db->queryNoSelect($sql);
+	    }
+	    return $salida;
+	}
+
 	public function getUsuarioId($id='')
 	{
 		if(empty($id)) return false;
