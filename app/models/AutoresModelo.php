@@ -38,7 +38,7 @@ class AutoresModelo extends Llaves
 		return $this->db->queryNoSelect($sql);
 	}
 
-	public function getAutoresId($id='') {
+	public function getAutorId($id='') {
 		if(empty($id)) return false;
 		$sql = "SELECT * FROM autores WHERE id='".$id."'";
 		return $this->db->query($sql);
@@ -53,7 +53,7 @@ class AutoresModelo extends Llaves
 
 	public function getTabla($inicio=1, $tamano=0) {
 		$sql = "SELECT a.id, p.pais, ";
-		$sql.= "a.apellidoPaterno, a.apellidoMaterno, a.nombre ";
+		$sql.= "a.apellidoPaterno,a.apellidoMaterno,a.nombre ";
 		$sql.= "FROM autores as a, paises as p ";
 		$sql.= "WHERE a.baja=0 AND ";
 		$sql.= "a.idPais=p.id";
@@ -62,6 +62,7 @@ class AutoresModelo extends Llaves
 		}
 		return $this->db->querySelect($sql);
 	}
+
 
 	public function modificar($data) {
 		$salida = false;
