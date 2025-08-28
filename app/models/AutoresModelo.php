@@ -63,15 +63,11 @@ class AutoresModelo extends Llaves
 		$salida = false;
 	    if (!empty($data["id"])) {
 	     $sql = "UPDATE autores SET "; 
-	     $sql.= "idTipoUsuario='".$data['idTipoUsuario']."', ";
-	     $sql.= "correo='".$data['correo']."', ";
+	     $sql.= "idPais='".$data['idPais']."', ";
+	     $sql.= "idGenero='".$data['idGenero']."', ";
 	     $sql.= "nombre='".$data['nombre']."', ";
-	     $sql.= "clave='".$data['clave']."', ";
 	     $sql.= "apellidoPaterno='".$data['apellidoPaterno']."', ";
 	     $sql.= "apellidoMaterno='".$data['apellidoMaterno']."', ";
-		 $sql.= "genero='".$data['genero']."', ";
-	     $sql.= "telefono='".$data['telefono']."', ";
-	     $sql.= "fechaNacimiento='".$data['fechaNacimiento']."', ";
 	     $sql.= "estado='".$data['estado']."', ";	
 	     $sql.= "modifica_dt=(NOW()) ";
 	     $sql.= "WHERE id=".$data['id'];
