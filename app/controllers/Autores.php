@@ -108,7 +108,7 @@ class Autores extends Controlador
                         $this->mensaje(
                             "Modificar un autor(a)",
                             "Modificar un autor(a)",
-                            "Se modificó correctamente un autor(a): " . $nombre." ".$apellidoPaterno,
+                            "Se modificó correctamente un autor(a): " . $nombre . " " . $apellidoPaterno,
                             "autores/" . $pag,
                             "success"
                         );
@@ -116,7 +116,7 @@ class Autores extends Controlador
                         $this->mensaje(
                             "Error al modificar un autor(a).",
                             "Error al modificar un autor(a).",
-                            "Error al modificar un autor(a): " . $nombre." ".$apellidoPaterno,
+                            "Error al modificar un autor(a): " . $nombre . " " . $apellidoPaterno,
                             "autores/" . $pag,
                             "danger"
                         );
@@ -144,116 +144,51 @@ class Autores extends Controlador
         }
     }
 
-
-
     public function borrar($id = "", $pag = 1)
     {
         //Leemos los datos del registro del id
-        $data = $this->modelo->getId($id);
-        $tipoUsuarios = $this->modelo->getCatalogo("tipoUsuarios");
-        $estadosUsuario = $this->modelo->getCatalogo("estadosUsuario");
+        $data = $this->modelo->getAutorId($id);
+        $paises = $this->modelo->getCatalogo("paises");
         $genero = $this->modelo->getCatalogo("genero");
         //Vista baja
         $datos = [
-            "titulo" => "Baja de un usuario",
-            "subtitulo" => "Baja de un usuario",
+            "titulo" => "Baja de un autor(a)",
+            "subtitulo" => "Baja de un autor(a)",
             "menu" => true,
             "admon" => "admon",
             "errores" => [],
             "pag" => $pag,
-            "tipoUsuarios" => $tipoUsuarios,
-            "estadosUsuario" => $estadosUsuario,
+            "paises" => $paises,
             "genero" => $genero,
-            "activo" => 'usuarios',
+            "activo" => 'autores',
             "data" => $data,
             "baja" => true
         ];
-        $this->vista("usuariosAltaVista", $datos);
+        $this->vista("autoresAltaVista", $datos);
     }
+
 
     public function bajaLogica($id = '', $pag = 1)
     {
         if (isset($id) && $id != "") {
             if ($this->modelo->bajaLogica($id)) {
                 $this->mensaje(
-                    "Borrar un usuario",
-                    "Borrar un usuario",
-                    "Se borró correctamente un usuario.",
-                    "usuarios/" . $pag,
+                    "Borrar un autor(a)",
+                    "Borrar un autor(a)",
+                    "Se borró correctamente un autor(a).",
+                    "autores/" . $pag,
                     "success"
                 );
             } else {
                 $this->mensaje(
-                    "Error al borrar un usuario",
-                    "Error al borrar un usuario",
-                    "Error al borrar un usuario.",
-                    "usuarios/" . $pag,
+                    "Error al borrar un autor(a)",
+                    "Error al borrar un autor(a)",
+                    "Error al borrar un autor(a).",
+                    "autores/" . $pag,
                     "danger"
                 );
             }
         }
-    }
-
-    public function estadoActualizar()
-    {
-        $errores = [];
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            //
-            $id = $_POST['id'] ?? "";
-            $pag = $_POST['pag'] ?? "1";
-            $estado = $_POST['estado'] ?? "void";
-            if ($estado == "void") {
-                array_push($errores, "El género es obligatorio.");
-            }
-            if ($id == 1) {
-                $this->mensaje(
-                    "Error al actualizar el estado del usuario",
-                    "Error al actualizar el estado del usuario",
-                    "No se puede cambiar el estado del administrador original.",
-                    "usuarios/" . $pag,
-                    "danger"
-                );
-                array_push($errores, "No se puede cambiar el estado del administrador original.");
-            }
-            if (empty($errores)) {
-                if ($this->modelo->estadoActualizar($id, $estado)) {
-                    $this->mensaje(
-                        "Actualizar el estado del usuario",
-                        "Actualizar el estado del usuario",
-                        "Se actualizó correctamente el estado del usuario.",
-                        "usuarios/" . $pag,
-                        "success"
-                    );
-                } else {
-                    $this->mensaje(
-                        "Error al actualizar el estado del usuario",
-                        "Error al actualizar el estado del usuario",
-                        "Error al actualizar el estado del usuario.",
-                        "usuarios/" . $pag,
-                        "danger"
-                    );
-                }
-            }
-        }
-    }
-
-    public function estadoCambiar($id, $pag = 1)
-    {
-        //Leemos los datos de la tabla
-        $data = $this->modelo->getId($id);
-        $estadosUsuario = $this->modelo->getCatalogo("estadosUsuario");
-        $datos = [
-            "titulo" => "Modificar el estado de un usuario",
-            "subtitulo" => "Modificar el estado de un usuario",
-            "activo" => "usuarios",
-            "menu" => true,
-            "admon" => "admon",
-            "estadosUsuario" => $estadosUsuario,
-            "pag" => $pag,
-            "errores" => [],
-            "data" => $data
-        ];
-        $this->vista("usuariosEstadoCambiarVista", $datos);
     }
 
     public function modificar($id, $pag = 1)
