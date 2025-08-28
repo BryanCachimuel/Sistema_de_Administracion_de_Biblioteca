@@ -12,25 +12,20 @@ class AutoresModelo extends Llaves
 	}
 
 	public function alta($data='') {
-	  if(empty($data)) return false;
-        $sql = "INSERT INTO autores VALUES(0,"; //1. id 
-        $sql.= "'".$data['idTipoUsuario']."', "; //2. tipo
-        $sql.= "'".$data['nombre']."', ";    	//3. nombre
-        $sql.= "'".$data['apellidoPaterno']."', "; //4. apellido paterno
-        $sql.= "'".$data['apellidoMaterno']."', "; //5. Apellido Materno	   
-        $sql.= "'".$data['correo']."', ";    	//6. correo
-        $sql.= "'".$data['clave']."', ";     	//7. clave de acceso
-        $sql.= "'".$data['genero']."', ";    	//8. genero
-        $sql.= "'".$data['telefono']."', ";    	//9. telefono
-        $sql.= "'".$data['fechaNacimiento']."', ";  //10. fecha nacimieto
-        $sql.= "'".$data['estado']."', ";    	//11. estado
-        //
-        $sql.= "'0', ";                          //12. baja lógica
-        $sql.= "'', ";                           //13. fecha login
-        $sql.= "NOW(),";                         //14. fecha alta-creado
-        $sql.= "'', ";                           //15. fecha baja
-        $sql.= "'')";                            //16. fecha modificado                        
-        return $this->db->queryNoSelect($sql);
+	   if(empty($data)) return false;
+	   $sql = "INSERT INTO autores VALUES(0,"; //1. id 
+	   $sql.= "'".$data['idPais']."', "; //2. país
+	   $sql.= "'".$data['idGenero']."', ";  //3. Genero
+	   $sql.= "'".$data['nombre']."', ";    	//4. nombre
+	   $sql.= "'".$data['apellidoPaterno']."', "; //5. apellido paterno
+	   $sql.= "'".$data['apellidoMaterno']."', "; //6. Apellido Materno	   
+	   $sql.= "'".$data['estado']."', ";    	//7. estado
+	   //
+	   $sql.= "'0', ";                          //8. baja lógica
+	   $sql.= "NOW(),";                         //9. fecha alta-creado
+	   $sql.= "'', ";                           //10. fecha baja
+	   $sql.= "'')";                            //11. fecha modificado                        
+	   return $this->db->queryNoSelect($sql);
 	}
 
 	public function bajaLogica($id){
