@@ -2,8 +2,8 @@
 /**
  * 
  */
-class Autores extends Controlador
-{
+class Autores extends Controlador {
+
 	private $modelo = "";
 	
 	function __construct()
@@ -15,7 +15,8 @@ class Autores extends Controlador
 		$this->modelo = $this->modelo("AutoresModelo");
 	}
 
-	public function caratula($pagina=1) {
+	public function caratula($pagina=1)
+	{
 		$num = $this->modelo->getNumRegistros();
 		$inicio = ($pagina-1)*TAMANO_PAGINA;
 		$totalPaginas = ceil($num/TAMANO_PAGINA);
@@ -46,76 +47,55 @@ class Autores extends Controlador
 	      //
 	      $id = $_POST['id'] ?? "";
 	      $pag = $_POST['pag'] ?? "1";
-	      $idTipoUsuario = Helper::cadena($_POST['idTipoUsuario'] ?? "");
-		  $correo = Helper::cadena($_POST['correo'] ?? "");
-		  $nombre = Helper::cadena($_POST['nombre'] ?? "");
-		  $apellidoPaterno = Helper::cadena($_POST['apellidoPaterno'] ?? "");
-		  $apellidoMaterno = Helper::cadena($_POST['apellidoMaterno'] ?? "");
-		  $genero = Helper::cadena($_POST['genero'] ?? "");
-		  $telefono = Helper::cadena($_POST['telefono'] ?? "");
-		  $fechaNacimiento = Helper::cadena($_POST['fechaNacimiento'] ?? "");
-		  $estado = Helper::cadena($_POST['estado'] ?? "");
-
-			// validar la información
-			if (Helper::correo($correo) == false) {
-				array_push($errores, "El correo no tiene un formato correcto");
-			}
-			if (empty($correo)) {
-				array_push($errores, "El correo es requerido");
-			}
-			if (trim($id)==="" && $this->modelo->buscarCorreo($correo)) {
-				array_push($errores, "El correo ya existe en la base de datos");
-			}
-
-			if (empty($nombre)) {
-				array_push($errores, "El nombre es requerido");
-			}
-
-			if (empty($apellidoPaterno)) {
-				array_push($errores, "El apellido paterno es requerido");
-			}
-
-			if (Helper::fecha($fechaNacimiento) == false) {
-				array_push($errores, "El formato de la fecha de nacimiento no es correcto");
-			}
-
-			if($genero == "void") {
-				array_push($errores, "El genero es requerido");
-			}
-
+	      $nombre = Helper::cadena($_POST['nombre'] ?? "");
+	      $apellidoPaterno = Helper::cadena($_POST['apellidoPaterno'] ?? "");
+	      $apellidoMaterno = Helper::cadena($_POST['apellidoMaterno'] ?? "");
+	      $idGenero = Helper::cadena($_POST['genero'] ?? "");
+	      $idPais = Helper::cadena($_POST['idPais'] ?? "");
+	      //
+	      // Validamos la información
+	      // 
+	      if(empty($nombre)){
+	        array_push($errores,"El nombre es requerido.");
+	      }
+	      if(empty($apellidoPaterno)){
+	        array_push($errores,"El apellido paterno es requerido.");
+	      }
+	      if($idGenero=="void"){
+	        array_push($errores,"El género es obligatorio.");
+	      }
+	      if($idPais=="void"){
+	        array_push($errores,"El país es obligatorio.");
+	      }
 	      if (empty($errores)) { 
 			// Crear arreglo de datos
-			$clave = Helper::generarClave(10);
+			//
 			$data = [
 			 "id" => $id,
-			 "idTipoUsuario" => $idTipoUsuario,
-			 "correo" => $correo,
-			 "nombre" => $nombre,
-			 "clave" => $clave,
-			 "apellidoPaterno" => $apellidoPaterno,
-			 "apellidoMaterno" => $apellidoMaterno,
-			 "genero" => $genero,
-			 "telefono" => $telefono,
-			 "fechaNacimiento" => $fechaNacimiento,
-			 "estado" => $estado
+			 "idPais"=>$idPais,
+		     "idGenero"=> $idGenero,
+		     "nombre"=> $nombre,
+		     "apellidoPaterno"=> $apellidoPaterno,
+		     "apellidoMaterno"=> $apellidoMaterno,
+		     "estado"=> ""
 			];
 	        //Enviamos al modelo
 	        if(trim($id)===""){
 	          //Alta
 	          if ($this->modelo->alta($data)) {
 	            $this->mensaje(
-	          		"Alta de un usuario", 
-	          		"Alta de un usuario", 
-	          		"Se añadió correctamente el usuario: ".$correo, 
-	          		"usuarios/".$pag, 
+	          		"Alta de un autor(a)", 
+	          		"Alta de un autor(a)", 
+	          		"Se añadió correctamente el autor(a): ".$nombre." ".$apellidoPaterno, 
+	          		"autores/".$pag, 
 	          		"success"
 	          	);
 	          } else {
 	          	$this->mensaje(
-	          		"Error al añadir un usuario.", 
-	          		"Error al añadir un usuario.", 
-	          		"Error al modificar un usuario: ".$correo, 
-	          		"usuarios/".$pag, 
+	          		"Error al añadir un autor(a).", 
+	          		"Error al añadir un autor(a).", 
+	          		"Error al modificar un autor(a): ".$nombre." ".$apellidoPaterno,
+	          		"autores/".$pag, 
 	          		"danger"
 	          	);
 	          }
@@ -143,32 +123,32 @@ class Autores extends Controlador
 	    } 
 	    if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST" ){
 	    	//Vista Alta
-	    	$tipoUsuarios = $this->modelo->getCatalogo("tipoUsuarios");
-			$estadosUsuario = $this->modelo->getCatalogo("estadosUsuario");
-			$genero = $this->modelo->getCatalogo("genero");
+	    	$paises = $this->modelo->getCatalogo("paises","pais");
+	    	$genero = $this->modelo->getCatalogo("genero");
 		    $datos = [
-		      "titulo" => "Alta de un usuario",
-		      "subtitulo" => "Alta de un usuario",
-		      "activo" => "usuarios",
+		      "titulo" => "Alta de un autor(a)",
+		      "subtitulo" => "Alta de un autor(a)",
+		      "activo" => "autores",
 		      "menu" => true,
 		      "admon" => "admon",
-		      "tipoUsuarios" => $tipoUsuarios,
-			  "estadosUsuario" => $estadosUsuario,
-			  "genero" => $genero,
+		      "paises" => $paises,
+		      "genero" => $genero,
 		      "pag" => $pag,
 		      "errores" => $errores,
 		      "data" => []
 		    ];
-		    $this->vista("usuariosAltaVista",$datos);
+		    $this->vista("autoresAltaVista",$datos);
 	    }
   	}
 
-  	public function borrar($id="",$pag=1) {
+
+
+  	public function borrar($id="",$pag=1){
 	    //Leemos los datos del registro del id
-	    $data = $this->modelo->getUsuarioId($id);
-	    $tipoUsuarios = $this->modelo->getCatalogo("tipoUsuarios");
-		$estadosUsuario = $this->modelo->getCatalogo("estadosUsuario");
-		$genero = $this->modelo->getCatalogo("genero");
+	    $data = $this->modelo->getId($id);
+	   	$tipoUsuarios = $this->modelo->getCatalogo("tipoUsuarios");
+	    $estadosUsuario = $this->modelo->getCatalogo("estadosUsuario");
+	    $genero = $this->modelo->getCatalogo("genero");
     	//Vista baja
 	    $datos = [
 	      "titulo" => "Baja de un usuario",
@@ -178,8 +158,8 @@ class Autores extends Controlador
 	      "errores" => [],
 	      "pag" => $pag,
 	      "tipoUsuarios" => $tipoUsuarios,
-		  "estadosUsuario" => $estadosUsuario,
-		  "genero" => $genero,
+	      "estadosUsuario" => $estadosUsuario,
+	      "genero" => $genero,
 	      "activo" => 'usuarios',
 	      "data" => $data,
 	      "baja" => true
@@ -187,13 +167,13 @@ class Autores extends Controlador
 	    $this->vista("usuariosAltaVista",$datos);
 	  }
 
-	public function bajaLogica($id='',$pag=1) {
+	public function bajaLogica($id='',$pag=1){
 	   if (isset($id) && $id!="") {
 	     if ($this->modelo->bajaLogica($id)) {
         	$this->mensaje(
         		"Borrar un usuario", 
         		"Borrar un usuario", 
-        		"Se borró correctamente el usuario.", 
+        		"Se borró correctamente un usuario.", 
         		"usuarios/".$pag, 
         		"success"
         	);
@@ -209,77 +189,75 @@ class Autores extends Controlador
 	   }
 	}
 
-	public function estadoActualizar() {
-
+	public function estadoActualizar()
+	{
 		$errores = [];
-
 		if ($_SERVER['REQUEST_METHOD']=="POST") {
-	      $id = $_POST['id'] ?? "";
-	      $pag = $_POST['pag'] ?? "1";
-		  $estado = $_POST['estado'] ?? "void";
-
-		  if($estado == "void") {
-				array_push($errores, "El estado es requerido");
-		  }
-
-		  if($id == 1) {
-				$this->mensaje(
-					"Error al actualizar el estado del usuario", 
-	          		"Error al actualizar el estado del usuario", 
-					"No se puede cambiar el estado del admistrador original", 
-					"usuarios/".$pag, 
-					"danger"
-        		);
-				array_push($errores, "");
-		  }
-
-		  if(empty($errores)) {
-			if($this->modelo->estadoActualizar($id,$estado)) {
-				$this->mensaje(
-					"Actualizar el estado del usuario", 
-					"Actualizar el estado del usuario", 
-					"Se actualizó correctamente el estado del usuario", 
-					"usuarios/".$pag, 
-					"success"
-        		);
-			}else {
-			 $this->mensaje(
-	          		"Error al actualizar el estado del usuario", 
-	          		"Error al actualizar el estado del usuario", 
-	          		"Error al actualizar el estado del usuario", 
-	          		"usuarios/".$pag, 
-	          		"danger"
-	          	);
-			}
-			
-		  }
+			//
+			$id = $_POST['id'] ?? "";
+			$pag = $_POST['pag'] ?? "1";
+			$estado = $_POST['estado'] ?? "void";
+			if($estado=="void"){
+	       		array_push($errores,"El género es obligatorio.");
+	       	}
+	       	if($id==1){
+	       		$this->mensaje(
+	        		"Error al actualizar el estado del usuario", 
+	        		"Error al actualizar el estado del usuario", 
+	        		"No se puede cambiar el estado del administrador original.", 
+	        		"usuarios/".$pag, 
+	        		"danger"
+	        	);
+	       		array_push($errores,"No se puede cambiar el estado del administrador original.");
+	       	}
+	       	if (empty($errores)) {
+	       		if ($this->modelo->estadoActualizar($id,$estado)) {
+	       			$this->mensaje(
+		        		"Actualizar el estado del usuario",
+		        		"Actualizar el estado del usuario",
+		        		"Se actualizó correctamente el estado del usuario.", 
+		        		"usuarios/".$pag, 
+		        		"success"
+		        	);	
+				} else {
+					$this->mensaje(
+		        		"Error al actualizar el estado del usuario", 
+		        		"Error al actualizar el estado del usuario", 
+		        		"Error al actualizar el estado del usuario.", 
+		        		"usuarios/".$pag, 
+		        		"danger"
+		        	);
+				}
+	       	}
 		}
 	}
 
-	public function estadoCambiar($id,$pag=1) {
+	public function estadoCambiar($id,$pag=1)
+	{
 		//Leemos los datos de la tabla
-		$data = $this->modelo->getUsuarioId($id);
-		$estadosUsuario = $this->modelo->getCatalogo("estadosUsuario");
+		$data = $this->modelo->getId($id);
+	    $estadosUsuario = $this->modelo->getCatalogo("estadosUsuario");
 		$datos = [
 		      "titulo" => "Modificar el estado de un usuario",
 		      "subtitulo" => "Modificar el estado de un usuario",
 		      "activo" => "usuarios",
 		      "menu" => true,
 		      "admon" => "admon",
-			  "estadosUsuario" => $estadosUsuario,
+		      "estadosUsuario" => $estadosUsuario,
 		      "pag" => $pag,
 		      "errores" => [],
 		      "data" => $data
 		    ];
-		$this->vista("usuariosEstadoCambiarVista",$datos);
+		    $this->vista("usuariosEstadoCambiarVista",$datos);
 	}
 
-  	public function modificar($id,$pag=1) {
+  	public function modificar($id,$pag=1)
+	{
 		//Leemos los datos de la tabla
-		$data = $this->modelo->getUsuarioId($id);
+		$data = $this->modelo->getId($id);
 		$tipoUsuarios = $this->modelo->getCatalogo("tipoUsuarios");
-		$estadosUsuario = $this->modelo->getCatalogo("estadosUsuario");
-		$genero = $this->modelo->getCatalogo("genero");
+	    $estadosUsuario = $this->modelo->getCatalogo("estadosUsuario");
+	    $genero = $this->modelo->getCatalogo("genero");
 		$datos = [
 		      "titulo" => "Modificar un usuario",
 		      "subtitulo" => "Modificar un usuario",
@@ -287,13 +265,13 @@ class Autores extends Controlador
 		      "menu" => true,
 		      "admon" => "admon",
 		      "tipoUsuarios" => $tipoUsuarios,
-			  "estadosUsuario" => $estadosUsuario,
-			  "genero" => $genero,
+		      "estadosUsuario" => $estadosUsuario,
+		      "genero" => $genero,
 		      "pag" => $pag,
 		      "errores" => [],
 		      "data" => $data
 		    ];
-		$this->vista("usuariosAltaVista",$datos);
+		    $this->vista("usuariosAltaVista",$datos);
 	}
 }
 ?>
