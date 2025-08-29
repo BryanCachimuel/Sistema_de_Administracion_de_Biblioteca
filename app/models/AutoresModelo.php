@@ -91,5 +91,13 @@ class AutoresModelo extends Llaves
 		$sql.= "l.idIdioma=i.id ";
 		return $this->db->querySelect($sql);
 	}
+
+	public function getLibros() {
+		$sql = "SELECT l.id, l.titulo ";
+		$sql.= "FROM libros as l ";
+		$sql.= "WHERE l.baja=0 ";
+		$sql.= "ORDER BY l.titulo";
+		return $this->db->querySelect($sql);
+	}
 }
 ?>
