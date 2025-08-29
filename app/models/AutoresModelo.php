@@ -76,5 +76,20 @@ class AutoresModelo extends Llaves
 	    }
 	    return $salida;
 	}
+
+	/* Autores - Libros */
+	public function getLibrosAutoresTabla($idAutor='') {
+		// buscar libros de un autor
+		if(empty($idAutor)) return false;
+		$sql = "SELECT la.id, l.titulo, t.tema, i.idioma ";
+		$sql.= "FROM librosAutores as la, libros as l, ";
+		$sql.= "temas as t, idiomas as i ";
+		$sql.= "WHERE la.idAutor=".$idAutor." AND ";
+		$sql.= "la.baja=0 AND ";
+		$sql.= "la.idLibro=l.id AND ";
+		$sql.= "l.idTema=t.id AND ";
+		$sql.= "l.idIdioma=i.id ";
+		return $this->db->querySelect($sql);
+	}
 }
 ?>
