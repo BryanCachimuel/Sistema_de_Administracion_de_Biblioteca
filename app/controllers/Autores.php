@@ -211,4 +211,22 @@ class Autores extends Controlador
         ];
         $this->vista("autoresAltaVista", $datos);
     }
+
+    /* Autores - Libros */
+    public function autoresLibros($idAutor) {
+        // leemos los datos de la tabla
+        $data = $this->modelo->getLibrosAutoresTabla($idAutor);
+        $autor = $this->modelo->getAutorId($idAutor);
+        $nombre = $autor["nombre"]." ".$autor["apellidoPaterno"]." ".$autor["apellidoMaterno"];
+        $datos = [
+            "titulo"=> "Libros",
+            "subtitulo"=> "Libros de: ".$nombre,
+            "admon"=> "admon",
+            "activo"=> "autores",
+            "data"=> $data,
+            "idAutor"=> $idAutor,
+            "menu"=> true
+        ];
+        $this->vista("autoresLibrosCaratulaVista",$datos);
+    }
 }
