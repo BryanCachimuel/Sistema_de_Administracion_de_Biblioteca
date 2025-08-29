@@ -229,4 +229,27 @@ class Autores extends Controlador
         ];
         $this->vista("autoresLibrosCaratulaVista",$datos);
     }
+
+    public function autoresLibrosAlta($idAutor="") {
+        // definir los arreglos
+        $data = array();
+        $errores = array();
+        if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST") {
+            // alta de un libro
+            $libros = $this->modelo->getLibros();
+            $autor = $this->modelo->getAutorId();
+            $nombre = $autor["nombre"]." ".$autor["apellidoPaterno"]." ".$autor["apellidoMaterno"];
+            $datos = [
+                "titulo"=> "Dar de alta a un libro",
+                "subtitulo"=> "Dar de alta a un libro para: ".$nombre,
+                "activo"=> "autores",
+                "menu"=> false,
+                "admon"=> "admon",
+                "errores"=> $errores,
+                "idAutor"=> $idAutor,
+                "data"=> $libros, 
+            ];
+            $this->vista("autoresLibrosCaratulaVista",$datos);
+        }
+    }
 }
