@@ -26,7 +26,7 @@
         <?php
           for ($i=0; $i < count($datos["genero"]); $i++) { 
             print "<option value='".$datos["genero"][$i]["id"]."'";
-            if(isset($datos["data"]["genero"]) && $datos["data"]["genero"]==$datos["genero"][$i]["id"]){
+            if(isset($datos["data"]["idGenero"]) && $datos["data"]["idGenero"]==$datos["genero"][$i]["id"]){
               print " selected ";
             }
             print ">".$datos["genero"][$i]["genero"]."</option>";
