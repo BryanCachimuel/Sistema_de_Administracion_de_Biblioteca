@@ -17,10 +17,11 @@
        <?php
         for($i=0; $i<count($datos['data']); $i++){
         print "<tr>";
-        print "<td class='text-left'>".$datos["data"][$i]['id']."</td>";
-        print "<td class='text-left'>".$datos["data"][$i]['nombre']."</td>";
-        print "<td class='text-left'>".$datos["data"][$i]['apellidoPaterno']."</td>";
-        print "<td class='text-left'>".$datos["data"][$i]['apellidoMaterno']."</td>";
+        print "<td>".$datos["data"][$i]['id']."</td>";
+        print "<td>".$datos["data"][$i]['nombre']."</td>";
+        print "<td>".$datos["data"][$i]['apellidoPaterno']."</td>";
+        print "<td>".$datos["data"][$i]['apellidoMaterno']."</td>";
+        print "<td>".$datos["data"][$i]['pais']."</td>";
         print "<td><a href='".RUTA."autores/libros/".$datos["data"][$i]["id"]."/".$datos["pag"]["pagina"]."' class='btn btn-warning'>Libros</a></td>";
         print "<td><a href='".RUTA."autores/modificar/".$datos["data"][$i]["id"]."/".$datos["pag"]["pagina"]."' class='btn btn-info'>Modificar</a></td>";
         print "<td><a href='".RUTA."autores/borrar/".$datos["data"][$i]["id"]."/".$datos["pag"]["pagina"]."' class='btn btn-danger'>Borrar</a></td>";
