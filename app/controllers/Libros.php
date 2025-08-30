@@ -97,18 +97,18 @@ class Libros extends Controlador {
                     //Modificar
                     if ($this->modelo->modificar($data)) {
                         $this->mensaje(
-                            "Modificar un autor(a)",
-                            "Modificar un autor(a)",
-                            "Se modificó correctamente un autor(a): " . $nombre . " " . $apellidoPaterno,
-                            "autores/" . $pag,
+                            "Modificar un libro",
+                            "Modificar un libro",
+                            "Se modificó correctamente un libro: " . $titulo,
+                            "libros/" . $pag,
                             "success"
                         );
                     } else {
                         $this->mensaje(
-                            "Error al modificar un autor(a).",
-                            "Error al modificar un autor(a).",
-                            "Error al modificar un autor(a): " . $nombre . " " . $apellidoPaterno,
-                            "autores/" . $pag,
+                            "Error al modificar un libro.",
+                            "Error al modificar un libro.",
+                            "Error al modificar un libro: " . $titulo,
+                            "libros/" . $pag,
                             "danger"
                         );
                     }
@@ -185,22 +185,22 @@ class Libros extends Controlador {
     public function modificar($id, $pag = 1)
     {
         //Leemos los datos de la tabla
-        $data = $this->modelo->getAutorId($id);
-        $paises = $this->modelo->getCatalogo("paises", "pais");
-        $genero = $this->modelo->getCatalogo("genero");
+        $data = $this->modelo->getLibroId($id);
+        $idiomas = $this->modelo->getCatalogo("idiomas", "idioma");
+        $temas = $this->modelo->getCatalogo("temas","tema");
         $datos = [
-            "titulo" => "Modificar un autor(a)",
-            "subtitulo" => "Modificar un autor(a)",
-            "activo" => "autores",
+            "titulo" => "Modificar un libro",
+            "subtitulo" => "Modificar un libro",
+            "activo" => "libros",
             "menu" => true,
             "admon" => "admon",
-            "paises" => $paises,
-            "genero" => $genero,
+            "idiomas" => $idiomas,
+            "temas" => $temas,
             "pag" => $pag,
             "errores" => [],
             "data" => $data
         ];
-        $this->vista("autoresAltaVista", $datos);
+        $this->vista("librosAltaVista", $datos);
     }
 
     /* Autores - Libros */
