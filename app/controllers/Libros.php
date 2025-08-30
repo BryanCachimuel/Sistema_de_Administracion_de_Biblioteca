@@ -138,24 +138,24 @@ class Libros extends Controlador {
     public function borrar($id = "", $pag = 1)
     {
         //Leemos los datos del registro del id
-        $data = $this->modelo->getAutorId($id);
-        $paises = $this->modelo->getCatalogo("paises");
-        $genero = $this->modelo->getCatalogo("genero");
+        $data = $this->modelo->getLibroId($id);
+        $idiomas = $this->modelo->getCatalogo("idiomas", "idioma");
+        $temas = $this->modelo->getCatalogo("temas","tema");
         //Vista baja
         $datos = [
-            "titulo" => "Baja de un autor(a)",
-            "subtitulo" => "Baja de un autor(a)",
+            "titulo" => "Baja de un libro",
+            "subtitulo" => "Baja de un libro",
             "menu" => true,
             "admon" => "admon",
             "errores" => [],
             "pag" => $pag,
-            "paises" => $paises,
-            "genero" => $genero,
-            "activo" => 'autores',
+            "idiomas" => $idiomas,
+            "temas" => $temas,
+            "activo" => 'libros',
             "data" => $data,
             "baja" => true
         ];
-        $this->vista("autoresAltaVista", $datos);
+        $this->vista("librosAltaVista", $datos);
     }
 
 
@@ -164,18 +164,18 @@ class Libros extends Controlador {
         if (isset($id) && $id != "") {
             if ($this->modelo->bajaLogica($id)) {
                 $this->mensaje(
-                    "Borrar un autor(a)",
-                    "Borrar un autor(a)",
-                    "Se borró correctamente un autor(a).",
-                    "autores/" . $pag,
+                    "Borrar un libro",
+                    "Borrar un libro",
+                    "Se borró correctamente un libro.",
+                    "libros/" . $pag,
                     "success"
                 );
             } else {
                 $this->mensaje(
-                    "Error al borrar un autor(a)",
-                    "Error al borrar un autor(a)",
-                    "Error al borrar un autor(a).",
-                    "autores/" . $pag,
+                    "Error al borrar un libro",
+                    "Error al borrar un libro",
+                    "Error al borrar un libro.",
+                    "libros/" . $pag,
                     "danger"
                 );
             }
