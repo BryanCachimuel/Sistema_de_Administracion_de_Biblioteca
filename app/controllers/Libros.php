@@ -73,24 +73,23 @@ class Libros extends Controlador {
                     "titulo" => $titulo,
                     "estado" => ""
                 ];
-                Helper::mostrar($data);
                 //Enviamos al modelo
                 if (trim($id) === "") {
                     //Alta
                     if ($this->modelo->alta($data)) {
                         $this->mensaje(
-                            "Alta de un autor(a)",
-                            "Alta de un autor(a)",
-                            "Se añadió correctamente el autor(a): " . $nombre . " " . $apellidoPaterno,
-                            "autores/" . $pag,
+                            "Alta de un libro",
+                            "Alta de un libro",
+                            "Se añadió correctamente el libro: " . $titulo,
+                            "libros/" . $pag,
                             "success"
                         );
                     } else {
                         $this->mensaje(
-                            "Error al añadir un autor(a).",
-                            "Error al añadir un autor(a).",
-                            "Error al modificar un autor(a): " . $nombre . " " . $apellidoPaterno,
-                            "autores/" . $pag,
+                            "Error al añadir un libro.",
+                            "Error al añadir un libro.",
+                            "Error al modificar un libro: " . $titulo,
+                            "libros/" . $pag,
                             "danger"
                         );
                     }
