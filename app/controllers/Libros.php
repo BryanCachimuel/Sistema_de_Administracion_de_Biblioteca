@@ -49,38 +49,31 @@ class Libros extends Controlador {
             //
             $id = $_POST['id'] ?? "";
             $pag = $_POST['pag'] ?? "1";
-            $nombre = Helper::cadena($_POST['nombre'] ?? "");
-            $apellidoPaterno = Helper::cadena($_POST['apellidoPaterno'] ?? "");
-            $apellidoMaterno = Helper::cadena($_POST['apellidoMaterno'] ?? "");
-            $idGenero = Helper::cadena($_POST['genero'] ?? "");
-            $idPais = Helper::cadena($_POST['idPais'] ?? "");
-            //
+            $idTema = Helper::cadena($_POST['idTema'] ?? "");
+            $idIdioma = Helper::cadena($_POST['idIdioma'] ?? "");
+            $titulo = Helper::cadena($_POST['titulo'] ?? "");
+            
             // Validamos la información
-            // 
-            if (empty($nombre)) {
-                array_push($errores, "El nombre es requerido.");
+            if (empty($titulo)) {
+                array_push($errores, "El título es requerido.");
             }
-            if (empty($apellidoPaterno)) {
-                array_push($errores, "El apellido paterno es requerido.");
+
+            if ($idTema == "void") {
+                array_push($errores, "El tema es requerido.");
             }
-            if ($idGenero == "void") {
-                array_push($errores, "El género es obligatorio.");
-            }
-            if ($idPais == "void") {
-                array_push($errores, "El país es obligatorio.");
+            if ($idIdioma == "void") {
+                array_push($errores, "El idioma es requerido.");
             }
             if (empty($errores)) {
                 // Crear arreglo de datos
-                //
                 $data = [
                     "id" => $id,
-                    "idPais" => $idPais,
-                    "idGenero" => $idGenero,
-                    "nombre" => $nombre,
-                    "apellidoPaterno" => $apellidoPaterno,
-                    "apellidoMaterno" => $apellidoMaterno,
+                    "idIdioma" => $idIdioma,
+                    "idTema" => $idTema,
+                    "titulo" => $titulo,
                     "estado" => ""
                 ];
+                Helper::mostrar($data);
                 //Enviamos al modelo
                 if (trim($id) === "") {
                     //Alta
@@ -123,23 +116,23 @@ class Libros extends Controlador {
                 }
             }
         }
+        // preparación de la vista
         if (!empty($errores) || $_SERVER['REQUEST_METHOD'] != "POST") {
-            //Vista Alta
-            $paises = $this->modelo->getCatalogo("paises", "pais");
-            $genero = $this->modelo->getCatalogo("genero");
+            $idiomas = $this->modelo->getCatalogo("idiomas", "idioma");
+            $temas = $this->modelo->getCatalogo("temas","tema");
             $datos = [
-                "titulo" => "Alta de un autor(a)",
-                "subtitulo" => "Alta de un autor(a)",
-                "activo" => "autores",
+                "titulo" => "Alta de un libro",
+                "subtitulo" => "Alta de un libro",
+                "activo" => "libros",
                 "menu" => true,
                 "admon" => "admon",
-                "paises" => $paises,
-                "genero" => $genero,
+                "idiomas" => $idiomas,
+                "temas" => $temas,
                 "pag" => $pag,
                 "errores" => $errores,
                 "data" => []
             ];
-            $this->vista("autoresAltaVista", $datos);
+            $this->vista("librosAltaVista", $datos);
         }
     }
 
