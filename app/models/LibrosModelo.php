@@ -13,18 +13,15 @@ class LibrosModelo extends Llaves
 
 	public function alta($data='') {
 	   if(empty($data)) return false;
-	   $sql = "INSERT INTO libros VALUES(0,"; //1. id 
-	   $sql.= "'".$data['idPais']."', "; //2. país
-	   $sql.= "'".$data['idGenero']."', ";  //3. Genero
-	   $sql.= "'".$data['nombre']."', ";    	//4. nombre
-	   $sql.= "'".$data['apellidoPaterno']."', "; //5. apellido paterno
-	   $sql.= "'".$data['apellidoMaterno']."', "; //6. Apellido Materno	   
-	   $sql.= "'".$data['estado']."', ";    	//7. estado
-	   //
-	   $sql.= "'0', ";                          //8. baja lógica
-	   $sql.= "NOW(),";                         //9. fecha alta-creado
-	   $sql.= "'', ";                           //10. fecha baja
-	   $sql.= "'')";                            //11. fecha modificado                        
+	   $sql = "INSERT INTO libros VALUES(0,";   //1. id 
+	   $sql.= "'".$data['idIdioma']."', ";      //2. idioma
+	   $sql.= "'".$data['idTema']."', ";        //3. tema
+	   $sql.= "'".$data['titulo']."', ";        //4. titulo
+	   $sql.= "'".$data['estado']."', ";        //5. estado
+	   $sql.= "'0', ";                          //6. baja lógica
+	   $sql.= "NOW(),";                         //7. fecha alta-creado
+	   $sql.= "'', ";                           //8. fecha baja
+	   $sql.= "'')";                            //9. fecha modificado                        
 	   return $this->db->queryNoSelect($sql);
 	}
 
