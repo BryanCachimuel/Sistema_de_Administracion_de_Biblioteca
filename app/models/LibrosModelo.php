@@ -61,11 +61,9 @@ class LibrosModelo extends Llaves
 		$salida = false;
 	    if (!empty($data["id"])) {
 	     $sql = "UPDATE libros SET "; 
-	     $sql.= "idPais='".$data['idPais']."', ";
-	     $sql.= "idGenero='".$data['idGenero']."', ";
-	     $sql.= "nombre='".$data['nombre']."', ";
-	     $sql.= "apellidoPaterno='".$data['apellidoPaterno']."', ";
-	     $sql.= "apellidoMaterno='".$data['apellidoMaterno']."', ";
+	     $sql.= "idTema='".$data['idTema']."', ";
+	     $sql.= "idIdioma='".$data['idIdioma']."', ";
+	     $sql.= "titulo='".$data['titulo']."', ";
 	     $sql.= "estado='".$data['estado']."', ";	
 	     $sql.= "modifica_dt=(NOW()) ";
 	     $sql.= "WHERE id=".$data['id'];
