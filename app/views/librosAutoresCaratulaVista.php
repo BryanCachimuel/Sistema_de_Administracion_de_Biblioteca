@@ -24,7 +24,7 @@
             ?>
         </tbody>
     </table>
-    <?php print "<a href='" . RUTA . "libros/librosAutoresAlta/" . $datos["idLibro"] . "' class='btn btn-success'>Relaciona un Autor</a>"; ?>
+    <?php print "<a href='".RUTA."libros/librosAutoresAlta/".$datos["idLibro"]."' class='btn btn-success'>Relaciona un autor</a>"; ?>
     <a href="<?php print RUTA; ?>libros" class="btn btn-info">Regresar</a>
 </div>
 <?php include("piepagina.php"); ?>
