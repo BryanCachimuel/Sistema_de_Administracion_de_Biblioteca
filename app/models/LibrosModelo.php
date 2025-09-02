@@ -84,11 +84,11 @@ class LibrosModelo extends Llaves
 		return $this->db->querySelect($sql);
 	}
 
-	public function getLibros() {
-		$sql = "SELECT l.id, l.titulo ";
-		$sql.= "FROM libros as l ";
-		$sql.= "WHERE l.baja=0 ";
-		$sql.= "ORDER BY l.titulo";
+	public function getAutores() {
+		$sql = "SELECT a.id, CONCAT(a.apellidoPaterno,' ',a.apellidoMaterno,', ',a.nombre) as autor ";
+		$sql.= "FROM autores as a ";
+		$sql.= "WHERE a.baja=0 ";
+		$sql.= "ORDER BY autor";
 		return $this->db->querySelect($sql);
 	}
 
