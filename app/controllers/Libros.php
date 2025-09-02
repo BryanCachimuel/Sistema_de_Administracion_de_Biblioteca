@@ -204,23 +204,24 @@ class Libros extends Controlador {
     }
 
     /* Libros - Autores */
-    public function librosAutores($idLibro) {
-        // leemos los datos de la tabla
-        $data = $this->modelo->getLibrosAutoresTabla($idLibro);
-        $libro = $this->modelo->getLibroId($idLibro);
-        $datos = [
-            "titulo"=> "Autores",
-            "subtitulo"=> "Autor(es) de libro: ".$libro["titulo"],
-            "admon"=> "admon",
-            "activo"=> "libros",
-            "data"=> $data,
-            "idLibro"=> $idLibro,
-            "menu"=> true
-        ];
-        $this->vista("librosAutoresCaratulaVista",$datos);
-    }
 
-    public function librosAutoresAlta($idLibro=""){
+    public function librosAutores($idLibro) {
+		//Leemos los datos de la tabla
+		$data = $this->modelo->getLibrosAutoresTabla($idLibro);
+		$libro = $this->modelo->getLibroId($idLibro);
+		$datos = [
+			"titulo"=> "Autores",
+			"subtitulo" => "Autor(es) del libro: ".$libro["titulo"],
+			"admon" => "admon",
+			"activo" => "libros",
+			"data" => $data,
+			"idLibro" => $idLibro,
+			"menu" => true
+		];
+		$this->vista("librosAutoresCaratulaVista",$datos);
+	}
+
+	public function librosAutoresAlta($idLibro=""){
 		//Definir los arreglos
 		$data = array();
 		$errores = array();
@@ -243,15 +244,31 @@ class Libros extends Controlador {
 				 "idLibro" => $idLibro,
 				 "idAutor"=>$idAutor,
 				];
-				Helper::mostrar($data);
 				//Enviamos al modelo
-				if(trim($id)===""){
+				if ($this->modelo->librosAutoresAlta($data)) {
+					//Envía correo
+					$this->mensaje(
+						"El autor fue añadido.", 
+						"El autor fue añadido.", 
+						"El autor fue añadido.", 
+						"libros/librosAutores/".$idLibro."/".$pag, 
+						"success"
+					);
+				} else {
+					$this->mensaje(
+						"Error al registrar un autor.", 
+						"Error al registrar un autor.", 
+						"Error al registrar el autor: ", 
+						"libros/".$pag, 
+						"danger"
+					);
 				}
 			}
 	    }
 	    if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST" ){
-
+	    	//
 	    	//Alta de un libro
+	    	//
 	    	$autores = $this->modelo->getAutores();
 	    	$libro = $this->modelo->getLibroId($idLibro);
 		    $datos = [
@@ -267,4 +284,5 @@ class Libros extends Controlador {
 		    $this->vista("librosAutoresAltaVista",$datos);
 	    }
   	}
+
 }
