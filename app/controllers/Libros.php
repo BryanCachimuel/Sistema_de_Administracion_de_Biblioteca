@@ -220,26 +220,51 @@ class Libros extends Controlador {
         $this->vista("librosAutoresCaratulaVista",$datos);
     }
 
-    public function autoresLibrosAlta($idAutor="") {
-        // definir los arreglos
-        $data = array();
-        $errores = array();
-        if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST") {
-            // alta de un libro
-            $libros = $this->modelo->getLibros();
-            $autor = $this->modelo->getAutorId();
-            $nombre = $autor["nombre"]." ".$autor["apellidoPaterno"]." ".$autor["apellidoMaterno"];
-            $datos = [
-                "titulo"=> "Dar de alta a un libro",
-                "subtitulo"=> "Dar de alta a un libro para: ".$nombre,
-                "activo"=> "autores",
-                "menu"=> false,
-                "admon"=> "admon",
-                "errores"=> $errores,
-                "idAutor"=> $idAutor,
-                "data"=> $libros, 
-            ];
-            $this->vista("autoresLibrosCaratulaVista",$datos);
-        }
-    }
+    public function librosAutoresAlta($idLibro=""){
+		//Definir los arreglos
+		$data = array();
+		$errores = array();
+		 //Recibimos la información de la vista
+	    if ($_SERVER['REQUEST_METHOD']=="POST") {
+			//
+			$idLibro = $_POST['idLibro'] ?? "";
+			$pag = $_POST['pag'] ?? "1";
+			$idAutor = Helper::cadena($_POST['idAutor'] ?? "");
+			//
+			// Validamos la información
+			// 
+			if($idAutor=="void"){
+				array_push($errores,"El autor es requerido.");
+			}
+			if (empty($errores)) { 
+				// Crear arreglo de datos
+				//
+				$data = [
+				 "idLibro" => $idLibro,
+				 "idAutor"=>$idAutor,
+				];
+				Helper::mostrar($data);
+				//Enviamos al modelo
+				if(trim($id)===""){
+				}
+			}
+	    }
+	    if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST" ){
+
+	    	//Alta de un libro
+	    	$autores = $this->modelo->getAutores();
+	    	$libro = $this->modelo->getLibroId($idLibro);
+		    $datos = [
+		      "titulo" => "Dar de alta a un autor",
+		      "subtitulo" => "Dar de alta a un autor para ".$libro["titulo"],
+		      "activo" => "libros",
+		      "menu" => false,
+		      "admon" => "admon",
+		      "errores" => $errores,
+		      "idLibro" => $idLibro,
+		      "data" => $autores
+		    ];
+		    $this->vista("librosAutoresAltaVista",$datos);
+	    }
+  	}
 }
