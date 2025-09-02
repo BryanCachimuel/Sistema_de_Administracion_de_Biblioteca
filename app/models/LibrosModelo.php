@@ -42,7 +42,6 @@ class LibrosModelo extends Llaves
 		return $salida["COUNT(*)"];
 	}
 
-
 	public function getTabla($inicio=1, $tamano=0) {
 		$sql = "SELECT l.id, t.tema, ";
 		$sql.= "l.titulo, i.idioma ";
@@ -55,7 +54,6 @@ class LibrosModelo extends Llaves
 		}
 		return $this->db->querySelect($sql);
 	}
-
 
 	public function modificar($data) {
 		$salida = false;
@@ -73,6 +71,26 @@ class LibrosModelo extends Llaves
 	    return $salida;
 	}
 
+	/* Libros - Autores */
+	public function getLibrosAutoresTabla($idLibro='') {
+		// buscar libros de un autor
+		if(empty($idLibro)) return false;
+		$sql = "SELECT la.id, a.nombre, ";
+		$sql.= "CONCAT(a.apellidoPaterno,' ',a.apellidoMaterno) as apellidos ";
+		$sql.= "FROM librosAutores as la, autores as a ";
+		$sql.= "WHERE la.idLibro=".$idLibro." AND ";
+		$sql.= "la.baja=0 AND ";
+		$sql.= "la.idAutor=a.id ";
+		return $this->db->querySelect($sql);
+	}
+
+	public function getLibros() {
+		$sql = "SELECT l.id, l.titulo ";
+		$sql.= "FROM libros as l ";
+		$sql.= "WHERE l.baja=0 ";
+		$sql.= "ORDER BY l.titulo";
+		return $this->db->querySelect($sql);
+	}
 
 }
 ?>
