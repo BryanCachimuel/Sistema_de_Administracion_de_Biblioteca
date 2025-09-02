@@ -203,22 +203,21 @@ class Libros extends Controlador {
         $this->vista("librosAltaVista", $datos);
     }
 
-    /* Autores - Libros */
-    public function autoresLibros($idAutor) {
+    /* Libros - Autores */
+    public function librosAutores($idLibro) {
         // leemos los datos de la tabla
-        $data = $this->modelo->getLibrosAutoresTabla($idAutor);
-        $autor = $this->modelo->getAutorId($idAutor);
-        $nombre = $autor["nombre"]." ".$autor["apellidoPaterno"]." ".$autor["apellidoMaterno"];
+        $data = $this->modelo->getLibrosAutoresTabla($idLibro);
+        $libro = $this->modelo->getLibroId($idLibro);
         $datos = [
-            "titulo"=> "Libros",
-            "subtitulo"=> "Libros de: ".$nombre,
+            "titulo"=> "Autores",
+            "subtitulo"=> "Autor(es) de libro: ".$libro["titulo"],
             "admon"=> "admon",
-            "activo"=> "autores",
+            "activo"=> "libros",
             "data"=> $data,
-            "idAutor"=> $idAutor,
+            "idLibro"=> $idLibro,
             "menu"=> true
         ];
-        $this->vista("autoresLibrosCaratulaVista",$datos);
+        $this->vista("librosAutoresCaratulaVista",$datos);
     }
 
     public function autoresLibrosAlta($idAutor="") {
