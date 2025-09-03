@@ -87,6 +87,11 @@ class LibrosModelo extends Llaves
 
 	}
 
+	public function librosAutoresBajaLogica($id){
+		$sql = "UPDATE librosAutores SET baja=1, baja_dt=(NOW()) WHERE id=".$id;
+		return $this->db->queryNoSelect($sql);
+	}
+
 	public function getLibrosAutoresTabla($idLibro='') {
 		// buscar libros de un autor
 		if(empty($idLibro)) return false;
@@ -108,7 +113,7 @@ class LibrosModelo extends Llaves
 	}
 
 	public function getIdLibrosAutores($id='') {
-		// Busca un registro de librosAutores
+		//Busca un registro de librosAutores
 		if(empty($id)) return false;
 		$sql = "SELECT la.id, la.idAutor, la.idLibro, ";
 		$sql.= "a.nombre, a.apellidoPaterno, ";
