@@ -302,4 +302,26 @@ class Libros extends Controlador {
         $this->vista("librosAutoresBorrarVista",$datos);
     }
 
+    public function librosAutoresBajaLogica($idLibroAutor='',$pag=1,$idLibro=""){
+		if (isset($idLibroAutor) && $idLibroAutor!="") {
+			if ($this->modelo->librosAutoresBajaLogica($idLibroAutor)) {
+				$this->mensaje(
+					"Eliminó el autor del libro", 
+					"Eliminó el autor del libro", 
+					"Se eliminó correctamente el autor del libro.", 
+					"libros/librosAutores/".$idLibro."/".$pag, 
+					"success"
+				);
+			} else {
+				$this->mensaje(
+					"Error al borrar el autor del libro", 
+					"Error al borrar el autor del libro", 
+					"Error al borrar el autor del libro.", 
+					"libros/".$pag, 
+					"danger"
+				);
+			}
+		}
+	}
+
 }
