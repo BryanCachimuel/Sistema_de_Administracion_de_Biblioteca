@@ -72,6 +72,21 @@ class LibrosModelo extends Llaves
 	}
 
 	/* Libros - Autores */
+
+	public function librosAutoresAlta($data='') {
+		if(empty($data)) return false;
+		$sql = "INSERT INTO librosAutores VALUES(0,"; //1. id 
+		$sql.= "'".$data['idLibro']."', "; //2. libro
+		$sql.= "'".$data['idAutor']."', "; //3. autor	   
+		//
+		$sql.= "'0', ";                  //4. baja lógica
+		$sql.= "NOW(),";                 //5. alta-creado
+		$sql.= "'', ";                   //6. baja
+		$sql.= "'')"; //7. modifica                    
+		return $this->db->queryNoSelect($sql);
+
+	}
+
 	public function getLibrosAutoresTabla($idLibro='') {
 		// buscar libros de un autor
 		if(empty($idLibro)) return false;
@@ -90,6 +105,21 @@ class LibrosModelo extends Llaves
 		$sql.= "WHERE a.baja=0 ";
 		$sql.= "ORDER BY autor";
 		return $this->db->querySelect($sql);
+	}
+
+	public function getIdLibrosAutores($id='') {
+		// Busca un registro de librosAutores
+		if(empty($id)) return false;
+		$sql = "SELECT la.id, la.idAutor, la.idLibro, ";
+		$sql.= "a.nombre, a.apellidoPaterno, ";
+		$sql.= "a.apellidoMaterno, l.titulo ";
+		$sql.= "FROM librosAutores as la, autores as a, ";
+		$sql.= "libros as l ";
+		$sql.= "WHERE la.idLibro=l.id AND ";
+		$sql.= "la.idAutor=a.id AND ";
+		$sql.= "la.baja=0 AND ";
+		$sql.= "la.id=".$id;
+		return $this->db->query($sql);
 	}
 
 }
