@@ -6,8 +6,7 @@
                 <th>Id</th>
                 <th>Aprellidos</th>
                 <th>Nombres</th>
-                <th>Copias</th>
-                <th>Borrar</th>
+                <th>Quitar</th>
             </tr>
         </thead>
         <tbody>
@@ -17,8 +16,7 @@
                 print "<td class='text-left'>" . $datos["data"][$i]['id'] . "</td>";
                 print "<td class='text-left'>" . $datos["data"][$i]['apellidos'] . "</td>";
                 print "<td class='text-left'>" . $datos["data"][$i]['nombre'] . "</td>";
-                print "<td><a href='" . RUTA . "libros/copias/" . $datos["data"][$i]["id"] . "' class='btn btn-warning'>Copias</a></td>";
-                print "<td><a href='" . RUTA . "libros/autoresBorrar/" . $datos["data"][$i]["id"] . "' class='btn btn-danger'>Borrar</a></td>";
+                print "<td><a href='" . RUTA . "libros/librosAutoresQuitar/" . $datos["data"][$i]["id"] . "' class='btn btn-danger'>Quitar</a></td>";
                 print "</tr>";
             }
             ?>
