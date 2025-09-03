@@ -285,4 +285,21 @@ class Libros extends Controlador {
 	    }
   	}
 
+    public function librosAutoresQuitar($idLibroAutor="",$pag=1) {
+        // indetificador de la tabla libroAutor
+        $data = $this->modelo->getIdLibrosAutores($idLibroAutor);
+        $errores = [];
+        $datos = [
+           "titulo" => "Borrar un autor",
+		    "subtitulo" => "Borrar un autor",
+		    "activo" => "libros",
+		    "menu" => false,
+		    "errores" => [],
+		    "idLibro" => $idLibroAutor,
+		    "baja" => true,
+            "data" => $data
+        ];
+        $this->vista("librosAutoresBorrarVista",$datos);
+    }
+
 }
