@@ -290,13 +290,15 @@ class Libros extends Controlador {
         $data = $this->modelo->getIdLibrosAutores($idLibroAutor);
         $errores = [];
         $datos = [
-           "titulo" => "Borrar un autor",
+            "titulo" => "Borrar un autor",
 		    "subtitulo" => "Borrar un autor",
 		    "activo" => "libros",
 		    "menu" => false,
+            "admon" => "admon",
 		    "errores" => [],
-		    "idLibro" => $idLibroAutor,
+            "pag" => $pag,
 		    "baja" => true,
+            "id" => $idLibroAutor,
             "data" => $data
         ];
         $this->vista("librosAutoresBorrarVista",$datos);
