@@ -20,7 +20,7 @@
     </div>
 
     <div class="form-group text-left">
-      <input type="hidden" name="id" id="id" value="<?php if (isset($datos['idAutor'])) { print $datos['idAutor']; } else { print ""; }?>">
+      <input type="hidden" name="idAutor" id="idAutor" value="<?php if (isset($datos['idAutor'])) { print $datos['idAutor']; } else { print ""; }?>">
 
       <?php
        if (isset($datos["baja"])) { ?>
