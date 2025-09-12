@@ -11,7 +11,7 @@
       value="<?php print $datos['data']['titulo']; ?>">
     </div>
 
-    <div class="form-group text-left">
+    <div class="form-group text-left mt-3">
         <a href="<?php print RUTA; ?>libros/librosAutoresBajaLogica/<?php print $datos['id'].'/'.$datos['pag'].'/'.$datos['data']['idLibro']; ?>" class="btn btn-danger">Quitar el autor</a>
         <a href="<?php print RUTA.'libros/'.$datos['pag'];?>" class="btn btn-danger">Regresar</a>
         <p><b>Advertencia: una vez borrado el registro, no podrá recuperar la información</b></p> 
