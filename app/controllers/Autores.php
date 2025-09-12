@@ -234,10 +234,50 @@ class Autores extends Controlador
         // definir los arreglos
         $data = array();
         $errores = array();
+
+        if ($_SERVER['REQUEST_METHOD']=="POST") {
+			//
+			$idLibro = Helper::cadena($_POST['idLibro'] ?? "");
+			$pag = $_POST['pag'] ?? "1";
+			$idAutor = $_POST['idAutor'] ?? "";
+			//
+			// Validamos la información
+			// 
+			if($idLibro=="void"){
+				array_push($errores,"El libro es requerido.");
+			}
+			if (empty($errores)) { 
+				// Crear arreglo de datos
+				//
+				$data = [
+				 "idLibro" => $idLibro,
+				 "idAutor"=>$idAutor,
+				];
+				//Enviamos al modelo
+				if ($this->modelo->autoresLibrosAlta($data)) {
+					//Envía correo
+					$this->mensaje(
+						"El libro fue añadido.", 
+						"El libro fue añadido.", 
+						"El libro fue añadido.", 
+						"autores/autoresLibros/".$idAutor."/".$pag, 
+						"success"
+					);
+				} else {
+					$this->mensaje(
+						"Error al registrar el libro.", 
+						"Error al registrar el libro.", 
+						"Error al registrar el libro: ", 
+						"autores/".$pag, 
+						"danger"
+					);
+				}
+			}
+	    }
         if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST") {
             // alta de un libro
             $libros = $this->modelo->getLibros();
-            $autor = $this->modelo->getAutorId();
+            $autor = $this->modelo->getAutorId($idAutor);
             $nombre = $autor["nombre"]." ".$autor["apellidoPaterno"]." ".$autor["apellidoMaterno"];
             $datos = [
                 "titulo"=> "Dar de alta a un libro",
