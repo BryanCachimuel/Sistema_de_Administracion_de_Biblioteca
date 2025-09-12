@@ -78,6 +78,19 @@ class AutoresModelo extends Llaves
 	}
 
 	/* Autores - Libros */
+	public function autoresLibrosAlta($data='') {
+		if(empty($data)) return false;
+		$sql = "INSERT INTO librosAutores VALUES(0,"; //1. id 
+		$sql.= "'".$data['idLibro']."', "; //2. libro
+		$sql.= "'".$data['idAutor']."', "; //3. autor	   
+		//
+		$sql.= "'0', ";                  //4. baja lógica
+		$sql.= "NOW(),";                 //5. alta-creado
+		$sql.= "'', ";                   //6. baja
+		$sql.= "'')"; //7. modifica                    
+		return $this->db->queryNoSelect($sql);
+	}
+
 	public function getLibrosAutoresTabla($idAutor='') {
 		// buscar libros de un autor
 		if(empty($idAutor)) return false;
