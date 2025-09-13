@@ -127,5 +127,10 @@ class AutoresModelo extends Llaves
 		$sql.= "la.id=".$idLibrosAutores;
 		return $this->db->query($sql);
 	}
+
+	public function autoresLibrosBajaLogica($id){
+		$sql = "UPDATE libros SET baja=1, baja_dt=(NOW()) WHERE id=".$id;
+		return $this->db->queryNoSelect($sql);
+	}
 }
 ?>
