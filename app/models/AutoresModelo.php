@@ -112,5 +112,20 @@ class AutoresModelo extends Llaves
 		$sql.= "ORDER BY l.titulo";
 		return $this->db->querySelect($sql);
 	}
+
+	public function getIdLibrosAutores($idLibrosAutores='') {
+		//Busca un registro de librosAutores
+		if(empty($idLibrosAutores)) return false;
+		$sql = "SELECT la.id, la.idAutor, la.idLibro, ";
+		$sql.= "a.nombre, a.apellidoPaterno, ";
+		$sql.= "a.apellidoMaterno, l.titulo ";
+		$sql.= "FROM librosAutores as la, autores as a, ";
+		$sql.= "libros as l ";
+		$sql.= "WHERE la.idLibro=l.id AND ";
+		$sql.= "la.idAutor=a.id AND ";
+		$sql.= "la.baja=0 AND ";
+		$sql.= "la.id=".$idLibrosAutores;
+		return $this->db->query($sql);
+	}
 }
 ?>
