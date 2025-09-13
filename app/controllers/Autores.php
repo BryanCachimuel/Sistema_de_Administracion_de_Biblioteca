@@ -310,4 +310,26 @@ class Autores extends Controlador
         ];
         $this->vista("autoresLibrosQuitarVista",$datos);
     }
+
+    public function autoresLibrosBajaLogica($idLibroAutor='',$pag=1,$idLibro=""){
+		if (isset($idLibroAutor) && $idLibroAutor!="") {
+			if ($this->modelo->autoresLibrosBajaLogica($idLibroAutor)) {
+				$this->mensaje(
+					"Eliminó el libro del autor", 
+					"Eliminó el libro del autor", 
+					"Se eliminó correctamente el libro del autor", 
+					"autores/autoresLibros/".$idLibro."/".$pag, 
+					"success"
+				);
+			} else {
+				$this->mensaje(
+					"Error al borrar el libro del autor", 
+					"Error al borrar el libro del autor", 
+					"Error al borrar el libro del autor", 
+					"autores/".$pag, 
+					"danger"
+				);
+			}
+		}
+	}
 }
