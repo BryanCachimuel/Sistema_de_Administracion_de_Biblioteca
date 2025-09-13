@@ -292,4 +292,22 @@ class Autores extends Controlador
             $this->vista("autoresLibrosCaratulaVista",$datos);
         }
     }
+
+     public function autoresLibrosQuitar($idLibroAutor="",$pag=1) {
+        // indetificador de la tabla libroAutor
+        $data = $this->modelo->getIdLibrosAutores($idLibroAutor);
+        $datos = [
+            "titulo" => "Quitar una relación de autor-libro",
+		    "subtitulo" => "Quitar una relación de autor-libro",
+		    "activo" => "autores",
+		    "menu" => false,
+            "admon" => "admon",
+		    "errores" => [],
+            "pag" => $pag,
+		    "baja" => true,
+            "id" => $idLibroAutor,
+            "data" => $data
+        ];
+        $this->vista("autoresLibrosQuitarVista",$datos);
+    }
 }
