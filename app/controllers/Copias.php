@@ -123,20 +123,24 @@ class Copias extends Controlador {
         if (!empty($errores) || $_SERVER['REQUEST_METHOD'] != "POST") {
             //Vista Alta
             $paises = $this->modelo->getCatalogo("paises", "pais");
-            $genero = $this->modelo->getCatalogo("genero");
+            $estadosCopias = $this->modelo->getCatalogo("estadosCopias");
+            $editoriales = $this->modelo->getEditoriales();
+            $libros = $this->modelo->getLibros();
             $datos = [
-                "titulo" => "Alta de un autor(a)",
-                "subtitulo" => "Alta de un autor(a)",
-                "activo" => "autores",
+                "titulo" => "Alta de una copia",
+                "subtitulo" => "Alta de una copia",
+                "activo" => "copias",
                 "menu" => true,
                 "admon" => "admon",
                 "paises" => $paises,
-                "genero" => $genero,
+                "estadosCopias" => $estadosCopias,
+                "libros" => $libros,
+                "editoriales" => $editoriales,
                 "pag" => $pag,
                 "errores" => $errores,
                 "data" => []
             ];
-            $this->vista("autoresAltaVista", $datos);
+            $this->vista("copiasAltaVista", $datos);
         }
     }
 
