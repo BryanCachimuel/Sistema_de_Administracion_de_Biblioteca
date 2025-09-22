@@ -38,7 +38,7 @@ class Copias extends Controlador {
     {
         //Definir los arreglos
         $data = [];
-        $errores = array();
+        $errores = [];
         $pag = 1;
 
         //Recibimos la información de la vista
@@ -46,38 +46,48 @@ class Copias extends Controlador {
             //
             $id = $_POST['id'] ?? "";
             $pag = $_POST['pag'] ?? "1";
-            $nombre = Helper::cadena($_POST['nombre'] ?? "");
-            $apellidoPaterno = Helper::cadena($_POST['apellidoPaterno'] ?? "");
-            $apellidoMaterno = Helper::cadena($_POST['apellidoMaterno'] ?? "");
-            $idGenero = Helper::cadena($_POST['genero'] ?? "");
+            $clave = Helper::cadena($_POST['clave'] ?? "");
+            $idLibro = Helper::cadena($_POST['idLibro'] ?? "");
+            $copia = Helper::cadena($_POST['copia'] ?? "");
+            $anio = Helper::cadena($_POST['anio'] ?? "");
+            $isdn = Helper::cadena($_POST['isdn'] ?? "");
+            $edicion = Helper::cadena($_POST['edicion'] ?? "");
+            $paginas = Helper::cadena($_POST['paginas'] ?? "");
+            $idEditorial = Helper::cadena($_POST['idEditorial'] ?? "");
             $idPais = Helper::cadena($_POST['idPais'] ?? "");
+            $estado = Helper::cadena($_POST['estado'] ?? "");
             //
             // Validamos la información
             // 
-            if (empty($nombre)) {
-                array_push($errores, "El nombre es requerido.");
+            if (empty($clave)) {
+                array_push($errores, "La clave es requerida.");
             }
-            if (empty($apellidoPaterno)) {
-                array_push($errores, "El apellido paterno es requerido.");
+            if ($idLibro == "void") {
+                array_push($errores, "El libro es requerido.");
             }
-            if ($idGenero == "void") {
-                array_push($errores, "El género es obligatorio.");
+            if ($idEditorial == "void") {
+                array_push($errores, "La editorial es requerida.");
             }
             if ($idPais == "void") {
-                array_push($errores, "El país es obligatorio.");
+                array_push($errores, "El país es requerido.");
             }
             if (empty($errores)) {
                 // Crear arreglo de datos
                 //
                 $data = [
                     "id" => $id,
+                    "idLibro" => $idLibro,
+                    "idEditorial" => $idEditorial,
                     "idPais" => $idPais,
-                    "idGenero" => $idGenero,
-                    "nombre" => $nombre,
-                    "apellidoPaterno" => $apellidoPaterno,
-                    "apellidoMaterno" => $apellidoMaterno,
-                    "estado" => ""
+                    "clave" => $clave,
+                    "copia" => $copia,
+                    "anio" => $anio,
+                    "isdn" => $isdn,
+                    "edicion" => $edicion,
+                    "paginas" => $paginas,
+                    "estado" => $estado
                 ];
+                Helper::mostrar($data);
                 //Enviamos al modelo
                 if (trim($id) === "") {
                     //Alta
