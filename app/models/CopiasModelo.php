@@ -65,6 +65,13 @@ class CopiasModelo extends Llaves
 		return $this->db->querySelect($sql);
 	}
 
+	public function getEditoriales() {
+		$sql = "SELECT id, editorial ";
+		$sql.= "FROM editoriales WHERE baja=0 ";
+		$sql.= "ORDER BY editorial";
+		return $this->db->querySelect($sql);
+	}
+
 
 	public function modificar($data) {
 		$salida = false;
