@@ -2,41 +2,75 @@
   <form action="<?php print RUTA; ?>copias/alta/" method="POST">
 
     <div class="form-group text-left">
-      <label for="nombre">* Nombre(s):</label>
-      <input type="text" name="nombre" id="nombre" class="form-control"
-      placeholder="Escribe el nombre del usuario." required value="<?php print isset($datos['data']['nombre'])?$datos['data']['nombre']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
-    </div>
-
-    <div class="form-group text-left">
-      <label for="apellidoPaterno">* Apellido paterno:</label>
-      <input type="text" name="apellidoPaterno" id="apellidoPaterno" class="form-control"
-      placeholder="Escribe el apellido paterno del usuario." required value="<?php print isset($datos['data']['apellidoPaterno'])?$datos['data']['apellidoPaterno']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
-    </div>
-
-    <div class="form-group text-left">
-      <label for="apellidoMaterno">Apellido materno:</label>
-      <input type="text" name="apellidoMaterno" id="apellidoMaterno" class="form-control"
-      placeholder="Escribe el apellido paterno del usuario." value="<?php print isset($datos['data']['apellidoMaterno'])?$datos['data']['apellidoMaterno']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
-    </div>
-
-    <div class="form-group text-left">
-      <label for="genero">* Género:</label>
-      <select class="form-control" name="genero" id="genero" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
-      <option value="void">---Selecciona un género---</option>
+      <label for="idLibro">* Libro:</label>
+      <select class="form-control" name="idLibro" id="idLibro" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
+      <option value="void">---Selecciona un libro---</option>
         <?php
-          for ($i=0; $i < count($datos["genero"]); $i++) { 
-            print "<option value='".$datos["genero"][$i]["id"]."'";
-            if(isset($datos["data"]["idGenero"]) && $datos["data"]["idGenero"]==$datos["genero"][$i]["id"]){
+          for ($i=0; $i < count($datos["libros"]); $i++) { 
+            print "<option value='".$datos["libros"][$i]["id"]."'";
+            if(isset($datos["data"]["idLibro"]) && $datos["data"]["idLibro"]==$datos["libros"][$i]["id"]){
               print " selected ";
             }
-            print ">".$datos["genero"][$i]["genero"]."</option>";
+            print ">".$datos["libros"][$i]["titulo"]."</option>";
           } 
         ?>
       </select>
     </div>
 
-       <div class="form-group text-left mb-3">
-      <label for="idPais">* País de origen:</label>
+    <div class="form-group text-left">
+      <label for="clave">* Clave:</label>
+      <input type="text" name="clave" id="clave" class="form-control"
+      placeholder="Escribe la clave de la copia." required value="<?php print isset($datos['data']['nombre'])?$datos['data']['nombre']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
+    </div>
+
+    <div class="form-group text-left">
+      <label for="copia">Copia:</label>
+      <input type="text" name="copia" id="copia" class="form-control"
+      placeholder="Escribe el número de la copia."  value="<?php print isset($datos['data']['copia'])?$datos['data']['copia']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
+    </div>
+
+    <div class="form-group text-left">
+      <label for="anio">Año de impresión:</label>
+      <input type="text" name="anio" id="anio" class="form-control"
+      placeholder="Escribe el año de impresión." value="<?php print isset($datos['data']['anio'])?$datos['data']['anio']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
+    </div>
+
+    <div class="form-group text-left">
+      <label for="isdn">ISDN:</label>
+      <input type="text" name="isdn" id="isdn" class="form-control"
+      placeholder="Escribe el ISDN." value="<?php print isset($datos['data']['isdn'])?$datos['data']['isdn']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
+    </div>
+
+    <div class="form-group text-left">
+      <label for="edicion">Edición:</label>
+      <input type="text" name="edicion" id="edicion" class="form-control"
+      placeholder="Escribe la edición del libro." value="<?php print isset($datos['data']['edicion'])?$datos['data']['edicion']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
+    </div>
+
+    <div class="form-group text-left">
+      <label for="paginas">Número de páginas:</label>
+      <input type="text" name="paginas" id="paginas" class="form-control"
+      placeholder="Escribe el número de páginas del libro." value="<?php print isset($datos['data']['paginas'])?$datos['data']['paginas']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
+    </div>
+
+    <div class="form-group text-left">
+      <label for="idEditorial">* Editorial:</label>
+      <select class="form-control" name="idEditorial" id="idEditorial" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
+      <option value="void">---Selecciona la editorial---</option>
+        <?php
+          for ($i=0; $i < count($datos["editoriales"]); $i++) { 
+            print "<option value='".$datos["editoriales"][$i]["id"]."'";
+            if(isset($datos["data"]["idEditorial"]) && $datos["data"]["idEditorial"]==$datos["editoriales"][$i]["id"]){
+              print " selected ";
+            }
+            print ">".$datos["editoriales"][$i]["editorial"]."</option>";
+          } 
+        ?>
+      </select>
+    </div>
+
+    <div class="form-group text-left">
+      <label for="idPais">* País:</label>
       <select class="form-control" name="idPais" id="idPais" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
       <option value="void">---Selecciona el país de origen---</option>
         <?php
@@ -46,6 +80,22 @@
               print " selected ";
             }
             print ">".$datos["paises"][$i]["pais"]."</option>";
+          } 
+        ?>
+      </select>
+    </div>
+
+    <div class="form-group text-left">
+      <label for="estado">* Estado copia:</label>
+      <select class="form-control" name="estado" id="estado" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
+      <option value="void">---Selecciona el estado de la copia---</option>
+        <?php
+          for ($i=0; $i < count($datos["estadosCopias"]); $i++) { 
+            print "<option value='".$datos["estadosCopias"][$i]["id"]."'";
+            if(isset($datos["data"]["estado"]) && $datos["data"]["estado"]==$datos["estadosCopias"][$i]["id"]){
+              print " selected ";
+            }
+            print ">".$datos["estadosCopias"][$i]["estadoCopia"]."</option>";
           } 
         ?>
       </select>
