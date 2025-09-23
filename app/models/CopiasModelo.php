@@ -81,11 +81,15 @@ class CopiasModelo extends Llaves
 		$salida = false;
 	    if (!empty($data["id"])) {
 	     $sql = "UPDATE copias SET "; 
+	     $sql.= "idLibro='".$data['idLibro']."', ";
+	     $sql.= "idEditorial='".$data['idEditorial']."', ";
 	     $sql.= "idPais='".$data['idPais']."', ";
-	     $sql.= "idGenero='".$data['idGenero']."', ";
-	     $sql.= "nombre='".$data['nombre']."', ";
-	     $sql.= "apellidoPaterno='".$data['apellidoPaterno']."', ";
-	     $sql.= "apellidoMaterno='".$data['apellidoMaterno']."', ";
+	     $sql.= "clave='".$data['clave']."', ";
+	     $sql.= "copia='".$data['copia']."', ";
+	     $sql.= "anio='".$data['anio']."', ";
+	     $sql.= "isdn='".$data['isdn']."', ";
+	     $sql.= "edicion='".$data['edicion']."', ";
+	     $sql.= "paginas='".$data['paginas']."', ";
 	     $sql.= "estado='".$data['estado']."', ";	
 	     $sql.= "modifica_dt=(NOW()) ";
 	     $sql.= "WHERE id=".$data['id'];
