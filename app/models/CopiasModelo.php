@@ -14,17 +14,21 @@ class CopiasModelo extends Llaves
 	public function alta($data='') {
 	   if(empty($data)) return false;
 	   $sql = "INSERT INTO copias VALUES(0,"; //1. id 
-	   $sql.= "'".$data['idPais']."', "; //2. país
-	   $sql.= "'".$data['idGenero']."', ";  //3. Genero
-	   $sql.= "'".$data['nombre']."', ";    	//4. nombre
-	   $sql.= "'".$data['apellidoPaterno']."', "; //5. apellido paterno
-	   $sql.= "'".$data['apellidoMaterno']."', "; //6. Apellido Materno	   
-	   $sql.= "'".$data['estado']."', ";    	//7. estado
+	   $sql.= "'".$data['idLibro']."', "; //2. idLibro
+	   $sql.= "'".$data['idEditorial']."', ";  //3. idEditorial
+	   $sql.= "'".$data['idPais']."', ";    	//4. idPais
+	   $sql.= "'".$data['clave']."', "; //5. clave
+	   $sql.= "'".$data['copia']."', "; //6.copia
+	   $sql.= "'".$data['anio']."', "; //7.anio	 
+	   $sql.= "'".$data['isdn']."', "; //8.isdn  
+	   $sql.= "'".$data['edicion']."', "; //9.edicion
+	   $sql.= "'".$data['paginas']."', "; //10.pagina
+	   $sql.= "'".$data['estado']."', ";    	//11. estado
 	   //
-	   $sql.= "'0', ";                          //8. baja lógica
-	   $sql.= "NOW(),";                         //9. fecha alta-creado
-	   $sql.= "'', ";                           //10. fecha baja
-	   $sql.= "'')";                            //11. fecha modificado                        
+	   $sql.= "'0', ";                          //12. baja lógica
+	   $sql.= "NOW(),";                         //13. fecha alta-creado
+	   $sql.= "'', ";                           //14. fecha baja
+	   $sql.= "'')";                            //15. fecha modificado                        
 	   return $this->db->queryNoSelect($sql);
 	}
 
@@ -58,7 +62,7 @@ class CopiasModelo extends Llaves
 		return $this->db->querySelect($sql);
 	}
 
-	public function getLibro() {
+	public function getLibros() {
 		$sql = "SELECT id, titulo ";
 		$sql.= "FROM libros WHERE baja=0 ";
 		$sql.= "ORDER BY titulo";
