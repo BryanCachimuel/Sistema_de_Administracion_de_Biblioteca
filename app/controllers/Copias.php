@@ -87,24 +87,23 @@ class Copias extends Controlador {
                     "paginas" => $paginas,
                     "estado" => $estado
                 ];
-                Helper::mostrar($data);
                 //Enviamos al modelo
                 if (trim($id) === "") {
                     //Alta
                     if ($this->modelo->alta($data)) {
                         $this->mensaje(
-                            "Alta de un autor(a)",
-                            "Alta de un autor(a)",
-                            "Se añadió correctamente el autor(a): " . $nombre . " " . $apellidoPaterno,
-                            "autores/" . $pag,
+                            "Alta de una copia",
+                            "Alta de una copia",
+                            "Se añadió correctamente la copia: " . $clave,
+                            "copias/" . $pag,
                             "success"
                         );
                     } else {
                         $this->mensaje(
-                            "Error al añadir un autor(a).",
-                            "Error al añadir un autor(a).",
-                            "Error al modificar un autor(a): " . $nombre . " " . $apellidoPaterno,
-                            "autores/" . $pag,
+                            "Error al añadir una copia",
+                            "Error al añadir una copia",
+                            "Error al modificar una copia: " . $clave,
+                            "copias/" . $pag,
                             "danger"
                         );
                     }
