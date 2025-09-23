@@ -20,7 +20,7 @@
     <div class="form-group text-left">
       <label for="clave">* Clave:</label>
       <input type="text" name="clave" id="clave" class="form-control"
-      placeholder="Escribe la clave de la copia." required value="<?php print isset($datos['data']['nombre'])?$datos['data']['nombre']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
+      placeholder="Escribe la clave de la copia." required value="<?php print isset($datos['data']['clave'])?$datos['data']['clave']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
     </div>
 
     <div class="form-group text-left">
