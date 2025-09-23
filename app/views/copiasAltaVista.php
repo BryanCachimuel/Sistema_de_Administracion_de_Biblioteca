@@ -101,7 +101,7 @@
       </select>
     </div>
 
-    <div class="form-group text-left">
+    <div class="form-group text-left mt-3">
       <input type="hidden" name="id" id="id" value="<?php if (isset($datos['data']['id'])) { print $datos['data']['id']; } else { print ""; } ?>">
       <input type="hidden" name="pag" id="id" value="<?php if (isset($datos['pag'])) { print $datos['pag']; } else { print "1"; } ?>">
 
