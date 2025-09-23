@@ -111,18 +111,18 @@ class Copias extends Controlador {
                     //Modificar
                     if ($this->modelo->modificar($data)) {
                         $this->mensaje(
-                            "Modificar un autor(a)",
-                            "Modificar un autor(a)",
-                            "Se modificó correctamente un autor(a): " . $nombre . " " . $apellidoPaterno,
-                            "autores/" . $pag,
+                            "Modificar una copia",
+                            "Modificar una copia",
+                            "Se modificó correctamente la copia: " . $clave." ".$copia,
+                            "copias/" . $pag,
                             "success"
                         );
                     } else {
                         $this->mensaje(
-                            "Error al modificar un autor(a).",
-                            "Error al modificar un autor(a).",
-                            "Error al modificar un autor(a): " . $nombre . " " . $apellidoPaterno,
-                            "autores/" . $pag,
+                            "Error al modificar una copia",
+                            "Error al modificar una copia",
+                            "Error al modificar una copia: " . $clave,
+                            "copias/" . $pag,
                             "danger"
                         );
                     }
@@ -203,22 +203,26 @@ class Copias extends Controlador {
     public function modificar($id, $pag = 1)
     {
         //Leemos los datos de la tabla
-        $data = $this->modelo->getAutorId($id);
-        $paises = $this->modelo->getCatalogo("paises", "pais");
-        $genero = $this->modelo->getCatalogo("genero");
+        $data = $this->modelo->getCopiasId($id);
+        $paises = $this->modelo->getCatalogo("paises","pais");
+        $estadosCopias = $this->modelo->getCatalogo("estadosCopias");
+        $editoriales = $this->modelo->getEditoriales();
+        $libros = $this->modelo->getLibros();
         $datos = [
-            "titulo" => "Modificar un autor(a)",
-            "subtitulo" => "Modificar un autor(a)",
-            "activo" => "autores",
+            "titulo" => "Modificar una copia",
+            "subtitulo" => "Modificar una copia",
+            "activo" => "copias",
             "menu" => true,
             "admon" => "admon",
             "paises" => $paises,
-            "genero" => $genero,
+            "estadosCopias" => $estadosCopias,
+            "editoriales" => $editoriales,
+            "libros" => $libros,
             "pag" => $pag,
             "errores" => [],
             "data" => $data
         ];
-        $this->vista("autoresAltaVista", $datos);
+        $this->vista("copiasAltaVista", $datos);
     }
 
    
