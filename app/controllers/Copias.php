@@ -157,23 +157,27 @@ class Copias extends Controlador {
     {
         //Leemos los datos del registro del id
         $data = $this->modelo->getAutorId($id);
-        $paises = $this->modelo->getCatalogo("paises");
-        $genero = $this->modelo->getCatalogo("genero");
+        $paises = $this->modelo->getCatalogo("paises","pais");
+        $estadosCopias = $this->modelo->getCatalogo("estadosCopias");
+        $editoriales = $this->modelo->getEditoriales();
+        $libros = $this->modelo->getLibros();
         //Vista baja
         $datos = [
-            "titulo" => "Baja de un autor(a)",
-            "subtitulo" => "Baja de un autor(a)",
+            "titulo" => "Baja de una copia",
+            "subtitulo" => "Baja de una copia",
             "menu" => true,
             "admon" => "admon",
             "errores" => [],
             "pag" => $pag,
             "paises" => $paises,
-            "genero" => $genero,
-            "activo" => 'autores',
+            "estadosCopias" => $estadosCopias,
+            "editoriales" => $editoriales,
+            "libros" => $libros,
+            "activo" => 'copias',
             "data" => $data,
             "baja" => true
         ];
-        $this->vista("autoresAltaVista", $datos);
+        $this->vista("copiasAltaVistas", $datos);
     }
 
 
