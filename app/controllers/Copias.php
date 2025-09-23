@@ -156,7 +156,7 @@ class Copias extends Controlador {
     public function borrar($id = "", $pag = 1)
     {
         //Leemos los datos del registro del id
-        $data = $this->modelo->getAutorId($id);
+        $data = $this->modelo->getCopiasId($id);
         $paises = $this->modelo->getCatalogo("paises","pais");
         $estadosCopias = $this->modelo->getCatalogo("estadosCopias");
         $editoriales = $this->modelo->getEditoriales();
@@ -177,7 +177,7 @@ class Copias extends Controlador {
             "data" => $data,
             "baja" => true
         ];
-        $this->vista("copiasAltaVistas", $datos);
+        $this->vista("copiasAltaVista", $datos);
     }
 
 
@@ -186,18 +186,18 @@ class Copias extends Controlador {
         if (isset($id) && $id != "") {
             if ($this->modelo->bajaLogica($id)) {
                 $this->mensaje(
-                    "Borrar un autor(a)",
-                    "Borrar un autor(a)",
-                    "Se borró correctamente un autor(a).",
-                    "autores/" . $pag,
+                    "Borrar una copia",
+                    "Borrar una copia",
+                    "Se borró correctamente una copia.",
+                    "copias/" . $pag,
                     "success"
                 );
             } else {
                 $this->mensaje(
-                    "Error al borrar un autor(a)",
-                    "Error al borrar un autor(a)",
-                    "Error al borrar un autor(a).",
-                    "autores/" . $pag,
+                    "Error al borrar una copia",
+                    "Error al borrar una copia",
+                    "Error al borrar una copia",
+                    "copias/" . $pag,
                     "danger"
                 );
             }
