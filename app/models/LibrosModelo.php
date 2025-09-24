@@ -127,5 +127,18 @@ class LibrosModelo extends Llaves
 		return $this->db->query($sql);
 	}
 
+	/* copias */
+	public function getCopiasLibroTabla($idLibro) {
+		/* buscar copias por libro */
+		if(empty($idLibro)) return false;
+		$sql = "SELECT c.id, c.copia, c.clave, c.idLibro, ";
+		$sql.= "c.edicion,c.anio,ec.estadoCopia as estado ";
+		$sql.= "FROM copias as c, estadosCopias as ec ";
+		$sql.= "WHERE c.idLibro=".$idLibro." AND ";
+		$sql.= "c.estado=ec.id AND ";
+		$sql.= "c.baja=0 ";
+		return $this->db->querySelect($sql);
+	}
+
 }
 ?>
