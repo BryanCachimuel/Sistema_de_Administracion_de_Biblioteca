@@ -94,7 +94,7 @@ class AutoresModelo extends Llaves
 	public function getLibrosAutoresTabla($idAutor='') {
 		// buscar libros de un autor
 		if(empty($idAutor)) return false;
-		$sql = "SELECT la.id, l.titulo, t.tema, i.idioma ";
+		$sql = "SELECT la.id, l.id as idLibro, l.titulo, t.tema, i.idioma ";
 		$sql.= "FROM librosAutores as la, libros as l, ";
 		$sql.= "temas as t, idiomas as i ";
 		$sql.= "WHERE la.idAutor=".$idAutor." AND ";
@@ -131,6 +131,17 @@ class AutoresModelo extends Llaves
 	public function autoresLibrosBajaLogica($id){
 		$sql = "UPDATE libros SET baja=1, baja_dt=(NOW()) WHERE id=".$id;
 		return $this->db->queryNoSelect($sql);
+	}
+
+	/* Copias - Autores - Libros */
+	public function copiasLibrosTabla($idLibro='') {
+		if(empty($idLibro)) return false;
+		$sql = "SELECT c.id c.copia, c.clave, c.idLibro,";
+		$sql.= "c.edicion,c.anio ";
+		$sql.= "FROM copias as c ";
+		$sql.= "WHERE c.idLibro=".$idLibro." AND ";
+		$sql.= "c.baja=0";
+		return $this->db->querySelect($sql);
 	}
 }
 ?>
