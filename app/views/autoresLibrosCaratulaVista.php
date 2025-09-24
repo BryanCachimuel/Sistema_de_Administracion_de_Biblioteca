@@ -14,10 +14,10 @@
             <?php
             for ($i = 0; $i < count($datos['data']); $i++) {
                 print "<tr>";
-                print "<td class='text-left'>" . $datos["data"][$i]['id'] . "</td>";
+                print "<td class='text-left'>" . $datos["data"][$i]['idLibro'] . "</td>";
                 print "<td class='text-left'>" . $datos["data"][$i]['tema'] . "</td>";
                 print "<td class='text-left'>" . $datos["data"][$i]['titulo'] . "</td>";
-                print "<td><a href='" . RUTA . "autores/copias/" . $datos["data"][$i]["id"] . "' class='btn btn-warning'>Copias</a></td>";
+                print "<td><a href='" . RUTA . "autores/copias/" . $datos["data"][$i]["idLibro"] . "' class='btn btn-warning'>Copias</a></td>";
                 print "<td><a href='" . RUTA . "autores/autoresLibrosQuitar/" . $datos["data"][$i]["id"] . "' class='btn btn-danger'>Quitar</a></td>";
                 print "</tr>";
             }
