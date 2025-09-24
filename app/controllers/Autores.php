@@ -332,4 +332,25 @@ class Autores extends Controlador
 			}
 		}
 	}
+
+   
+    /* Copias */
+  	public function copias($idLibro) {
+  		//
+  		if($idLibro=="") return false;
+  		$libro = $this->modelo->getLibro($idLibro);
+  		$copias = $this->modelo->copiasLibroTabla($idLibro);
+  		$datos = [
+		     "titulo" => "Copias de un libro",
+		     "subtitulo" => "Copias del libro: ".$libro["titulo"],
+		     "activo" => "autores",
+		     "menu" => false,
+		     "admon" => "admon",
+		     "libro" => $idLibro,
+		     "errores" => [],
+		     "data" => $copias
+		];
+		$this->vista("autoresLibrosCopiasCaratulaVista",$datos);
+	}
+
 }
