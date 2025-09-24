@@ -134,14 +134,24 @@ class AutoresModelo extends Llaves
 	}
 
 	/* Copias - Autores - Libros */
-	public function copiasLibrosTabla($idLibro='') {
+	public function copiasLibroTabla($idLibro='') {
+		// buscar copias por libro
 		if(empty($idLibro)) return false;
 		$sql = "SELECT c.id c.copia, c.clave, c.idLibro,";
-		$sql.= "c.edicion,c.anio ";
-		$sql.= "FROM copias as c ";
+		$sql.= "c.edicion,c.anio, ec.estadoCopia as estado ";
+		$sql.= "FROM copias as c, estadoscopias as ec ";
 		$sql.= "WHERE c.idLibro=".$idLibro." AND ";
+		$sql.= "c.estado=ec.id AND ";
 		$sql.= "c.baja=0";
 		return $this->db->querySelect($sql);
+	}
+
+	public function getLibro($idLibro) {
+		$sql = "SELECT l.id, l.titulo ";
+		$sql.= "FROM libros as l ";
+		$sql.= "WHERE l.baja=0 ";
+		$sql.= "AND l.id=".$idLibro;
+		return $this->db->query($sql);
 	}
 }
 ?>
