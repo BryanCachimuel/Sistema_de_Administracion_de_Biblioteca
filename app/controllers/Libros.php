@@ -326,4 +326,23 @@ class Libros extends Controlador {
 		}
 	}
 
+    /* Copias */
+    public function copias($idLibro='') {
+  		if($idLibro=="") return false;
+  		$libro = $this->modelo->getLibroId($idLibro);
+  		$copias = $this->modelo->getCopiasLibroTabla($idLibro);
+  		$datos = [
+		     "titulo" => "Copias de un libro",
+		     "subtitulo" => "Copias del libro: ".$libro["titulo"],
+		     "activo" => "libros",
+		     "menu" => false,
+		     "admon" => "admon",
+		     "libro" => $idLibro,
+		     "errores" => [],
+		     "data" => $copias
+		];
+		$this->vista("autoresLibrosCopiasCaratulaVista",$datos);
+  	}
+
+
 }
