@@ -1,0 +1,80 @@
+<?php  
+/**
+ * 
+ */
+class PrestamosModelo extends Llaves
+{
+	protected $db="";
+	
+	function __construct()
+	{
+		$this->db = new MySQLdb();
+	}
+
+	public function alta($data='') {
+	   if(empty($data)) return false;
+	   $sql = "INSERT INTO prestamos VALUES(0,";   //1. id 
+	   $sql.= "'".$data['idIdioma']."', ";      //2. idioma
+	   $sql.= "'".$data['idTema']."', ";        //3. tema
+	   $sql.= "'".$data['titulo']."', ";        //4. titulo
+	   $sql.= "'".$data['estado']."', ";        //5. estado
+	   $sql.= "'0', ";                          //6. baja lógica
+	   $sql.= "NOW(),";                         //7. fecha alta-creado
+	   $sql.= "'', ";                           //8. fecha baja
+	   $sql.= "'')";                            //9. fecha modificado                        
+	   return $this->db->queryNoSelect($sql);
+	}
+
+	public function bajaLogica($id){
+		$sql = "UPDATE prestamos SET baja=1, baja_dt=(NOW()) WHERE id=".$id;
+		return $this->db->queryNoSelect($sql);
+	}
+
+	public function getPrestamoId($id='') {
+		if(empty($id)) return false;
+		$sql = "SELECT * FROM prestamos WHERE id='".$id."'";
+		return $this->db->query($sql);
+	}
+
+	public function getNumRegistros() {
+		$sql = "SELECT COUNT(*) FROM prestamos WHERE baja=0";
+		$salida = $this->db->query($sql);
+		return $salida["COUNT(*)"];
+	}
+
+	public function getTabla($inicio=1, $tamano=0) {
+		$sql = "SELECT p.id, c.clave, l.titulo, ";
+		$sql.= "CONCAT(u.nombre, ' ',u.apellidoPaterno) as usuario, ";
+        $sql.= "DATE_FORMAT(p.prestamo_dt, '%d-%m-%Y') as devolucion, ";
+        $sql.= "DATE_FORMAT(p.devolucion_dt, '%d-%m-%Y') as prestamo, ";
+        $sql.= "FROM prestamos as p, usuarios as u, libros as l, copias as c ";
+		$sql.= "WHERE p.baja=0 AND ";
+		$sql.= "p.idCopia=c.id AND ";
+		$sql.= "p.idUsuario=u.id AND ";
+		$sql.= "p.estado=".COPIA_PRESTADO." AND ";
+		$sql.= "c.idLibro=l.id ";
+		$sql.= "ORDER BY p.devolucion_dt DESC ";
+		if($tamano > 0) {
+			$sql.= " LIMIT ".$inicio.", ".$tamano;
+		}
+        return $this->db->querySelect($sql);
+	}
+
+	public function modificar($data) {
+		$salida = false;
+	    if (!empty($data["id"])) {
+	     $sql = "UPDATE prestamos SET "; 
+	     $sql.= "idTema='".$data['idTema']."', ";
+	     $sql.= "idIdioma='".$data['idIdioma']."', ";
+	     $sql.= "titulo='".$data['titulo']."', ";
+	     $sql.= "estado='".$data['estado']."', ";	
+	     $sql.= "modifica_dt=(NOW()) ";
+	     $sql.= "WHERE id=".$data['id'];
+	     //Enviamos a la base de datos
+	     $salida = $this->db->queryNoSelect($sql);
+	    }
+	    return $salida;
+	}
+
+}
+?>
