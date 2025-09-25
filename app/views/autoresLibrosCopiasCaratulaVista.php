@@ -26,6 +26,6 @@
     ?>
   </tbody>
   </table>
-  <a href="<?php print RUTA; ?>autores" class="btn btn-success">Regresar</a>
+  <a href="<?php print RUTA.$datos["activo"]; ?>" class="btn btn-success">Regresar</a>
   </div>
 <?php include("piepagina.php"); ?>
