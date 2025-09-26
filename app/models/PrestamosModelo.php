@@ -67,6 +67,13 @@ class PrestamosModelo extends Llaves
 		return $this->db->querySelect($sql);
 	}
 
+	public function getLibros() {
+		$sql = "SELECT id, titulo ";
+		$sql.= "FROM libros WHERE baja=0 ";
+		$sql.= "ORDER BY titulo ";
+		return $this->db->querySelect($sql);
+	}
+
 
 	public function modificar($data) {
 		$salida = false;
