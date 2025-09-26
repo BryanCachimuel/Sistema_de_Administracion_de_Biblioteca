@@ -117,21 +117,30 @@ class Prestamos extends Controlador {
         }
         // preparación de la vista
         if (!empty($errores) || $_SERVER['REQUEST_METHOD'] != "POST") {
-            $idiomas = $this->modelo->getCatalogo("idiomas", "idioma");
-            $temas = $this->modelo->getCatalogo("temas","tema");
+            $usuarios = $this->modelo->getUsuarios();
+            $copias = $this->modelo->getCopiasDisponibles();
+            $prestamo_dt = new DateTime();
+            $devolucion_dt = new DateTime();
+            $p = "+".PRESTAMO." days";
+            $devolucion_dt->modify($p);
+            $prestamo = $prestamo_dt->format('Y-m-d');
+            $devolucion = $devolucion_dt->format('Y-m-d');
             $datos = [
-                "titulo" => "Alta de un libro",
-                "subtitulo" => "Alta de un libro",
-                "activo" => "libros",
+                "titulo" => "Prestar un libro",
+                "subtitulo" => "Prestar un libro",
+                "activo" => "prestamos",
                 "menu" => true,
                 "admon" => "admon",
-                "idiomas" => $idiomas,
-                "temas" => $temas,
-                "pag" => $pag,
+                "usuarios" => $usuarios,
+                "copias" => $copias,
                 "errores" => $errores,
-                "data" => []
+                "pag" => $pag,
+                "data" => [
+                    "prestamo" => $prestamo,
+                    "devolucion" => $devolucion
+                ]
             ];
-            $this->vista("librosAltaVista", $datos);
+            $this->vista("prestamosAltaVista", $datos);
         }
     }
 
