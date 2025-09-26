@@ -62,8 +62,9 @@ class PrestamosModelo extends Llaves
 
 	public function getUsuarios() {
 		$sql = "SELECT id, CONCAT(apellidoPaterno,'',apellidoMaterno,', ',nombre) as usuario ";
-		$sql.= "FROM usuarios WHERE baja=0 ";
-		$sql.= "ORDER BY usuario";
+		$sql.= "FROM usuarios WHERE baja=0 AND ";
+		$sql.= "estado=".USUARIO_ACTIVO;
+		$sql.= " ORDER BY usuario";
 		return $this->db->querySelect($sql);
 	}
 
