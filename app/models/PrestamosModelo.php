@@ -60,6 +60,13 @@ class PrestamosModelo extends Llaves
 		return $this->db->querySelect($sql);
 	}
 
+	public function getUsuarios() {
+		$sql = "SELECT id, CONCAT(apellidoPaterno,'',apellidoMaterno,', ',nombre) as usuario ";
+		$sql.= "FROM usuarios WHERE baja=0 ";
+		$sql.= "ORDER BY usuario";
+		return $this->db->querySelect($sql);
+	}
+
 
 	public function modificar($data) {
 		$salida = false;
