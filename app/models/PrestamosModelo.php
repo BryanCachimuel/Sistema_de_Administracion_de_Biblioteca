@@ -74,6 +74,16 @@ class PrestamosModelo extends Llaves
 		return $this->db->querySelect($sql);
 	}
 
+	public function getCopiasDisponibles() {
+		$sql = "SELECT c.id, CONCAT(c.clave,' ',l.titulo) as copia ";
+		$sql.= "FROM copias as c, libros as l ";
+		$sql.= "WHERE c.baja=0 AND ";
+		$sql.= "c.idLibro=l.id AND ";
+		$sql.= "c.estado=".COPIA_DISPONIBLE." ";
+		$sql.= "ORDER BY c.clave";
+		return $this->db->querySelect($sql);
+	}
+
 
 	public function modificar($data) {
 		$salida = false;
