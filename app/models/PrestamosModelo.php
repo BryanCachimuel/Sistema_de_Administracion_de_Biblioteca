@@ -44,21 +44,22 @@ class PrestamosModelo extends Llaves
 
 	public function getTabla($inicio=1, $tamano=0) {
 		$sql = "SELECT p.id, c.clave, l.titulo, ";
-		$sql.= "CONCAT(u.nombre, ' ',u.apellidoPaterno) as usuario, ";
-        $sql.= "DATE_FORMAT(p.prestamo_dt, '%d-%m-%Y') as devolucion, ";
-        $sql.= "DATE_FORMAT(p.devolucion_dt, '%d-%m-%Y') as prestamo, ";
-        $sql.= "FROM prestamos as p, usuarios as u, libros as l, copias as c ";
+		$sql.= "CONCAT(u.nombre,' ',u.apellidoPaterno) as usuario,";
+		$sql.= "DATE_FORMAT(p.prestamo_dt, '%d-%m-%Y') as prestamo, ";
+		$sql.= "DATE_FORMAT(p.devolucion_dt, '%d-%m-%Y') as devolucion ";
+		$sql.= "FROM prestamos as p, usuarios as u, libros as l, copias as c ";
 		$sql.= "WHERE p.baja=0 AND ";
 		$sql.= "p.idCopia=c.id AND ";
 		$sql.= "p.idUsuario=u.id AND ";
 		$sql.= "p.estado=".COPIA_PRESTADO." AND ";
 		$sql.= "c.idLibro=l.id ";
 		$sql.= "ORDER BY p.devolucion_dt DESC ";
-		if($tamano > 0) {
+		if ($tamano>0) {
 			$sql.= " LIMIT ".$inicio.", ".$tamano;
 		}
-        return $this->db->querySelect($sql);
+		return $this->db->querySelect($sql);
 	}
+
 
 	public function modificar($data) {
 		$salida = false;
