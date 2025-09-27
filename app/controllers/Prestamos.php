@@ -37,112 +37,127 @@ class Prestamos extends Controlador {
         $this->vista("prestamosCaratulaVista", $datos);
     }
 
-    public function alta()
-    {
-        //Definir los arreglos
-        $data = [];
-        $errores = array();
-        $pag = 1;
+   public function alta(){
+	   //Definir los arreglos
+	    $data = [];
+	    $errores = array();
+	    $pag = 1;
 
-        //Recibimos la información de la vista
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            //
-            $id = $_POST['id'] ?? "";
-            $pag = $_POST['pag'] ?? "1";
-            $idTema = Helper::cadena($_POST['idTema'] ?? "");
-            $idIdioma = Helper::cadena($_POST['idIdioma'] ?? "");
-            $titulo = Helper::cadena($_POST['titulo'] ?? "");
-            
-            // Validamos la información
-            if (empty($titulo)) {
-                array_push($errores, "El título es requerido.");
-            }
+	    //Recibimos la información de la vista
+	    if ($_SERVER['REQUEST_METHOD']=="POST") {
+	      //
+	      $id = trim($_POST['id'] ?? "");
+	      $pag = $_POST['pag'] ?? "1";
+	      $idUsuario = Helper::cadena($_POST['idUsuario'] ?? "");
+	      $idCopia = Helper::cadena($_POST['idCopia'] ?? "");
+	      $prestamo = Helper::cadena($_POST['prestamo'] ?? "");
+	      $devolucion = Helper::cadena($_POST['devolucion'] ?? "");
+	      //
+	      // Validamos la información
+	      // 
+	      if(empty($idUsuario) || $idUsuario=="void"){
+	        array_push($errores,"El id del usuario es requerido.");
+	      }
+	      if (empty($idCopia) || $idCopia=="void") {
+	      	array_push($errores,"El id de la copia es requerido.");
+	      }
+	      if (empty($prestamo)) {
+	      	array_push($errores,"La fecha de prestamo es requerida.");
+	      }
+	      if (empty($devolucion)) {
+	      	array_push($errores,"La fecha de devolucion es requerida.");
+	      }
+	      if (empty($errores)) { 
+			// Crear arreglo de datos
+			//
+			$data = [
+			 "id" => $id,
+			 "idCopia"=> $idCopia,
+		     "idUsuario"=> $idUsuario,
+		     "prestamo"=> $prestamo,
+		     "devolucion" => $devolucion
+			];
+	        //Enviamos al modelo
+	        if(trim($id)===""){
+	          //Alta
+	          if ($this->modelo->alta($data)) {
+	          	if ($this->modelo->copiasModificar($data["idCopia"])) {
+		            $this->mensaje(
+		          		"La copia fue registrada.", 
+		          		"La copia fue registrada.", 
+		          		"La copia fue registrada.", 
+		          		"prestamos/".$pag, 
+		          		"success"
+		          	);
+		        } else {
+		          	$this->mensaje(
+		          		"Error al modifica el estado de la copia.", 
+		          		"Error al modifica el estado de la copia.",  
+		          		"Error al modifica el estado de la copia.", 
+		          		"prestamos/".$pag, 
+		          		"danger"
+		          	);
+		          }
+	          } else {
+	          	$this->mensaje(
+	          		"Error al registrar el préstamo.", 
+	          		"Error al registrar el préstamo.",  
+	          		"Error al registrar el préstamo.", 
+	          		"prestamos/".$pag, 
+	          		"danger"
+	          	);
+	          }
+	        } else {
+	          //Modificar
+	          if ($this->modelo->modificar($data)) {
+	            $this->mensaje(
+	          		"Modificar un libro", 
+	          		"Modificar un libro", 
+	          		"Se modificó correctamente el libro: ".$titulo,
+	          		"libros/".$pag, 
+	          		"success"
+	          	);
+	          } else {
+	          	$this->mensaje(
+	          		"Error al modificar un libro.", 
+	          		"Error al modificar un libro.", 
+	          		"Error al modificar un libro: ".$titulo, 
+	          		"libros/".$pag, 
+	          		"danger"
+	          	);
+	          }
+	        }
+	      }
+	    }
+	    //Preparación de la vista
+	    if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST" ){
+	    	$usuarios = $this->modelo->getUsuarios();
+	    	$copias = $this->modelo->getCopiasDisponibles();
+	    	$prestamo_dt = new DateTime();
+	    	$devolucion_dt = new DateTime();
+	    	$p = "+".PRESTAMO." days";
+	    	$devolucion_dt->modify($p);
+	    	$prestamo = $prestamo_dt->format('Y-m-d');
+	    	$devolucion = $devolucion_dt->format('Y-m-d');
+		    $datos = [
+		      "titulo" => "Prestar un libro",
+		      "subtitulo" => "Prestar un libro",
+		      "activo" => "prestamos",
+		      "menu" => true,
+		      "admon" => "admon",
+		      "usuarios" => $usuarios,
+		      "copias" => $copias,
+		      "errores" => $errores,
+		      "pag" => $pag,
+		      "data" => [
+		      	"prestamo" => $prestamo,
+		      	"devolucion" => $devolucion
+		      ]
+		    ];
+		    $this->vista("prestamosAltaVista",$datos);
+	    }
+  	}
 
-            if ($idTema == "void") {
-                array_push($errores, "El tema es requerido.");
-            }
-            if ($idIdioma == "void") {
-                array_push($errores, "El idioma es requerido.");
-            }
-            if (empty($errores)) {
-                // Crear arreglo de datos
-                $data = [
-                    "id" => $id,
-                    "idIdioma" => $idIdioma,
-                    "idTema" => $idTema,
-                    "titulo" => $titulo,
-                    "estado" => ""
-                ];
-                //Enviamos al modelo
-                if (trim($id) === "") {
-                    //Alta
-                    if ($this->modelo->alta($data)) {
-                        $this->mensaje(
-                            "Alta de un libro",
-                            "Alta de un libro",
-                            "Se añadió correctamente el libro: " . $titulo,
-                            "libros/" . $pag,
-                            "success"
-                        );
-                    } else {
-                        $this->mensaje(
-                            "Error al añadir un libro.",
-                            "Error al añadir un libro.",
-                            "Error al modificar un libro: " . $titulo,
-                            "libros/" . $pag,
-                            "danger"
-                        );
-                    }
-                } else {
-                    //Modificar
-                    if ($this->modelo->modificar($data)) {
-                        $this->mensaje(
-                            "Modificar un libro",
-                            "Modificar un libro",
-                            "Se modificó correctamente un libro: " . $titulo,
-                            "libros/" . $pag,
-                            "success"
-                        );
-                    } else {
-                        $this->mensaje(
-                            "Error al modificar un libro.",
-                            "Error al modificar un libro.",
-                            "Error al modificar un libro: " . $titulo,
-                            "libros/" . $pag,
-                            "danger"
-                        );
-                    }
-                }
-            }
-        }
-        // preparación de la vista
-        if (!empty($errores) || $_SERVER['REQUEST_METHOD'] != "POST") {
-            $usuarios = $this->modelo->getUsuarios();
-            $copias = $this->modelo->getCopiasDisponibles();
-            $prestamo_dt = new DateTime();
-            $devolucion_dt = new DateTime();
-            $p = "+".PRESTAMO." days";
-            $devolucion_dt->modify($p);
-            $prestamo = $prestamo_dt->format('Y-m-d');
-            $devolucion = $devolucion_dt->format('Y-m-d');
-            $datos = [
-                "titulo" => "Prestar un libro",
-                "subtitulo" => "Prestar un libro",
-                "activo" => "prestamos",
-                "menu" => true,
-                "admon" => "admon",
-                "usuarios" => $usuarios,
-                "copias" => $copias,
-                "errores" => $errores,
-                "pag" => $pag,
-                "data" => [
-                    "prestamo" => $prestamo,
-                    "devolucion" => $devolucion
-                ]
-            ];
-            $this->vista("prestamosAltaVista", $datos);
-        }
-    }
 
     public function borrar($id = "", $pag = 1)
     {
