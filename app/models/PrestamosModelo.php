@@ -14,14 +14,15 @@ class PrestamosModelo extends Llaves
 	public function alta($data='') {
 	   if(empty($data)) return false;
 	   $sql = "INSERT INTO prestamos VALUES(0,";   //1. id 
-	   $sql.= "'".$data['idIdioma']."', ";      //2. idioma
-	   $sql.= "'".$data['idTema']."', ";        //3. tema
-	   $sql.= "'".$data['titulo']."', ";        //4. titulo
-	   $sql.= "'".$data['estado']."', ";        //5. estado
-	   $sql.= "'0', ";                          //6. baja lógica
-	   $sql.= "NOW(),";                         //7. fecha alta-creado
-	   $sql.= "'', ";                           //8. fecha baja
-	   $sql.= "'')";                            //9. fecha modificado                        
+	   $sql.= "'".$data['idCopia']."', ";      //2. idCopia
+	   $sql.= "'".$data['idUsuario']."', ";        //3. idUsuario
+	   $sql.= "'".$data['prestamo']."', ";        //4. prestamo
+	   $sql.= "'".$data['devolucion']."', ";        //5. devolución
+	   $sql.= "'".COPIA_PRESTADO."', ";			// 6. estado
+	   $sql.= "'0', ";                          //7. baja lógica
+	   $sql.= "NOW(),";                         //8. fecha alta-creado
+	   $sql.= "'', ";                           //9. fecha baja
+	   $sql.= "'')";                            //10. fecha modificado                        
 	   return $this->db->queryNoSelect($sql);
 	}
 
