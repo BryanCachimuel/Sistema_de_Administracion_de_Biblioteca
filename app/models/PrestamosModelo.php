@@ -103,5 +103,17 @@ class PrestamosModelo extends Llaves
 	    return $salida;
 	}
 
+	public function copiasModificar($idCopia='') {
+		$salida = false;
+		if(!empty($idCopia)) {
+			$sql = "UPDATE copias SET ";
+			$sql.= "estado='".COPIA_PRESTADO."', ";
+			$sql.= "modifica_dt=(NOW()) ";
+			$sql.= "WHERE id=".$idCopia;
+			$salida = $this->db->queryNoSelect($sql);
+		}
+		return $salida;
+	}
+
 }
 ?>
