@@ -52,7 +52,7 @@ class CopiasModelo extends Llaves
 
 	public function getTabla($inicio=1, $tamano=0) {
 		$sql = "SELECT c.id, c.clave, ";
-		$sql.= "l.titulo,c.edicion,c.copia, ec.estadoCopia ";
+		$sql.= "l.titulo,c.edicion,c.copia, ec.estadoCopia, c.estado ";
 		$sql.= "FROM copias as c, libros as l, estadosCopias as ec ";
 		$sql.= "WHERE c.baja=0 AND ";
 		$sql.= "c.idLibro=l.id AND ";
