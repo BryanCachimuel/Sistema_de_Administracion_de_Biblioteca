@@ -116,7 +116,7 @@ class PrestamosModelo extends Llaves
 	}
 
 	public function copiasDevolver($data) {
-		$salida = true;
+		$salida = false;
 		if(!empty($data)) {
 			$sql = "UPDATE copias SET ";
 			$sql .= "estado='".$data["idEstado"]."', ";
@@ -135,6 +135,13 @@ class PrestamosModelo extends Llaves
 		$sql .= "estado=".COPIA_PRESTADO." AND ";
 		$sql .= "baja=0";
 		return $this->db->queryNoSelect($sql);
+	}
+
+	public function getEstadoCopia($copia, $numCopia) {
+		$sql = "SELECT id, estado ";
+		$sql .= "FROM copias WHERE clave='".$copia."' AND ";
+		$sql .= "copia='".$numCopia."'";
+		return $this->db->query($sql);
 	}
 
 }
