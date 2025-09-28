@@ -109,25 +109,6 @@ class Prestamos extends Controlador
 							"danger"
 						);
 					}
-				} else {
-					//Modificar
-					if ($this->modelo->modificar($data)) {
-						$this->mensaje(
-							"Modificar un libro",
-							"Modificar un libro",
-							"Se modificó correctamente el libro: " . $titulo,
-							"libros/" . $pag,
-							"success"
-						);
-					} else {
-						$this->mensaje(
-							"Error al modificar un libro.",
-							"Error al modificar un libro.",
-							"Error al modificar un libro: " . $titulo,
-							"libros/" . $pag,
-							"danger"
-						);
-					}
 				}
 			}
 		}
@@ -157,54 +138,6 @@ class Prestamos extends Controlador
 				]
 			];
 			$this->vista("prestamosAltaVista", $datos);
-		}
-	}
-
-
-	public function borrar($id = "", $pag = 1)
-	{
-		//Leemos los datos del registro del id
-		$data = $this->modelo->getLibroId($id);
-		$idiomas = $this->modelo->getCatalogo("idiomas", "idioma");
-		$temas = $this->modelo->getCatalogo("temas", "tema");
-		//Vista baja
-		$datos = [
-			"titulo" => "Baja de un libro",
-			"subtitulo" => "Baja de un libro",
-			"menu" => true,
-			"admon" => "admon",
-			"errores" => [],
-			"pag" => $pag,
-			"idiomas" => $idiomas,
-			"temas" => $temas,
-			"activo" => 'libros',
-			"data" => $data,
-			"baja" => true
-		];
-		$this->vista("librosAltaVista", $datos);
-	}
-
-
-	public function bajaLogica($id = '', $pag = 1)
-	{
-		if (isset($id) && $id != "") {
-			if ($this->modelo->bajaLogica($id)) {
-				$this->mensaje(
-					"Borrar un libro",
-					"Borrar un libro",
-					"Se borró correctamente un libro.",
-					"libros/" . $pag,
-					"success"
-				);
-			} else {
-				$this->mensaje(
-					"Error al borrar un libro",
-					"Error al borrar un libro",
-					"Error al borrar un libro.",
-					"libros/" . $pag,
-					"danger"
-				);
-			}
 		}
 	}
 
