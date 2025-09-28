@@ -7,6 +7,11 @@
     </div>
 
     <div class="form-group text-left">
+      <label for="num">* Número copia:</label>
+      <input type="text" name="num" id="num" class="form-control" required>
+    </div>
+
+    <div class="form-group text-left">
       <label for="idEstado">* Estados:</label>
       <select class="form-control" name="idEstado" id="idEstado">
         <?php
