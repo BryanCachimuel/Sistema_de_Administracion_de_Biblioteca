@@ -206,25 +206,22 @@ class Prestamos extends Controlador {
         }
     }
 
-    public function modificar($id, $pag = 1)
-    {
+	public function devolver() {
         //Leemos los datos de la tabla
-        $data = $this->modelo->getLibroId($id);
-        $idiomas = $this->modelo->getCatalogo("idiomas", "idioma");
-        $temas = $this->modelo->getCatalogo("temas","tema");
+        $data = [];
+		$errores = [];
+        $estados = $this->modelo->getCatalogo("estadosCopias");
         $datos = [
-            "titulo" => "Modificar un libro",
-            "subtitulo" => "Modificar un libro",
-            "activo" => "libros",
+            "titulo" => "Regresar un libro",
+            "subtitulo" => "Regresar un libro",
+            "activo" => "prestamos",
             "menu" => true,
             "admon" => "admon",
-            "idiomas" => $idiomas,
-            "temas" => $temas,
-            "pag" => $pag,
+			"estados" => $estados,
             "errores" => [],
-            "data" => $data
+            "data" => []
         ];
-        $this->vista("librosAltaVista", $datos);
+        $this->vista("prestamosDevolverVista", $datos);
     }
 
 }
