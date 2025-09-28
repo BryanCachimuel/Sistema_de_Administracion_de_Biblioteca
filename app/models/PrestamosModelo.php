@@ -26,11 +26,6 @@ class PrestamosModelo extends Llaves
 	   return $this->db->queryNoSelect($sql);
 	}
 
-	public function bajaLogica($id){
-		$sql = "UPDATE prestamos SET baja=1, baja_dt=(NOW()) WHERE id=".$id;
-		return $this->db->queryNoSelect($sql);
-	}
-
 	public function getPrestamoId($id='') {
 		if(empty($id)) return false;
 		$sql = "SELECT * FROM prestamos WHERE id='".$id."'";
@@ -84,23 +79,6 @@ class PrestamosModelo extends Llaves
 		$sql.= "c.estado=".COPIA_DISPONIBLE." ";
 		$sql.= "ORDER BY c.clave";
 		return $this->db->querySelect($sql);
-	}
-
-
-	public function modificar($data) {
-		$salida = false;
-	    if (!empty($data["id"])) {
-	     $sql = "UPDATE prestamos SET "; 
-	     $sql.= "idTema='".$data['idTema']."', ";
-	     $sql.= "idIdioma='".$data['idIdioma']."', ";
-	     $sql.= "titulo='".$data['titulo']."', ";
-	     $sql.= "estado='".$data['estado']."', ";	
-	     $sql.= "modifica_dt=(NOW()) ";
-	     $sql.= "WHERE id=".$data['id'];
-	     //Enviamos a la base de datos
-	     $salida = $this->db->queryNoSelect($sql);
-	    }
-	    return $salida;
 	}
 
 	public function copiasModificar($idCopia='') {
