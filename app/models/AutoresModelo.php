@@ -58,6 +58,14 @@ class AutoresModelo extends Llaves
 		return $this->db->querySelect($sql);
 	}
 
+	public function getIntegridadReferencial($id) {
+		$ir_array = [0];
+		$sql = "SELECT COUNT(*) FROM librosAutores WHERE baja=0 AND idAutor=".$id;
+		$salida = $this->db->query($sql);
+		$ir_array[0] = $salida["COUNT(*)"];
+		return $ir_array;
+	}
+
 
 	public function modificar($data) {
 		$salida = false;
