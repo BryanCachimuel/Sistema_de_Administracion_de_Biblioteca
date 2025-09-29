@@ -55,6 +55,20 @@ class LibrosModelo extends Llaves
 		return $this->db->querySelect($sql);
 	}
 
+	public function getIntegridadReferencial($id) {
+		$ir_array = [0,0,0];
+		$sql = "SELECT COUNT(*) FROM copias WHERE baja=0 AND idLibro=".$id;
+		$salida = $this->db->query($sql);
+		$ir_array[1] = $salida["COUNT(*)"];
+
+		$sql = "SELECT COUNT(*) FROM librosAutores WHERE baja=0 AND idLibro=".$id;
+		$salida = $this->db->query($sql);
+		$ir_array[2] = $salida["COUNT(*)"];
+
+		$ir_array[0] = $ir_array[1] + $ir_array[2];
+		return $ir_array;
+	}
+
 	public function modificar($data) {
 		$salida = false;
 	    if (!empty($data["id"])) {
