@@ -150,21 +150,34 @@ class Autores extends Controlador
         $data = $this->modelo->getAutorId($id);
         $paises = $this->modelo->getCatalogo("paises");
         $genero = $this->modelo->getCatalogo("genero");
-        //Vista baja
-        $datos = [
-            "titulo" => "Baja de un autor(a)",
-            "subtitulo" => "Baja de un autor(a)",
-            "menu" => true,
-            "admon" => "admon",
-            "errores" => [],
-            "pag" => $pag,
-            "paises" => $paises,
-            "genero" => $genero,
-            "activo" => 'autores',
-            "data" => $data,
-            "baja" => true
-        ];
-        $this->vista("autoresAltaVista", $datos);
+        $ir_array = $this->modelo->getIntegridadReferencial($id);
+
+        if ($ir_array[0] == 0) {
+            //Vista baja
+            $datos = [
+                "titulo" => "Baja de un autor(a)",
+                "subtitulo" => "Baja de un autor(a)",
+                "menu" => true,
+                "admon" => "admon",
+                "errores" => [],
+                "pag" => $pag,
+                "paises" => $paises,
+                "genero" => $genero,
+                "activo" => 'autores',
+                "data" => $data,
+                "baja" => true
+            ];
+            $this->vista("autoresAltaVista", $datos);
+        }
+        else {
+            $this->mensaje(
+                "Error al borrar un autor",
+				"Error al borrar un autor",
+				"No podemos eliminar esté autor porque tiene: <ul><li>".$ir_array[0]." préstamos. <li></ul>Primero debe eliminar esas referencias",
+				"autores",
+				"danger"
+            );
+        }
     }
 
 
@@ -213,144 +226,148 @@ class Autores extends Controlador
     }
 
     /* Autores - Libros */
-    public function autoresLibros($idAutor) {
+    public function autoresLibros($idAutor)
+    {
         // leemos los datos de la tabla
         $data = $this->modelo->getLibrosAutoresTabla($idAutor);
         $autor = $this->modelo->getAutorId($idAutor);
-        $nombre = $autor["nombre"]." ".$autor["apellidoPaterno"]." ".$autor["apellidoMaterno"];
+        $nombre = $autor["nombre"] . " " . $autor["apellidoPaterno"] . " " . $autor["apellidoMaterno"];
         $datos = [
-            "titulo"=> "Libros",
-            "subtitulo"=> "Libros de: ".$nombre,
-            "admon"=> "admon",
-            "activo"=> "autores",
-            "data"=> $data,
-            "idAutor"=> $idAutor,
-            "menu"=> true
+            "titulo" => "Libros",
+            "subtitulo" => "Libros de: " . $nombre,
+            "admon" => "admon",
+            "activo" => "autores",
+            "data" => $data,
+            "idAutor" => $idAutor,
+            "menu" => true
         ];
-        $this->vista("autoresLibrosCaratulaVista",$datos);
+        $this->vista("autoresLibrosCaratulaVista", $datos);
     }
 
-    public function autoresLibrosAlta($idAutor="") {
+    public function autoresLibrosAlta($idAutor = "")
+    {
         // definir los arreglos
         $data = array();
         $errores = array();
 
-        if ($_SERVER['REQUEST_METHOD']=="POST") {
-			//
-			$idLibro = Helper::cadena($_POST['idLibro'] ?? "");
-			$pag = $_POST['pag'] ?? "1";
-			$idAutor = $_POST['idAutor'] ?? "";
-			//
-			// Validamos la información
-			// 
-			if($idLibro=="void"){
-				array_push($errores,"El libro es requerido.");
-			}
-			if (empty($errores)) { 
-				// Crear arreglo de datos
-				//
-				$data = [
-				 "idLibro" => $idLibro,
-				 "idAutor"=>$idAutor,
-				];
-				//Enviamos al modelo
-				if ($this->modelo->autoresLibrosAlta($data)) {
-					//Envía correo
-					$this->mensaje(
-						"El libro fue añadido.", 
-						"El libro fue añadido.", 
-						"El libro fue añadido.", 
-						"autores/autoresLibros/".$idAutor."/".$pag, 
-						"success"
-					);
-				} else {
-					$this->mensaje(
-						"Error al registrar el libro.", 
-						"Error al registrar el libro.", 
-						"Error al registrar el libro: ", 
-						"autores/".$pag, 
-						"danger"
-					);
-				}
-			}
-	    }
-        if(!empty($errores) || $_SERVER['REQUEST_METHOD']!="POST") {
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            //
+            $idLibro = Helper::cadena($_POST['idLibro'] ?? "");
+            $pag = $_POST['pag'] ?? "1";
+            $idAutor = $_POST['idAutor'] ?? "";
+            //
+            // Validamos la información
+            // 
+            if ($idLibro == "void") {
+                array_push($errores, "El libro es requerido.");
+            }
+            if (empty($errores)) {
+                // Crear arreglo de datos
+                //
+                $data = [
+                    "idLibro" => $idLibro,
+                    "idAutor" => $idAutor,
+                ];
+                //Enviamos al modelo
+                if ($this->modelo->autoresLibrosAlta($data)) {
+                    //Envía correo
+                    $this->mensaje(
+                        "El libro fue añadido.",
+                        "El libro fue añadido.",
+                        "El libro fue añadido.",
+                        "autores/autoresLibros/" . $idAutor . "/" . $pag,
+                        "success"
+                    );
+                } else {
+                    $this->mensaje(
+                        "Error al registrar el libro.",
+                        "Error al registrar el libro.",
+                        "Error al registrar el libro: ",
+                        "autores/" . $pag,
+                        "danger"
+                    );
+                }
+            }
+        }
+        if (!empty($errores) || $_SERVER['REQUEST_METHOD'] != "POST") {
             // alta de un libro
             $libros = $this->modelo->getLibros();
             $autor = $this->modelo->getAutorId($idAutor);
-            $nombre = $autor["nombre"]." ".$autor["apellidoPaterno"]." ".$autor["apellidoMaterno"];
+            $nombre = $autor["nombre"] . " " . $autor["apellidoPaterno"] . " " . $autor["apellidoMaterno"];
             $datos = [
-                "titulo"=> "Dar de alta a un libro",
-                "subtitulo"=> "Dar de alta a un libro para: ".$nombre,
-                "activo"=> "autores",
-                "menu"=> false,
-                "admon"=> "admon",
-                "errores"=> $errores,
-                "idAutor"=> $idAutor,
-                "data"=> $libros, 
+                "titulo" => "Dar de alta a un libro",
+                "subtitulo" => "Dar de alta a un libro para: " . $nombre,
+                "activo" => "autores",
+                "menu" => false,
+                "admon" => "admon",
+                "errores" => $errores,
+                "idAutor" => $idAutor,
+                "data" => $libros,
             ];
-            $this->vista("autoresLibrosCaratulaVista",$datos);
+            $this->vista("autoresLibrosCaratulaVista", $datos);
         }
     }
 
-     public function autoresLibrosQuitar($idLibroAutor="",$pag=1) {
+    public function autoresLibrosQuitar($idLibroAutor = "", $pag = 1)
+    {
         // indetificador de la tabla libroAutor
         $data = $this->modelo->getIdLibrosAutores($idLibroAutor);
         $datos = [
             "titulo" => "Quitar una relación de autor-libro",
-		    "subtitulo" => "Quitar una relación de autor-libro",
-		    "activo" => "autores",
-		    "menu" => false,
+            "subtitulo" => "Quitar una relación de autor-libro",
+            "activo" => "autores",
+            "menu" => false,
             "admon" => "admon",
-		    "errores" => [],
+            "errores" => [],
             "pag" => $pag,
-		    "baja" => true,
+            "baja" => true,
             "id" => $idLibroAutor,
             "data" => $data
         ];
-        $this->vista("autoresLibrosQuitarVista",$datos);
+        $this->vista("autoresLibrosQuitarVista", $datos);
     }
 
-    public function autoresLibrosBajaLogica($idLibroAutor='',$pag=1,$idLibro=""){
-		if (isset($idLibroAutor) && $idLibroAutor!="") {
-			if ($this->modelo->autoresLibrosBajaLogica($idLibroAutor)) {
-				$this->mensaje(
-					"Eliminó el libro del autor", 
-					"Eliminó el libro del autor", 
-					"Se eliminó correctamente el libro del autor", 
-					"autores/autoresLibros/".$idLibro."/".$pag, 
-					"success"
-				);
-			} else {
-				$this->mensaje(
-					"Error al borrar el libro del autor", 
-					"Error al borrar el libro del autor", 
-					"Error al borrar el libro del autor", 
-					"autores/".$pag, 
-					"danger"
-				);
-			}
-		}
-	}
+    public function autoresLibrosBajaLogica($idLibroAutor = '', $pag = 1, $idLibro = "")
+    {
+        if (isset($idLibroAutor) && $idLibroAutor != "") {
+            if ($this->modelo->autoresLibrosBajaLogica($idLibroAutor)) {
+                $this->mensaje(
+                    "Eliminó el libro del autor",
+                    "Eliminó el libro del autor",
+                    "Se eliminó correctamente el libro del autor",
+                    "autores/autoresLibros/" . $idLibro . "/" . $pag,
+                    "success"
+                );
+            } else {
+                $this->mensaje(
+                    "Error al borrar el libro del autor",
+                    "Error al borrar el libro del autor",
+                    "Error al borrar el libro del autor",
+                    "autores/" . $pag,
+                    "danger"
+                );
+            }
+        }
+    }
 
-   
+
     /* Copias */
-  	public function copias($idLibro) {
-  		//
-  		if($idLibro=="") return false;
-  		$libro = $this->modelo->getLibro($idLibro);
-  		$copias = $this->modelo->copiasLibroTabla($idLibro);
-  		$datos = [
-		     "titulo" => "Copias de un libro",
-		     "subtitulo" => "Copias del libro: ".$libro["titulo"],
-		     "activo" => "autores",
-		     "menu" => false,
-		     "admon" => "admon",
-		     "libro" => $idLibro,
-		     "errores" => [],
-		     "data" => $copias
-		];
-		$this->vista("autoresLibrosCopiasCaratulaVista",$datos);
-	}
-
+    public function copias($idLibro)
+    {
+        //
+        if ($idLibro == "") return false;
+        $libro = $this->modelo->getLibro($idLibro);
+        $copias = $this->modelo->copiasLibroTabla($idLibro);
+        $datos = [
+            "titulo" => "Copias de un libro",
+            "subtitulo" => "Copias del libro: " . $libro["titulo"],
+            "activo" => "autores",
+            "menu" => false,
+            "admon" => "admon",
+            "libro" => $idLibro,
+            "errores" => [],
+            "data" => $copias
+        ];
+        $this->vista("autoresLibrosCopiasCaratulaVista", $datos);
+    }
 }
