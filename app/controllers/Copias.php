@@ -1,6 +1,7 @@
 <?php
 
-class Copias extends Controlador {
+class Copias extends Controlador
+{
 
     private $modelo = "";
 
@@ -113,7 +114,7 @@ class Copias extends Controlador {
                         $this->mensaje(
                             "Modificar una copia",
                             "Modificar una copia",
-                            "Se modificó correctamente la copia: " . $clave." ".$copia,
+                            "Se modificó correctamente la copia: " . $clave . " " . $copia,
                             "copias/" . $pag,
                             "success"
                         );
@@ -157,27 +158,39 @@ class Copias extends Controlador {
     {
         //Leemos los datos del registro del id
         $data = $this->modelo->getCopiasId($id);
-        $paises = $this->modelo->getCatalogo("paises","pais");
+        $paises = $this->modelo->getCatalogo("paises", "pais");
         $estadosCopias = $this->modelo->getCatalogo("estadosCopias");
         $editoriales = $this->modelo->getEditoriales();
         $libros = $this->modelo->getLibros();
-        //Vista baja
-        $datos = [
-            "titulo" => "Baja de una copia",
-            "subtitulo" => "Baja de una copia",
-            "menu" => true,
-            "admon" => "admon",
-            "errores" => [],
-            "pag" => $pag,
-            "paises" => $paises,
-            "estadosCopias" => $estadosCopias,
-            "editoriales" => $editoriales,
-            "libros" => $libros,
-            "activo" => 'copias',
-            "data" => $data,
-            "baja" => true
-        ];
-        $this->vista("copiasAltaVista", $datos);
+        $ir_array = $this->modelo->getIntegridadReferencial($id);
+
+        if ($ir_array[0] == 0) {
+            //Vista baja
+            $datos = [
+                "titulo" => "Baja de una copia",
+                "subtitulo" => "Baja de una copia",
+                "menu" => true,
+                "admon" => "admon",
+                "errores" => [],
+                "pag" => $pag,
+                "paises" => $paises,
+                "estadosCopias" => $estadosCopias,
+                "editoriales" => $editoriales,
+                "libros" => $libros,
+                "activo" => 'copias',
+                "data" => $data,
+                "baja" => true
+            ];
+            $this->vista("copiasAltaVista", $datos);
+        } else {
+            $this->mensaje(
+                "Error al borrar una copia",
+				"Error al borrar una copia",
+				"No podemos eliminar está copia porque tiene: <ul><li>".$ir_array[0]." préstamos. <li></ul>Primero debe eliminar esas referencias",
+				"copias",
+				"danger"
+            );
+        }
     }
 
 
@@ -208,7 +221,7 @@ class Copias extends Controlador {
     {
         //Leemos los datos de la tabla
         $data = $this->modelo->getCopiasId($id);
-        $paises = $this->modelo->getCatalogo("paises","pais");
+        $paises = $this->modelo->getCatalogo("paises", "pais");
         $estadosCopias = $this->modelo->getCatalogo("estadosCopias");
         $editoriales = $this->modelo->getEditoriales();
         $libros = $this->modelo->getLibros();
@@ -228,6 +241,4 @@ class Copias extends Controlador {
         ];
         $this->vista("copiasAltaVista", $datos);
     }
-
-   
 }
