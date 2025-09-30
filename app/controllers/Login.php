@@ -102,9 +102,9 @@ class Login extends Controlador
 				//Alta
 				if ($this->modelo->registrar($data)) {
 
-					if($this->modelo->enviarCorreoRegistro($data, $clave)) {
+					if ($this->modelo->enviarCorreoRegistro($data, $clave)) {
 						$this->mensaje("Registro del usuario", "Registro del usuario", "Se envió un correo a " . $data["correo"] . " favor de verificarlo, también el buzón de 'span'.", "login", "success");
-					}else {
+					} else {
 						$this->mensaje("Registro del usuario", "Registro del usuario", "Error al enviar el correo a " . $data["correo"] . " favor de verificarlo.", "login", "danger");
 					}
 				} else {
@@ -137,12 +137,13 @@ class Login extends Controlador
 		}
 	}
 
-	public function registroConfirmar($data='') {
+	public function registroConfirmar($data = '')
+	{
 		$id = Helper::desencriptar($data);
-		$errores=[];
-		if ($_SERVER["REQUEST_METHOD"]=="POST") {
-			$id=$_POST["id"]??"";
-			$clave=$_POST['clave']??"";
+		$errores = [];
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			$id = $_POST["id"] ?? "";
+			$clave = $_POST['clave'] ?? "";
 
 			if (empty($id)) {
 				array_push($errores, "El número de usuario es requerido.");
@@ -150,22 +151,22 @@ class Login extends Controlador
 			if (empty($clave)) {
 				array_push($errores, "La clave de acceso es requerida.");
 			}
-			if (count($errores)==0) {
+			if (count($errores) == 0) {
 				// clave sin encriptar
 				$data = $this->modelo->getUsuarioId($id);
-				if($data) {
-					if($data["clave"] == $clave) {
-						$clave = hash_hmac("sha512",$clave,CLAVE);
-						if($this->modelo->usuarioAutorizar($id,$clave)) {
-							$this->mensaje("Actualizar Registro","Actualizar Registro","El registro se actualizo correctamente, bienvenido(a)","login","success");
-						}else {
-							$this->mensaje("Error al actualizar el usuario","Error al actualizar el usuario","Error al actualizar el usuario","login","danger");
+				if ($data) {
+					if ($data["clave"] == $clave) {
+						$clave = hash_hmac("sha512", $clave, CLAVE);
+						if ($this->modelo->usuarioAutorizar($id, $clave)) {
+							$this->mensaje("Actualizar Registro", "Actualizar Registro", "El registro se actualizo correctamente, bienvenido(a)", "login", "success");
+						} else {
+							$this->mensaje("Error al actualizar el usuario", "Error al actualizar el usuario", "Error al actualizar el usuario", "login", "danger");
 						}
-					}else {
-						$this->mensaje("Error al actualizar el usuario","Error al actualizar el usuario","La contraseña de acceso no coincide","login","danger");
-					}	
-				}else {
-					$this->mensaje("Error al actualizar el usuario","Error al actualizar el usuario","Existio un error al actualizar la contraseña de acceso. Favor intentarlo más tarde o cuminicarse a soporte técnico","login","danger");
+					} else {
+						$this->mensaje("Error al actualizar el usuario", "Error al actualizar el usuario", "La contraseña de acceso no coincide", "login", "danger");
+					}
+				} else {
+					$this->mensaje("Error al actualizar el usuario", "Error al actualizar el usuario", "Existio un error al actualizar la contraseña de acceso. Favor intentarlo más tarde o cuminicarse a soporte técnico", "login", "danger");
 				}
 				exit;
 			}
@@ -177,7 +178,7 @@ class Login extends Controlador
 			"menu" => false,
 			"data" => $id
 		];
-		$this->vista("loginRegistroConfirmarVista",$datos);
+		$this->vista("loginRegistroConfirmarVista", $datos);
 	}
 
 	public function olvidoVerificar()
@@ -323,6 +324,43 @@ class Login extends Controlador
 			}
 			if (empty($usuario)) {
 				array_push($errores, "El usuario es requerido.");
+			}
+			// clave de acceso temporal
+			if (strlen($clave) == 10) {
+				$data = $this->modelo->buscarCorreo($usuario);
+				$id = $data["id"];
+				$estado = $data["estado"];
+				if (empty($id)) {
+					$this->mensaje(
+						"Error en el acceso",
+						"Error en el acceso",
+						"Favor de verificar el usuario",
+						"login",
+						"danger"
+					);
+				} else {
+					if ($data["clave"] == $clave) {
+						$datos = [
+							"titulo" => "Añadir contraseña",
+							"subtitulo" => "Añadir contraseña",
+							"menu" => false,
+							"admon" => "admon",
+							"errores" => [],
+							"data" => Helper::encriptar($id)
+							//"data" => $id
+						];
+						$this->vista("loginCambiarVista",$datos);
+					} else {
+						$this->mensaje(
+							"Error en el acceso",
+							"Error en el acceso",
+							"Favor de verificar el usuario",
+							"login",
+							"danger"
+						);
+					}
+				}
+				exit;
 			}
 			if (count($errores) == 0) {
 				$clave = hash_hmac("sha512", $clave, CLAVE);
