@@ -247,6 +247,7 @@ class Login extends Controlador
 			$clave1 = $_POST['clave'] ?? "";
 			$clave2 = $_POST['verifica'] ?? "";
 			$id = $_POST['id'] ?? "";
+			$id = Helper::desencriptar($id);
 			//
 			if (empty($clave1)) {
 				array_push($errores, "La clave de acceso es requerida.");
