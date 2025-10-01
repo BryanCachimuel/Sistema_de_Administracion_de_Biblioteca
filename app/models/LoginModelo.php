@@ -42,6 +42,14 @@ class LoginModelo extends Llaves{
 		return false;
 	}
 
+    public function actualizarLogin($id='') {
+		if ($id!="") {
+			$sql = "UPDATE usuarios SET login_dt=(NOW()) WHERE id=".$id;
+			return $this->db->queryNoSelect($sql);
+		}
+		return false;
+	}
+
     public function getUsuarioId($id='') {
 		if(empty($id)) return false;
 		$sql = "SELECT * FROM usuarios WHERE id='".$id."'";
