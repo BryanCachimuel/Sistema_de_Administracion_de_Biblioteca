@@ -367,9 +367,23 @@ class Login extends Controlador
 				$clave = hash_hmac("sha512", $clave, CLAVE);
 				$data = $this->modelo->buscarCorreo($usuario);
 				if ($data && $data["clave"] == $clave) {
-					$sesion = new Sesion();
-					$sesion->iniciarLogin($data);
-					header("location:" . RUTA . "tablero");
+					if ($data["estado"] == USUARIO_ACTIVO) {
+						$sesion = new Sesion();
+						$sesion->iniciarLogin($data);
+						if($data["idTipoUsuario"] == ADMON) {
+							header("location:" . RUTA . "tablero");
+						}else {
+							Helper::mostrar("Bienvenido a la consulta");
+						}
+					} else {
+						$this->mensaje(
+							"Error en el acceso",
+							"Error en el acceso",
+							"Favor de verificar el estado de tu usuario. No está activo. Habla con el administrador",
+							"login",
+							"danger"
+						);
+					}	
 				} else {
 					$datos = [
 						"titulo" => "Sistema de biblioteca",
