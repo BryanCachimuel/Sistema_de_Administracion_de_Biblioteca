@@ -370,10 +370,11 @@ class Login extends Controlador
 					if ($data["estado"] == USUARIO_ACTIVO) {
 						$sesion = new Sesion();
 						$sesion->iniciarLogin($data);
+						$this->modelo->actualizarLogin($data["id"]);
 						if($data["idTipoUsuario"] == ADMON) {
 							header("location:" . RUTA . "tablero");
 						}else {
-							Helper::mostrar("Bienvenido a la consulta");
+							header("location:" . RUTA . "consultar"); 
 						}
 					} else {
 						$this->mensaje(
