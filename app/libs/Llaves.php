@@ -16,7 +16,7 @@ class Llaves {
 
 	public function buscarCorreo($usuario='') {
         if(empty($usuario)) return false;
-        $sql = "SELECT id, nombre, apellidoPaterno, apellidoMaterno, clave, correo, estado FROM usuarios WHERE correo='".$usuario."'";
+        $sql = "SELECT id, nombre, apellidoPaterno, apellidoMaterno, clave, correo, estado, idTipoUsuario FROM usuarios WHERE correo='".$usuario."'";
         return $this->db->query($sql);
     }
 }
