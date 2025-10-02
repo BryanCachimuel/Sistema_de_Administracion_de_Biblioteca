@@ -22,6 +22,14 @@ class ConsultarModelo
 		$sql.= "ORDER BY p.devolucion_dt DESC ";
 		$sql.= "LIMIT 10";
 		return $this->db->querySelect($sql);
+    }
 
+    public function getTemas() {
+        $sql = "SELECT t.id, t.tema, c.categoria ";
+		$sql.= "FROM temas as t, categorias as c ";
+		$sql.= "WHERE t.baja=0 AND ";
+		$sql.= "t.idCategoria=c.id ";
+		$sql.= "ORDER BY t.tema";
+		return $this->db->querySelect($sql);
     }
 }
