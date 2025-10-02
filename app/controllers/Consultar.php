@@ -18,14 +18,17 @@ class Consultar extends Controlador {
     }
 
     public function caratula($value='') {
-        $datos = [
-            "titulo" => "Sistema de Biblioteca",
-            "subtitulo" => $this->usuario["nombre"]." ".$this->usuario["apellidoPaterno"]." ".$this->usuario["apellidoMaterno"],
+        $prestamos = $this->modelo->getPrestamos($this->usuario["id"]);
+		$datos = [
+			"titulo" => "Sistema de biblioteca",
+			"subtitulo" => $this->usuario["nombre"]." ".$this->usuario["apellidoPaterno"]." ".$this->usuario["apellidoMaterno"],
 			"usuario"=>$this->usuario,
+			"prestamos"=>$prestamos,
+			"admon"=>false,
 			"data"=>[],
-			"menu" => false
-        ];
-        $this->vista("consultarCaratulaVista",$datos);
+			"menu" => true
+		];
+		$this->vista("consultarCaratulaVista",$datos);
     }
 
     public function logout() {
