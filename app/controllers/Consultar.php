@@ -31,6 +31,19 @@ class Consultar extends Controlador {
 		$this->vista("consultarCaratulaVista",$datos);
     }
 
+    public function consultar() {
+        // leer los datos de la tabla
+        $temas = $this->modelo->getTemas();
+        $datos = [
+            "titulo"=> "Consultas",
+            "subtitulo"=> "Consultas",
+            "admon"=> false,
+            "temas"=> $temas,
+            "menu"=>true
+        ];
+        $this->vista("consultarConsultarVista",$datos);
+    }
+
     public function logout() {
         if(isset($_SESSION['usuario'])) {
             $this->sesion->finalizarLogin();
