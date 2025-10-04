@@ -86,7 +86,7 @@
                 print "<ul class='navbar-nav mr-auto mt-2 mt-lg-0'>";
                 //
                 print "<li class='nav-item'>";
-                print "<a href='" . RUTA . "consultas' class='nav-link ";
+                print "<a href='" . RUTA . "consultar/consultar' class='nav-link ";
                 if (isset($datos["activo"]) && $datos["activo"] == "consultas") print "active";
                 print "'>Consultas</a>";
                 print "</li>";
