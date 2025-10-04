@@ -77,6 +77,22 @@ class Consultar extends Controlador {
         }
     }
 
+    public function copias($idLibro='') {
+        $libro = $this->modelo->getLibro($idLibro);
+        $autores = $this->modelo->getAutores($idLibro);
+        $copias = $this->modelo->getCopias($idLibro);
+        $datos = [
+            "titulo"=> "Consultas",
+			"subtitulo" => $libro["categoria"].">".$libro["tema"].">".$libro["titulo"],
+			"admon" => false,
+			"libros" => $libro,
+			"autores" => $autores,
+			"copias" => $copias,
+			"menu" => true
+        ];
+        $this->vista("consultarCopiasVista",$datos);
+    }
+
     public function logout() {
         if(isset($_SESSION['usuario'])) {
             $this->sesion->finalizarLogin();
