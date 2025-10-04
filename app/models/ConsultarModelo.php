@@ -61,4 +61,14 @@ class ConsultarModelo
 		$sql .= "ORDER BY t.tema";
 		return $this->db->querySelect($sql);
 	}
+
+	public function getLibro($idLibro="") {
+		$sql = "SELECT c.id, c.clave, c.copia, c.anio, c.edicion, c.estado, e.estadoCopia ";
+		$sql.= "FROM copias as c, estadosCopias as e ";
+		$sql.= "WHERE c.baja=0 AND ";
+		$sql.= "c.estado=e.id AND ";
+		$sql.= "c.idLibro=".$idLibro;
+		return $this->db->querySelect($sql);
+
+	}
 }
