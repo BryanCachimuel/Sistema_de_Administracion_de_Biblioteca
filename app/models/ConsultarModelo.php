@@ -62,13 +62,24 @@ class ConsultarModelo
 		return $this->db->querySelect($sql);
 	}
 
-	public function getLibro($idLibro="") {
-		$sql = "SELECT c.id, c.clave, c.copia, c.anio, c.edicion, c.estado, e.estadoCopia ";
-		$sql.= "FROM copias as c, estadosCopias as e ";
-		$sql.= "WHERE c.baja=0 AND ";
-		$sql.= "c.estado=e.id AND ";
-		$sql.= "c.idLibro=".$idLibro;
-		return $this->db->querySelect($sql);
-
+	public function getLibro($idLibro = "") {
+		$sql = "SELECT l.id, l.titulo, l.idTema, t.tema, c.categoria ";
+		$sql .= "FROM libros as l, temas as t, categorias as c ";
+		$sql .= "WHERE l.baja=0 AND ";
+		$sql .= "l.id=" . $idLibro . " AND ";
+		$sql .= "l.idTema=t.id AND ";
+		$sql .= "t.idCategoria=c.id";
+		return $this->db->query($sql);
 	}
+
+	public function getAutores($idLibro = "") {
+		$sql = "SELECT a.id, CONCAT(a.nombre,' ',a.apellidoPaterno,' ',a.apellidoMaterno) as autor ";
+		$sql .= "FROM autores as a, librosAutores as la ";
+		$sql .= "WHERE la.baja=0 AND ";
+		$sql .= "la.idAutor=a.id AND ";
+		$sql .= "la.idLibro=" . $idLibro;
+		return $this->db->querySelect($sql);
+	}
+
+	
 }
