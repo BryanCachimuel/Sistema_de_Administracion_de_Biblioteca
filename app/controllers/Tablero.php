@@ -22,6 +22,7 @@ class Tablero extends Controlador {
             "titulo" => "Sistema de Biblioteca",
             "subtitulo" => $this->usuario["nombre"]." ".$this->usuario["apellidoPaterno"]." ".$this->usuario["apellidoMaterno"],
 			"usuario"=>$this->usuario,
+            "admon"=>ADMON,
 			"data"=>[],
 			"menu" => true
         ];
