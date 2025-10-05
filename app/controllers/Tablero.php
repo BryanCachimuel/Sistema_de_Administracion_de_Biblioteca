@@ -49,4 +49,14 @@ class Tablero extends Controlador {
 	  		"Respaldar"
 	  	);
     }
+
+    public function respaldarEjecutar() {
+		$fecha = date("Ymdhis");
+		$id = uniqid();
+		$tablas = $this->modelo->getTablas();
+		Helper::mostrar($tablas);
+		foreach ($tablas as $tabla) {
+		}
+	}
+
 }
