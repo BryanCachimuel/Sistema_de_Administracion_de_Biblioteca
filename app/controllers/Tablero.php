@@ -35,4 +35,18 @@ class Tablero extends Controlador {
         }
         header("location:".RUTA);
     }
+
+    public function respaldar() {
+        $m = "Cuidado: Este proceso realiza el respaldo de la base de datos. Puede tardar algunos minutos";
+        $this->mensaje(
+	  		"Respaldar la base de datos", 
+	  		"Respaldar la base de datos", 
+	  		$m, 
+	  		"tablero",
+	  		"danger",
+	  		"tablero/respaldarEjecutar/",
+	  		"success",
+	  		"Respaldar"
+	  	);
+    }
 }
