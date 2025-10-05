@@ -36,4 +36,8 @@ class Sesion {
     public function getUsuario() {
         return $this->usuario;
     }
+
+    public function setUsuario($data='') {
+        $this->usuario = $_SESSION['usuario'] = $data;
+    }
 }
