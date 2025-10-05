@@ -1,8 +1,8 @@
 <?php
 
-class TableroModelo {
+class TableroModelo extends Llaves{
 
-    private $db = "";
+    protected $db = "";
 
     function __construct() {
         $this->db = new MySQLdb();

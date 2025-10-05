@@ -2,9 +2,9 @@
 
 class Consultar extends Controlador {
 
-    private $usuario = "";
-    private $modelo = "";
-    private $sesion;
+    protected $usuario = "";
+    protected $modelo = "";
+    protected $sesion;
 
     function __construct() {
         // Creamos sesión
