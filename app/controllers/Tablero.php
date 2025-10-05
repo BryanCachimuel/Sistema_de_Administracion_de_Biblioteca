@@ -54,9 +54,15 @@ class Tablero extends Controlador {
 		$fecha = date("Ymdhis");
 		$id = uniqid();
 		$tablas = $this->modelo->getTablas();
-		Helper::mostrar($tablas);
 		foreach ($tablas as $tabla) {
+			$this->modelo->respaldarTabla($tabla["Tables_in_biblioteca"],$fecha,$id);
 		}
+		$this->mensaje("Respaldo de base de datos",
+		"Respaldo de base de datos",
+		"El respaldo de base de datos fue exitosa.<br>En la carpeta:<br>respaldos/".$fecha."-".$id,
+		"tablero",
+		"success");
+
 	}
 
 }
