@@ -37,4 +37,69 @@ class Controlador {
         $this->vista("mensaje", $datos);
     }
 
+    public function perfil()
+	{
+		$errores = [];
+		$regreso = ($this->usuario["idTipoUsuario"]==ADMON)?"tablero":"consultar";
+		$admon = ($this->usuario["idTipoUsuario"]==ADMON);
+		if ($_SERVER['REQUEST_METHOD']=="POST") {
+			//
+			$id = $_POST['id']??"";
+			$nombre = Helper::cadena($_POST['nombre']??"");
+			$apellidoPaterno = Helper::cadena($_POST['apellidoPaterno']??"");
+			$apellidoMaterno = Helper::cadena($_POST['apellidoMaterno']??"");
+			$nueva = $_POST['clave']??"";
+			$verifica = $_POST['verifica']??"";
+
+			if(empty($nombre)){
+				array_push($errores, "El nombre del usuario no puede estar vacío.");
+			}
+			if(empty($apellidoPaterno)){
+				array_push($errores, "El apellido paterno no puede estar vacío.");
+			}
+			if(!(empty($nueva) && empty($verifica)) ){
+				if(empty($verifica)){
+					array_push($errores, "La nueva clave de acceso de verificación no puede estar vacía.");
+				}
+				if($nueva!=$verifica){
+					array_push($errores, "Las claves de acceso no coinciden.");
+				}
+			}
+			//
+			if (empty($errores)) {
+				if ($this->modelo->setUsuario($id, $nombre, $apellidoPaterno, $apellidoMaterno,$nueva)) {
+					$data = $this->modelo->getUsuarioId($id);
+					$this->sesion->setUsuario($data);
+					 $this->mensaje(
+		          		"Modificación del perfil exitoso", 
+		          		"Modificación del perfil exitoso", 
+		          		"Modificación del perfil exitoso ", 
+		          		$regreso, 
+		          		"success"
+		          	);
+				} else {
+					$this->mensaje(
+		          		"Error al modificar del perfil", 
+		          		"Error al modificar del perfil", 
+		          		"Error al modificar del perfil", 
+		          		$regreso, 
+		          		"danger"
+		          	);
+				}
+				exit;
+			}
+		}
+		//
+		$datos = [
+			"titulo"=> "Perfil del usuario",
+			"subtitulo" => "Perfil del usuario",
+			"admon" => $admon,
+			"menu" => true,
+			"regreso" => $regreso,
+			"activo" => "perfil",
+			"errores" => $errores,
+			"data" => $this->usuario
+		];
+		$this->vista("tableroPerfilVista",$datos);
+	}
 }
