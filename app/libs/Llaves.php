@@ -19,4 +19,20 @@ class Llaves {
         $sql = "SELECT id, nombre, apellidoPaterno, apellidoMaterno, clave, correo, estado, idTipoUsuario FROM usuarios WHERE correo='".$usuario."'";
         return $this->db->query($sql);
     }
+
+	public function setUsuario($id, $nombre, $apellidoPaterno, $apellidoMaterno, $clave) {
+		$sql = "UPDATE usuarios SET ";
+		$sql.= "nombre='".$nombre."', ";
+		$sql.= "apellidoMaterno='".$apellidoMaterno."', ";
+		$sql.= "apellidoPaterno='".$apellidoPaterno."' ";
+		if ($clave!="") {
+			$clave = hash_hmac("sha512", $clave, CLAVE);
+			$sql.= ", clave='".$clave."' ";
+		}
+		$sql.= "WHERE id=".$id;
+		return $this->db->queryNoSelect($sql);
+	}
+
+	
+
 }
