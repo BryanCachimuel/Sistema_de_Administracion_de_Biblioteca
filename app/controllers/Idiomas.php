@@ -24,6 +24,7 @@ class Idiomas extends Controlador
 			"subtitulo" => "Idiomas",
 			"activo" => "idiomas",
 			"menu" => true,
+			"admon" => ADMON,
 			"pag" => [
 				"totalPaginas" => $totalPaginas,
 				"regresa" => "idiomas",
@@ -108,7 +109,7 @@ class Idiomas extends Controlador
 				"subtitulo" => "Alta de un idioma",
 				"activo" => "idiomas",
 				"menu" => true,
-				"admon" => "admon",
+				"admon" => ADMON,
 				"pag" => $pag,
 				"errores" => $errores,
 				"data" => []
@@ -182,7 +183,7 @@ class Idiomas extends Controlador
 			"subtitulo" => "Modificar idioma",
 			"menu" => true,
 			"idiomas/" => $pag,
-			"admon" => "admon",
+			"admon" => ADMON,
 			"pag" => $pag,
 			"activo" => "idiomas",
 			"data" => $data
