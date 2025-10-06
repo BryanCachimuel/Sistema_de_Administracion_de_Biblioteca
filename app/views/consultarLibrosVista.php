@@ -18,7 +18,7 @@
       print "<td class='text-left'>".$datos["data"][$i]['tema']."</td>";
       print "<td class='text-left'>".$datos["data"][$i]['titulo']."</td>";
       print "<td class='text-left'>".$datos["data"][$i]['autor']."</td>";
-      print "<td><a href='".RUTA."consultas/copias/".$datos["data"][$i]["id"]."' class='btn btn-warning'>Copias</a></td>";
+      print "<td><a href='".RUTA."consultar/copias/".$datos["data"][$i]["id"]."' class='btn btn-warning'>Copias</a></td>";
       print "</tr>";
     }
     ?>
