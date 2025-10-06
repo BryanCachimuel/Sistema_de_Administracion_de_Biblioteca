@@ -1,0 +1,9 @@
+body {
+    background-image: url(/biblioteca/public/img/fondo.jpg);
+    background-size: cover;
+    /*background-color: #ccc;*/
+}
+
+.colornav {
+    background-color: #87ceeb;
+}
