@@ -4,15 +4,23 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="<?php print RUTA; ?>public/img/favicon.ico">
     <title><?php print "Biblioteca | " . $datos["titulo"]; ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="<?php print RUTA; ?>public/css/main.css">
 </head>
 
 <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <a href='<?php print RUTA . "tablero"; ?>' class="navbar-brand">Biblioteca</a>
         <?php
+        print '<a href="' . RUTA;
+        if (isset($datos["admon"]) && $datos["admon"] == ADMON) {
+            print 'tablero"';
+        } else {
+            print 'consultar"';
+        }
+        print ' class="navbar-brand"><img src="' . RUTA . 'public/img/logo.png" width="40" alt="Inicio"/>Biblioteca</a>';
         if (isset($datos["menu"]) && $datos["menu"] == true) {
             if (isset($datos["admon"]) && $datos["admon"] == ADMON) {
                 print "<ul class='navbar-nav mr-auto mt-2 mt-lg-0'>";
