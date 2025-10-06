@@ -24,7 +24,7 @@ class Consultar extends Controlador {
 			"subtitulo" => $this->usuario["nombre"]." ".$this->usuario["apellidoPaterno"]." ".$this->usuario["apellidoMaterno"],
 			"usuario"=>$this->usuario,
 			"prestamos"=>$prestamos,
-			"admon"=>false,
+			"admon" => $this->usuario["tipoUsuario"],
 			"data"=>[],
 			"menu" => true
 		];

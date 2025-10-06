@@ -24,6 +24,7 @@ class Categorias extends Controlador
 			"subtitulo" => "Categorías",
 			"activo" => "categorias",
 			"menu" => true,
+			"admon" => ADMON,
 			"pag" => [
 				"totalPaginas" => $totalPaginas,
 				"regresa" => "categorias",
@@ -113,7 +114,7 @@ class Categorias extends Controlador
 				"subtitulo" => "Alta de una categoría",
 				"activo" => "categorias",
 				"menu" => true,
-				"admon" => "admon",
+				"admon" => ADMON,
 				"pag" => $pag,
 				"errores" => $errores,
 				"data" => []
@@ -134,7 +135,7 @@ class Categorias extends Controlador
 				"titulo" => "Baja de una categoría",
 				"subtitulo" => "Baja de la categoría",
 				"menu" => true,
-				"admon" => "admon",
+				"admon" => ADMON,
 				"errores" => [],
 				"activo" => 'categorias',
 				"pag" => $pag,
@@ -186,7 +187,7 @@ class Categorias extends Controlador
 			"titulo" => "Modificar categoría",
 			"subtitulo" => "Modificar categoría",
 			"menu" => true,
-			"admon" => "admon",
+			"admon" => ADMON,
 			"pag" => $pag,
 			"activo" => "categorias",
 			"data" => $data
