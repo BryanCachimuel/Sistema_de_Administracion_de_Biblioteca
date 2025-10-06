@@ -18,12 +18,14 @@ class Tablero extends Controlador {
     }
 
     public function caratula($value='') {
+        $prestamos = $this->modelo->getPrestamos();
         $datos = [
             "titulo" => "Sistema de Biblioteca",
             "subtitulo" => $this->usuario["nombre"]." ".$this->usuario["apellidoPaterno"]." ".$this->usuario["apellidoMaterno"],
 			"usuario"=>$this->usuario,
             "admon"=>ADMON,
 			"data"=>[],
+            "prestamos" => $prestamos,
 			"menu" => true
         ];
         $this->vista("tableroCaratulaVista",$datos);
