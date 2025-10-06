@@ -15,6 +15,20 @@ class TableroModelo extends Llaves
         return $this->db->querySelect("SHOW TABLES");
     }
 
+    public function getPrestamos() {
+        $sql = "SELECT p.id, c.clave, l.titulo, CONCAT(u.nombre,' ',u.apellidoPaterno) as usuario, ";
+        $sql.= "DATE_FORMAT(p.prestamo_dt, '%d-%m-%Y') as fechaInicio, DATE_FORMAT(p.devolucion_dt, '%d-%m-%Y') as fechaFin, ";
+        $sql.= "DATEDIFF(p.devolucion_dt, NOW()) as dif ";
+        $sql.= "FROM prestamos as p, usuarios as u, libros as l, copias as c ";
+        $sql.= "WHERE p.baja=0 AND ";
+        $sql.= "p.idCopia=c.id AND ";
+        $sql.= "p.idUsuario=u.id AND ";
+        $sql.= "c.idLibro=l.id ";
+        $sql.= "ORDER BY p.devolucion_dt DESC ";
+        $sql.= "LIMIT 10";
+        return $this->db->querySelect($sql);
+    }
+
     public function respaldarTabla($tabla = '', $fecha = "", $id = "")
     {
         if (empty($tabla) || empty($fecha)) return false;
