@@ -40,8 +40,9 @@ class Controlador {
     public function perfil()
 	{
 		$errores = [];
-		$regreso = ($this->usuario["idTipoUsuario"]==ADMON)?"tablero":"consultar";
 		$admon = ($this->usuario["idTipoUsuario"]==ADMON);
+		$regreso = ($admon)?"tablero":"consultar";
+		
 		if ($_SERVER['REQUEST_METHOD']=="POST") {
 			//
 			$id = $_POST['id']??"";
