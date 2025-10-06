@@ -1,16 +1,14 @@
 <?php
 
-class ConsultarModelo
-{
-	private $db = "";
+class ConsultarModelo extends Llaves {
+	
+	protected $db = "";
 
-	function __construct()
-	{
+	function __construct() {
 		$this->db = new MySQLdb();
 	}
 
-	public function getPrestamos($idUsuario)
-	{
+	public function getPrestamos($idUsuario) {
 		$sql = "SELECT p.id, c.clave, l.titulo, ";
 		$sql .= "DATE_FORMAT(p.prestamo_dt,'%d-%m-%Y') as fechaInicio, ";
 		$sql .= "DATE_FORMAT(p.devolucion_dt,'%d-%m-%Y') as fechaFin ";
@@ -25,8 +23,7 @@ class ConsultarModelo
 		return $this->db->querySelect($sql);
 	}
 
-	public function getLibros($data)
-	{
+	public function getLibros($data) {
 		$sql = "SELECT l.id, l.titulo, CONCAT(a.nombre,' ',a.apellidoPaterno,' ',a.apellidoMaterno) as autor, t.tema  ";
 		$sql .= "FROM librosAutores as la, libros as l, ";
 		$sql .= "autores as a, temas as t ";
@@ -52,8 +49,7 @@ class ConsultarModelo
 		return $this->db->querySelect($sql);
 	}
 
-	public function getTemas()
-	{
+	public function getTemas() {
 		$sql = "SELECT t.id, t.tema, c.categoria ";
 		$sql .= "FROM temas as t, categorias as c ";
 		$sql .= "WHERE t.baja=0 AND ";
