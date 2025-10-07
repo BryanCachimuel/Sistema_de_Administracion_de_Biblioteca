@@ -21,7 +21,7 @@ class Controlador {
     public function mensaje($titulo="",$subtitulo,$texto,$url,$color,$url2="",$color2="",$texto2=""){
         $datos = [
             "titulo" => $titulo,
-            "menu" => true,
+            "menu" => false,
             "errores" => [],
             "data" => [],
             "subtitulo" => $subtitulo,
