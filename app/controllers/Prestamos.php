@@ -28,6 +28,7 @@ class Prestamos extends Controlador
 			"subtitulo" => "Préstamos",
 			"activo" => "prestamos",
 			"menu" => true,
+			"admon" => ADMON,
 			"pag" => [
 				"totalPaginas" => $totalPaginas,
 				"regresa" => "prestamos",
@@ -127,7 +128,7 @@ class Prestamos extends Controlador
 				"subtitulo" => "Prestar un libro",
 				"activo" => "prestamos",
 				"menu" => true,
-				"admon" => "admon",
+				"admon" => ADMON,
 				"usuarios" => $usuarios,
 				"copias" => $copias,
 				"errores" => $errores,
@@ -208,7 +209,7 @@ class Prestamos extends Controlador
 				"subtitulo" => "Regresar un libro",
 				"activo" => "prestamos",
 				"menu" => true,
-				"admon" => "admon",
+				"admon" => ADMON,
 				"estados" => $estados,
 				"errores" => [],
 				"data" => []

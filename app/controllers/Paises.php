@@ -24,6 +24,7 @@ class Paises extends Controlador
 			"subtitulo" => "Países",
 			"activo" => "paises",
 			"menu" => true,
+			"admon" => ADMON,
 			"pag" => [
 				"totalPaginas" => $totalPaginas,
 				"regresa" => "paises",
@@ -109,7 +110,7 @@ class Paises extends Controlador
 				"subtitulo" => "Alta de un país",
 				"activo" => "paises",
 				"menu" => true,
-				"admon" => "admon",
+				"admon" => ADMON,
 				"pag" => $pag,
 				"errores" => $errores,
 				"data" => []
@@ -183,7 +184,7 @@ class Paises extends Controlador
 			"subtitulo" => "Modificar país",
 			"menu" => true,
 			"pag" => $pag,
-			"admon" => "admon",
+			"admon" => ADMON,
 			"activo" => "paises",
 			"data" => $data
 		];
