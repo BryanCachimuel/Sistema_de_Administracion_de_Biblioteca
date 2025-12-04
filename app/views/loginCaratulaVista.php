@@ -3,12 +3,12 @@
 <form action="<?php print RUTA; ?>login/verificar" method="POST">
 
     <div class="form-group text-left">
-        <label for="usuario">* Usuario:</label>
+        <label for="usuario">* <i class="fa-solid fa-user"></i> Usuario:</label>
         <input type="text" name="usuario" class="form-control" placeholder="Escribe tu usuario (correo electrónico)" value="<?php print isset($datos['data']['usuario'])?$datos['data']['usuario']:''; ?>">
     </div>
 
     <div class="form-group text-left">
-        <label for="clave">* Clave:</label>
+        <label for="clave">* <i class="fa-solid fa-key"></i> Clave:</label>
         <input type="password" name="clave" class="form-control" placeholder="Escribe tu clave de acceso" value="<?php print isset($datos['data']['clave'])?$datos['data']['clave']:''; ?>">
     </div>
 
