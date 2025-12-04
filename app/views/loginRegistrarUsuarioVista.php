@@ -3,35 +3,35 @@
   <form action="<?php print RUTA; ?>login/registrar/" method="POST">
 
     <div class="form-group text-left">
-      <label for="correo">* Correo:</label>
+      <label for="correo">* <i class="fa-regular fa-envelope"></i> Correo:</label>
       <input type="email" name="correo" id="correo" class="form-control" required >
     </div>
 
      <div class="form-group text-left mt-2">
-      <label for="verificarCorreo">* Verificar correo:</label>
+      <label for="verificarCorreo">* <i class="fa-regular fa-envelope"></i> Verificar correo:</label>
       <input type="email" name="verificarCorreo" id="verificarCorreo" class="form-control" required >
     </div>
 
     <div class="form-group text-left mt-2">
-      <label for="nombre">* Nombre(s):</label>
+      <label for="nombre">* <i class="fa-regular fa-id-card"></i> Nombre(s):</label>
       <input type="text" name="nombre" id="nombre" class="form-control"
       placeholder="Escribe el nombre del usuario." required >
     </div>
 
     <div class="form-group text-left mt-2">
-      <label for="apellidoPaterno">* Apellido paterno:</label>
+      <label for="apellidoPaterno">* <i class="fa-regular fa-id-card"></i> Apellido paterno:</label>
       <input type="text" name="apellidoPaterno" id="apellidoPaterno" class="form-control"
       placeholder="Escribe el apellido paterno del usuario." required >
     </div>
 
     <div class="form-group text-left mt-2">
-      <label for="apellidoMaterno">Apellido materno:</label>
+      <label for="apellidoMaterno"><i class="fa-regular fa-id-card"></i> Apellido materno:</label>
       <input type="text" name="apellidoMaterno" id="apellidoMaterno" class="form-control"
       placeholder="Escribe el apellido paterno del usuario.">
     </div>
 
     <div class="form-group text-left mt-2">
-      <label for="genero">* Género:</label>
+      <label for="genero">* <i class="fa-solid fa-children"></i> Género:</label>
       <select class="form-control" name="genero" id="genero">
       <option value="void">---Selecciona un género---</option>
         <?php
@@ -44,13 +44,13 @@
     </div>
 
     <div class="form-group text-left mt-2">
-      <label for="telefono">Teléfono:</label>
+      <label for="telefono"><i class="fa-solid fa-mobile-screen"></i> Teléfono:</label>
       <input type="text" name="telefono" id="telefono" class="form-control"
       placeholder="Escribe el telefono del usuario." >
     </div>
 
     <div class="form-group text-left  mt-2">
-      <label for="fechaNacimiento">Fecha nacimiento:</label>
+      <label for="fechaNacimiento"><i class="fa-regular fa-calendar-days"></i> Fecha nacimiento:</label>
       <input type="date" name="fechaNacimiento" id="fechaNacimiento" class="form-control"
       placeholder="Seleccione la fecha de nacimiento del usuario." >
     </div>
@@ -59,7 +59,7 @@
       <input type="hidden" name="idTipoUsuario" id="idTipoUsuario" value="<?php print ESTUDIANTE; ?>">
 
       <input type="submit" value="Enviar" class="btn btn-success">
-      <a href="<?php print RUTA; ?>login" class="btn btn-info">Regresar</a>
+      <a href="<?php print RUTA; ?>login" class="btn btn-info"><i class="fa-solid fa-angles-left"></i> Regresar</a>
     </div>
   </form>
 
