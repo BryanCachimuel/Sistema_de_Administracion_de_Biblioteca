@@ -24,7 +24,7 @@ define('COPIA_PRESTADO',2);
 define('COPIA_REPARACION',3);
 define('COPIA_PERDIDO',4);
 define('COPIA_NO_DISPONIBLE',5);
-
+///
 define('PRESTAMO',7);
 //
 require_once("libs/MySQLdb.php");
