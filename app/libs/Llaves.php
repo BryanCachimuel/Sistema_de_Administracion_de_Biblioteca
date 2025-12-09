@@ -1,8 +1,13 @@
 <?php  
-
-class Llaves {
+/**
+ * 
+ */
+class Llaves
+{
 	
-	function __construct() {
+	function __construct()
+	{
+		// code...
 	}
 
 	public function getCatalogo($tipo, $ordenar=""){
@@ -14,13 +19,16 @@ class Llaves {
 	    return $data;
 	}
 
-	public function buscarCorreo($usuario='') {
-        if(empty($usuario)) return false;
-        $sql = "SELECT id, nombre, apellidoPaterno, apellidoMaterno, clave, correo, estado, idTipoUsuario FROM usuarios WHERE correo='".$usuario."'";
-        return $this->db->query($sql);
-    }
+	
+	public function buscarCorreo($usuario='')
+	{
+		if(empty($usuario)) return false;
+		$sql = "SELECT id, nombre, apellidoPaterno, apellidoMaterno, clave, correo, estado, idTipoUsuario FROM usuarios WHERE correo='".$usuario."'";
+		return $this->db->query($sql);
+	}
 
-	public function setUsuario($id, $nombre, $apellidoPaterno, $apellidoMaterno, $clave) {
+	public function setUsuario($id, $nombre, $apellidoPaterno, $apellidoMaterno, $clave)
+	{
 		$sql = "UPDATE usuarios SET ";
 		$sql.= "nombre='".$nombre."', ";
 		$sql.= "apellidoMaterno='".$apellidoMaterno."', ";
@@ -33,8 +41,10 @@ class Llaves {
 		return $this->db->queryNoSelect($sql);
 	}
 
-	public function getUsuarioId($id='') {
+	public function getUsuarioId($id='')
+	{
 		$sql = "SELECT * FROM usuarios WHERE id=".$id." AND baja=0";
 		return $this->db->query($sql);
 	}
 }
+?>
