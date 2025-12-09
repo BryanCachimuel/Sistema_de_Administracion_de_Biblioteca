@@ -1,43 +1,60 @@
-<?php
+<?php  
+/**
+ * 
+ */
+class Sesion
+{
+	private $login = false;
+	private $usuario;
+	
+	function __construct()
+	{
+		session_start();
+		if (isset($_SESSION['usuario'])) {
+			$this->usuario = $_SESSION['usuario'];
+			$this->login = true;
+		} else {
+			unset($this->usuario);
+			$this->login = false;
+		}
+	}
 
-class Sesion {
+	public function iniciarLogin($usuario='')
+	{
+		if ($usuario) {
+			$this->usuario = $_SESSION['usuario'] = $usuario;
+			$this->login = true;
+		}
+	}
 
-    private $login = false;
-    private $usuario;
+	public function finalizarLogin()
+	{
+		unset($this->usuario);
+		unset($_SESSION['usuario']);
+		$this->login = false;
+	}
 
-    function __construct() {
-        session_start();
-        if(isset($_SESSION['usuario'])) {
-            $this->usuario = $_SESSION['usuario'];
-            $this->login = true;
-        }else {
-            unset($this->usuario);
-            $this->login = false;
-        }
-    }
+	public function getLogin()
+	{
+		if (isset($this->login)) {
+			return $this->login;
+		}
+		return false;
+	}
 
-    public function iniciarLogin($usuario='') {
-        if($usuario) {
-            $this->usuario = $_SESSION['usuario'] = $usuario;
-            $this->login = true;
-        }
-    }
+	public function getUsuario()
+	{
+		if (isset($this->usuario)) {
+			return $this->usuario;
+		}
+		return false;
+	}
 
-    public function finalizarLogin() {
-        unset($this->usuario);
-        unset($_SESSION['usuario']);
-        $this->login = false;
-    }
-
-    public function getLogin() {
-        return $this->login;
-    }
-
-    public function getUsuario() {
-        return $this->usuario;
-    }
-
-    public function setUsuario($data='') {
-        $this->usuario = $_SESSION['usuario'] = $data;
-    }
+	public function setUsuario($data='')
+	{
+		$this->usuario=$_SESSION['usuario']=$data;
+	}
 }
+
+
+?>
