@@ -1,48 +1,58 @@
-<?php
-class Controlador {
+<?php 
+/**
+ * 
+ */
+class Controlador
+{
+	
+	function __construct(){}
 
-    public function modelo($modelo='') {
-        if(file_exists("../app/models/".$modelo.".php")){
-            require_once("../app/models/".$modelo.".php");
-            return new $modelo;
-        } else {
-            die("El modelo " .$modelo. " no existe");
-        }
-    }
+	public function modelo($modelo='')
+	{
+		if (file_exists("../app/modelos/".$modelo.".php")) {
+			require_once("../app/modelos/".$modelo.".php");
+			return new $modelo;
+		} else {
+			die("El modelo ".$modelo." no existe");
+		}
+		
+	}
 
-    public function vista($vista='', $datos=[]) {
-       if(file_exists("../app/views/".$vista.".php")){
-            require_once("../app/views/".$vista.".php");
-        } else {
-            die("La vista " .$vista. " no existe");
-        } 
-    }
+	public function vista($vista='',$datos=[])
+	{
+		if (file_exists("../app/vistas/".$vista.".php")) {
+			require_once("../app/vistas/".$vista.".php");
+		} else {
+			die("La vista ".$vista." no existe");
+		}
+	}
 
-    public function mensaje($titulo="",$subtitulo,$texto,$url,$color,$url2="",$color2="",$texto2=""){
-        $datos = [
-            "titulo" => $titulo,
-            "menu" => false,
-            "errores" => [],
-            "data" => [],
-            "subtitulo" => $subtitulo,
-            "texto" => $texto,
-            "url" => $url,
-            "color" => "alert-".$color,
-            "colorBoton" => "btn-".$color,
-            "textoBoton" => "Regresar",
-            "url2" => $url2,
-            "colorBoton2" => "btn-".$color2,
-            "textoBoton2" => $texto2
-        ];
-        $this->vista("mensaje", $datos);
-    }
+	public function mensaje($titulo='',$subtitulo,$texto,$url,$color,$url2="",$color2="",$texto2="")
+	  {
+	    $datos = [
+	      "titulo" => $titulo,
+	      "menu" => false,
+	      "errores" => [],
+	      "data" => [],
+	      "subtitulo" => $subtitulo,
+	      "texto" => $texto,
+	      "url" => $url,
+	      "color" => "alert-".$color,
+	      "colorBoton" => "btn-".$color,
+	      "textoBoton" => "Regresar",
+	      "url2" => $url2,
+	      "colorBoton2" => "btn-".$color2,
+	      "textoBoton2" => $texto2
+	      ];
+	      $this->vista("mensaje",$datos);
+	  }
 
-    public function perfil()
+	public function perfil()
 	{
 		$errores = [];
 		$admon = ($this->usuario["idTipoUsuario"]==ADMON);
 		$regreso = ($admon)?"tablero":"consultar";
-		
+		//
 		if ($_SERVER['REQUEST_METHOD']=="POST") {
 			//
 			$id = $_POST['id']??"";
@@ -104,3 +114,4 @@ class Controlador {
 		$this->vista("tableroPerfilVista",$datos);
 	}
 }
+ ?>
