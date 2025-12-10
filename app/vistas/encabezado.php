@@ -7,6 +7,7 @@
 	<title><?php print "Biblioteca | ".$datos["titulo"]; ?></title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<link rel="stylesheet" type="text/css" href="<?php print RUTA; ?>public/css/main.css">
 </head>
 <body>
@@ -26,31 +27,31 @@
 				print "<li class='nav-item'>";
 				print "<a href='".RUTA."autores' class='nav-link ";
 				if(isset($datos["activo"]) && $datos["activo"]=="autores") print "active";
-				print "'>Autores</a>";
+				print "'><i class='fa-solid fa-user-group'></i> Autores</a>";
 				print "</li>";
 				//
 				print "<li class='nav-item'>";
 				print "<a href='".RUTA."libros' class='nav-link ";
 				if(isset($datos["activo"]) && $datos["activo"]=="libros") print "active";
-				print "'>Libros</a>";
+				print "'><i class='fa-solid fa-book'></i> Libros</a>";
 				print "</li>";
 				//
 				print "<li class='nav-item'>";
 				print "<a href='".RUTA."usuarios' class='nav-link ";
 				if(isset($datos["activo"]) && $datos["activo"]=="usuarios") print "active";
-				print "'>Usuarios</a>";
+				print "'><i class='fa-solid fa-people-group'></i> Usuarios</a>";
 				print "</li>";
 				//
 				print "<li class='nav-item'>";
 				print "<a href='".RUTA."categorias' class='nav-link ";
 				if(isset($datos["activo"]) && $datos["activo"]=="categorias") print "active";
-				print "'>Categorías</a>";
+				print "'><i class='fa-solid fa-list'></i>Categorías</a>";
 				print "</li>";
 				//
 				print "<li class='nav-item'>";
 				print "<a href='".RUTA."editoriales' class='nav-link ";
 				if(isset($datos["activo"]) && $datos["activo"]=="editoriales") print "active";
-				print "'>Editoriales</a>";
+				print "'><i class='fa-solid fa-newspaper'></i> Editoriales</a>";
 				print "</li>";
 				//
 				print "<li class='nav-item'>";
