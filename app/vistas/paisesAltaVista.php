@@ -12,13 +12,13 @@
 
       <?php
       if (isset($datos["baja"])) { ?>
-        <a href="<?php print RUTA; ?>paises/bajaLogica/<?php print $datos['data']['id']."/".$datos["pag"]; ?>" class="btn btn-danger">Borrar</a>
-        <a href="<?php print RUTA; ?>paises" class="btn btn-danger">Regresar</a>
-        <p><b>Advertencia: una vez borrado el registro, no podrá recuperar la información</b></p>
+        <a href="<?php print RUTA; ?>paises/bajaLogica/<?php print $datos['data']['id']."/".$datos["pag"]; ?>" class="btn btn-danger"><i class='fa-solid fa-trash-can'></i></a>
+        <a href="<?php print RUTA; ?>paises" class="btn btn-danger"><i class="fa-solid fa-angles-left"></i> Regresar</a>
+        <p><strong>Advertencia: una vez borrado el registro, no podrá recuperar la información</strong></p>
       <?php } else { ?> 
       <div class="mt-3">
         <input type="submit" value="Enviar" class="btn btn-success">
-        <a href="<?php print RUTA.'paises/'.$datos["pag"]; ?>" class="btn btn-success">Regresar</a>
+        <a href="<?php print RUTA.'paises/'.$datos["pag"]; ?>" class="btn btn-success"><i class="fa-solid fa-angles-left"></i> Regresar</a>
       </div>
     <?php } ?> 
     </div>
