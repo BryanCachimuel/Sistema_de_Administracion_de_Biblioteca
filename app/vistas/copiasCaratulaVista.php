@@ -35,12 +35,12 @@
       if ($datos["data"][$i]['estado']==COPIA_PRESTADO) {
         print " disabled";
       }
-      print "'>Modificar</a></td>";
+      print "'><i class='fa-solid fa-file-pen'></i></a></td>";
       print "<td><a href='".RUTA."copias/borrar/".$datos["data"][$i]["id"]."/".$datos["pag"]["pagina"]."' class='btn btn-danger";
       if ($datos["data"][$i]['estado']==COPIA_PRESTADO) {
           print " disabled";
       }
-      print "'>Borrar</a></td>";
+      print "'><i class='fa-solid fa-trash-can'></i></a></td>";
       print "</tr>";
     }
     ?>
@@ -48,8 +48,8 @@
   </table>
 <?php include("paginacion.php"); ?>
 <a href="<?php print RUTA; ?>copias/alta" class="btn btn-success">
-  Dar de alta una copia</a>
+  <i class="fa-solid fa-circle-plus"></i> Dar de alta una copia</a>
   <br>
-  <p>* Las copias <b>prestadas</b> no pueden ser modificadas ni borradas.</p>
+  <p class="mt-3">* Las copias <b>prestadas</b> no pueden ser modificadas ni borradas.</p>
   </div>
 <?php include("piepagina.php"); ?>
