@@ -2,7 +2,7 @@
   <form action="<?php print RUTA; ?>paises/alta/" method="POST">
 
     <div class="form-group text-left">
-      <label for="pais">* País:</label>
+      <label for="pais">* <i class="fa-solid fa-earth-asia"></i> País:</label>
       <input type="text" name="pais" id="pais" class="form-control" required value="<?php print isset($datos['data']['pais'])?$datos['data']['pais']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
     </div>
 
@@ -16,8 +16,10 @@
         <a href="<?php print RUTA; ?>paises" class="btn btn-danger">Regresar</a>
         <p><b>Advertencia: una vez borrado el registro, no podrá recuperar la información</b></p>
       <?php } else { ?> 
-      <input type="submit" value="Enviar" class="btn btn-success">
-      <a href="<?php print RUTA.'paises/'.$datos["pag"]; ?>" class="btn btn-success">Regresar</a>
+      <div class="mt-3">
+        <input type="submit" value="Enviar" class="btn btn-success">
+        <a href="<?php print RUTA.'paises/'.$datos["pag"]; ?>" class="btn btn-success">Regresar</a>
+      </div>
     <?php } ?> 
     </div>
   </form>
