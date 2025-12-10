@@ -57,35 +57,35 @@
 				print "<li class='nav-item'>";
 				print "<a href='".RUTA."temas' class='nav-link ";
 				if(isset($datos["activo"]) && $datos["activo"]=="temas") print "active";
-				print "'>Temas</a>";
+				print "'><i class='fa-solid fa-book-open-reader'></i> Temas</a>";
 				print "</li>";
 				//
 				print "<li class='nav-item'>";
 				print "<a href='".RUTA."idiomas' class='nav-link ";
 				if(isset($datos["activo"]) && $datos["activo"]=="idiomas") print "active";
-				print "'>Idiomas</a>";
+				print "'><i class='fa-solid fa-earth-americas'></i> Idiomas</a>";
 				print "</li>";
 				//
 				print "<li class='nav-item'>";
 				print "<a href='".RUTA."prestamos' class='nav-link ";
 				if(isset($datos["activo"]) && $datos["activo"]=="prestamos") print "active";
-				print "'>Préstamos</a>";
+				print "'><i class='fa-solid fa-hand-holding-hand'></i> Préstamos</a>";
 				print "</li>";
 				//
 				print "<li class='nav-item'>";
 				print "<a href='".RUTA."copias' class='nav-link ";
 				if(isset($datos["activo"]) && $datos["activo"]=="copias") print "active";
-				print "'>Copias</a>";
+				print "'><i class='fa-solid fa-book-open'></i> Copias</a>";
 				print "</li>";
 				//
 				print "<li class='nav-item'>";
 				print "<a href='".RUTA."paises' class='nav-link ";
 				if(isset($datos["activo"]) && $datos["activo"]=="paises") print "active";
-				print "'>Países</a>";
+				print "'><i class='fa-solid fa-earth-oceania'></i> Países</a>";
 				print "</li>";
 				//
 			    print "<li class='nav-item'>";
-			    print "<a href='".RUTA."tablero/respaldar' class='nav-link'>Respaldar</a>";
+			    print "<a href='".RUTA."tablero/respaldar' class='nav-link'><i class='fa-solid fa-database'></i> Respaldar</a>";
 			    print "</li>";
 				//
 				print "</ul>";
