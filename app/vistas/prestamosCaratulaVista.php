@@ -25,9 +25,7 @@
   </tbody>
   </table>
 <?php include("paginacion.php"); ?>
-<a href="<?php print RUTA; ?>prestamos/alta" class="btn btn-success">
-  Dar de alta un préstamo</a>
-  <a href="<?php print RUTA; ?>prestamos/devolver" class="btn btn-success">
-  Devolver un libro</a>
+<a href="<?php print RUTA; ?>prestamos/alta" class="btn btn-success"><i class="fa-solid fa-circle-plus"></i> Dar de alta un préstamo</a>
+  <a href="<?php print RUTA; ?>prestamos/devolver" class="btn btn-success"> <i class="fa-solid fa-hand-holding-hand"></i> Devolver un libro</a>
   </div>
 <?php include("piepagina.php"); ?>
