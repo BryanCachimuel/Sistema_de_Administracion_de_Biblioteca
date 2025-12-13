@@ -1,8 +1,8 @@
 <?php include_once("encabezado.php"); ?>
   <form action="<?php print RUTA; ?>prestamos/alta/" method="POST">
 
-    <div class="form-group text-left">
-      <label for="idUsuario">* Usuarios:</label>
+    <div class="form-group text-left mb-2">
+      <label for="idUsuario">* <i class="fa-solid fa-children"></i> Usuarios:</label>
       <select class="form-control" name="idUsuario" id="idUsuario" 
       <?php if (isset($datos["baja"])) { print " disabled "; } ?>
       >
@@ -19,8 +19,8 @@
       </select>
     </div>
 
-    <div class="form-group text-left">
-      <label for="idCopia">* Copias disponibles:</label>
+    <div class="form-group text-left mb-2">
+      <label for="idCopia">* <i class="fa-solid fa-book"></i> Copias disponibles:</label>
       <select class="form-control" name="idCopia" id="idCopia" 
       <?php if (isset($datos["baja"])) { print " disabled "; } ?>
       >
@@ -37,21 +37,21 @@
       </select>
     </div>
 
-    <div class="form-group text-left">
-      <label for="prestamo">* Fecha de préstamo:</label>
+    <div class="form-group text-left mb-2">
+      <label for="prestamo">* <i class="fa-regular fa-calendar-days"></i> Fecha de préstamo:</label>
       <input type="text" name="prestamo" id="prestamo" class="form-control"  <?php if (isset($datos["baja"])) { print " disabled "; }?>
       value="<?php print isset($datos['data']['prestamo'])?$datos['data']['prestamo']:''; ?>"
       >
     </div>
 
-    <div class="form-group text-left">
-      <label for="devolucion">* Fecha de devolución:</label>
+    <div class="form-group text-left mb-2">
+      <label for="devolucion">* <i class="fa-regular fa-calendar-days"></i> Fecha de devolución:</label>
       <input type="text" name="devolucion" id="devolucion" class="form-control"  <?php if (isset($datos["baja"])) { print " disabled "; }?>
       value="<?php print isset($datos['data']['devolucion'])?$datos['data']['devolucion']:''; ?>"
       >
     </div>
 
-    <div class="form-group text-left">
+    <div class="form-group text-left mb-2">
       <input type="hidden" name="id" id="id" value="<?php if (isset($datos['data']['id'])) { print $datos['data']['id']; } else { print ""; }?>">
       <input type="hidden" name="pag" id="id" value="<?php if (isset($datos['pag'])) { print $datos['pag']; } else { print "1"; } ?>">
 
