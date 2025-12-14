@@ -1,8 +1,8 @@
 <?php include_once("encabezado.php"); ?>
   <form action="<?php print RUTA; ?>idiomas/alta/" method="POST">
 
-    <div class="form-group text-left">
-      <label for="idioma">* Idioma:</label>
+    <div class="form-group text-left mb-3">
+      <label for="idioma">* <i class="fa-solid fa-earth-americas"></i> Idioma:</label>
       <input type="text" name="idioma" id="idioma" class="form-control" required value="<?php print isset($datos['data']['idioma'])?$datos['data']['idioma']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
     </div>
 
