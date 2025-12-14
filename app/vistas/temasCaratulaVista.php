@@ -17,8 +17,8 @@
       print "<td class='text-left'>".$datos["data"][$i]['id']."</td>";
       print "<td class='text-left'>".$datos["data"][$i]['categoria']."</td>";
       print "<td class='text-left'>".$datos["data"][$i]['tema']."</td>";
-      print "<td><a href='".RUTA."temas/modificar/".$datos["data"][$i]["id"]."/".$datos["pag"]["pagina"]."' class='btn btn-info'>Modificar</a></td>";
-      print "<td><a href='".RUTA."temas/borrar/".$datos["data"][$i]["id"]."/".$datos["pag"]["pagina"]."' class='btn btn-danger'>Borrar</a></td>";
+      print "<td><a href='".RUTA."temas/modificar/".$datos["data"][$i]["id"]."/".$datos["pag"]["pagina"]."' class='btn btn-info'><i class='fa-solid fa-pen-clip'></i></a></td>";
+      print "<td><a href='".RUTA."temas/borrar/".$datos["data"][$i]["id"]."/".$datos["pag"]["pagina"]."' class='btn btn-danger'><i class='fa-solid fa-trash-can'></i></a></td>";
       print "</tr>";
     }
     ?>
@@ -26,6 +26,6 @@
   </table>
 <?php include("paginacion.php"); ?>
 <a href="<?php print RUTA; ?>temas/alta" class="btn btn-success">
-  Dar de alta un tema</a>
+  <i class="fa-solid fa-circle-plus"></i> Dar de alta un tema</a>
   </div>
 <?php include("piepagina.php"); ?>
