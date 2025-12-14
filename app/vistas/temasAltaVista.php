@@ -1,8 +1,8 @@
 <?php include_once("encabezado.php"); ?>
   <form action="<?php print RUTA; ?>temas/alta/" method="POST">
 
-    <div class="form-group text-left">
-      <label for="idCategoria">* Categoría:</label>
+    <div class="form-group text-left mb-3">
+      <label for="idCategoria">* <i class="fa-solid fa-list"></i> Categoría:</label>
       <select class="form-control" name="idCategoria" id="idCategoria" 
       <?php
       if (isset($datos["baja"])) {
@@ -23,8 +23,8 @@
       </select>
     </div>
 
-    <div class="form-group text-left">
-      <label for="tema">* Nombre del tema:</label>
+    <div class="form-group text-left mb-3">
+      <label for="tema">* <i class="fa-solid fa-book-bookmark"></i> Nombre del tema:</label>
       <input type="text" name="tema" id="tema" class="form-control" required value="<?php print isset($datos['data']['tema'])?$datos['data']['tema']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
     </div>
 
