@@ -15,8 +15,8 @@
       print "<tr>";
       print "<td class='text-left'>".$datos["data"][$i]['id']."</td>";
       print "<td class='text-left'>".$datos["data"][$i]['idioma']."</td>";
-      print "<td><a href='".RUTA."idiomas/modificar/".$datos["data"][$i]["id"]."/".$datos["pag"]["pagina"]."' class='btn btn-info'>Modificar</a></td>";
-      print "<td><a href='".RUTA."idiomas/borrar/".$datos["data"][$i]["id"]."/".$datos["pag"]["pagina"]."' class='btn btn-danger'>Borrar</a></td>";
+      print "<td><a href='".RUTA."idiomas/modificar/".$datos["data"][$i]["id"]."/".$datos["pag"]["pagina"]."' class='btn btn-info'><i class='fa-solid fa-pen-clip'></i></a></td>";
+      print "<td><a href='".RUTA."idiomas/borrar/".$datos["data"][$i]["id"]."/".$datos["pag"]["pagina"]."' class='btn btn-danger'><i class='fa-solid fa-trash-can'></i></a></td>";
       print "</tr>";
     }
     ?>
@@ -24,6 +24,6 @@
   </table>
 <?php include("paginacion.php"); ?>
 <a href="<?php print RUTA; ?>idiomas/alta" class="btn btn-success">
-  Dar de alta un idioma</a>
+  <i class="fa-solid fa-circle-plus"></i> Dar de alta un idioma</a>
   </div>
 <?php include("piepagina.php"); ?>
