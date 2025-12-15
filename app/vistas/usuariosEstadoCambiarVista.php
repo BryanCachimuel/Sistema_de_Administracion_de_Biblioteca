@@ -1,24 +1,24 @@
 <?php include_once("encabezado.php"); ?>
   <form action="<?php print RUTA; ?>usuarios/estadoActualizar/" method="POST">
 
-    <div class="form-group text-left">
-      <label for="nombre">* Nombre(s):</label>
+    <div class="form-group text-left mb-3">
+      <label for="nombre">* <i class="fa-regular fa-id-badge"></i> Nombre(s):</label>
       <input type="text" name="nombre" id="nombre" class="form-control"
        value="<?php print isset($datos['data']['nombre'])?$datos['data']['nombre']:''; ?>"  disabled>
     </div>
 
-    <div class="form-group text-left">
-      <label for="apellidoPaterno">* Apellido paterno:</label>
+    <div class="form-group text-left mb-3">
+      <label for="apellidoPaterno">* <i class="fa-regular fa-id-badge"></i> Apellido paterno:</label>
       <input type="text" name="apellidoPaterno" id="apellidoPaterno" class="form-control" value="<?php print isset($datos['data']['apellidoPaterno'])?$datos['data']['apellidoPaterno']:''; ?>" disabled>
     </div>
 
-    <div class="form-group text-left">
-      <label for="apellidoMaterno">Apellido materno:</label>
+    <div class="form-group text-left mb-3">
+      <label for="apellidoMaterno"><i class="fa-regular fa-id-badge"></i> Apellido materno:</label>
       <input type="text" name="apellidoMaterno" id="apellidoMaterno" class="form-control" value="<?php print isset($datos['data']['apellidoMaterno'])?$datos['data']['apellidoMaterno']:''; ?>" disabled>
     </div>
 
-    <div class="form-group text-left">
-      <label for="estado">* Estado usuario:</label>
+    <div class="form-group text-left mb-3">
+      <label for="estado">* <i class="fa-solid fa-chart-line"></i> Estado usuario:</label>
       <select class="form-control" name="estado" id="estado">
       <option value="void">---Selecciona un estado de usuario---</option>
         <?php
