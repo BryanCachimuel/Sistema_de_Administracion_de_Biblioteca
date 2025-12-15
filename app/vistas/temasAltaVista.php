@@ -36,7 +36,7 @@
       if (isset($datos["baja"])) { ?>
         <a href="<?php print RUTA; ?>temas/bajaLogica/<?php print $datos['data']['id'].'/'.$datos['pag']; ?>" class="btn btn-danger">Borrar</a>
         <a href="<?php print RUTA.'temas/'.$datos['pag'];?>" class="btn btn-danger">Regresar</a>
-        <p><b>Advertencia: una vez borrado el registro, no podrá recuperar la información</b></p>
+        <p class="mt-3"><b>Advertencia: una vez borrado el registro, no podrá recuperar la información</b></p>
       <?php } else { ?> 
       <input type="submit" value="Enviar" class="btn btn-success">
       <a href="<?php print RUTA.'temas/'.$datos['pag']; ?>" class="btn btn-success">Regresar</a>
