@@ -1,13 +1,13 @@
 <?php include_once("encabezado.php"); ?>
   <form action="<?php print RUTA; ?>categorias/alta/" method="POST">
 
-    <div class="form-group text-left">
-      <label for="clave">* Clave:</label>
+    <div class="form-group text-left mb-3">
+      <label for="clave">* <i class="fa-solid fa-key"></i> Clave:</label>
       <input type="text" name="clave" id="clave" class="form-control" required value="<?php print isset($datos['data']['clave'])?$datos['data']['clave']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
     </div>
 
-    <div class="form-group text-left">
-      <label for="categoria">* Categoria:</label>
+    <div class="form-group text-left mb-3">
+      <label for="categoria">* <i class="fa-solid fa-list"></i> Categoria:</label>
       <input type="text" name="categoria" id="categoria" class="form-control" required value="<?php print isset($datos['data']['categoria'])?$datos['data']['categoria']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
     </div>
 
