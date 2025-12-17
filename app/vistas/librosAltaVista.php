@@ -1,7 +1,7 @@
 <?php include_once("encabezado.php"); ?>
   <form action="<?php print RUTA; ?>libros/alta/" method="POST">
 
-    <div class="form-group text-left">
+    <div class="form-group text-left mb-3">
       <label for="idTema">* <i class="fa-solid fa-book-bookmark"></i> Tema:</label>
       <select class="form-control" name="idTema" id="idTema" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
       <option value="void">---Selecciona un tema---</option>
@@ -17,7 +17,7 @@
       </select>
     </div>
 
-    <div class="form-group text-left">
+    <div class="form-group text-left mb-3">
       <label for="idIdioma">* <i class="fa-solid fa-book-bookmark"></i> Idioma principal del libro:</label>
       <select class="form-control" name="idIdioma" id="idIdioma" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
       <option value="void">---Selecciona un idioma---</option>
@@ -34,7 +34,7 @@
     </div>
 
 
-    <div class="form-group text-left">
+    <div class="form-group text-left mb-3">
       <label for="titulo">* <i class="fa-solid fa-clipboard-list"></i> Título:</label>
       <input type="text" name="titulo" id="titulo" class="form-control"
       placeholder="Escribe el título del libro." required value="<?php print isset($datos['data']['titulo'])?$datos['data']['titulo']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
