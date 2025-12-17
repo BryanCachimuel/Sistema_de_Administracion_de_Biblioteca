@@ -16,7 +16,7 @@
       print "<td class='text-left'>".$datos["data"][$i]['id']."</td>";
       print "<td class='text-left'>".$datos["data"][$i]['apellidos']."</td>";
       print "<td class='text-left'>".$datos["data"][$i]['nombre']."</td>";
-      print "<td><a href='".RUTA."libros/librosAutoresQuitar/".$datos["data"][$i]["id"]."' class='btn btn-danger'>Quitar</a></td>";
+      print "<td><a href='".RUTA."libros/librosAutoresQuitar/".$datos["data"][$i]["id"]."' class='btn btn-danger'><i class='fa-solid fa-user-xmark'></i></a></td>";
       print "</tr>";
     }
     ?>
