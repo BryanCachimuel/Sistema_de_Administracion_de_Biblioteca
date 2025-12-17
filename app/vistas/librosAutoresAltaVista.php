@@ -1,8 +1,8 @@
 <?php include_once("encabezado.php"); ?>
   <form action="<?php print RUTA; ?>libros/librosAutoresAlta/" method="POST">
 
-    <div class="form-group text-left">
-      <label for="idAutor">* Autor:</label>
+    <div class="form-group text-left mb-3">
+      <label for="idAutor">* <i class="fa-solid fa-user-tie"></i> Autor:</label>
       <select class="form-control" name="idAutor" id="idAutor" 
       <?php if (isset($datos["baja"])) { print " disabled "; } ?>
       >
