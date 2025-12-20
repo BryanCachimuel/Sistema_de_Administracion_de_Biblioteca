@@ -1,25 +1,25 @@
 <?php include_once("encabezado.php"); ?>
   <form action="<?php print RUTA; ?>autores/alta/" method="POST">
 
-    <div class="form-group text-left">
+    <div class="form-group text-left mb-3">
       <label for="nombre">* Nombre(s):</label>
       <input type="text" name="nombre" id="nombre" class="form-control"
       placeholder="Escribe el nombre del usuario." required value="<?php print isset($datos['data']['nombre'])?$datos['data']['nombre']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
     </div>
 
-    <div class="form-group text-left">
+    <div class="form-group text-left mb-3">
       <label for="apellidoPaterno">* Apellido paterno:</label>
       <input type="text" name="apellidoPaterno" id="apellidoPaterno" class="form-control"
       placeholder="Escribe el apellido paterno del usuario." required value="<?php print isset($datos['data']['apellidoPaterno'])?$datos['data']['apellidoPaterno']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
     </div>
 
-    <div class="form-group text-left">
+    <div class="form-group text-left mb-3">
       <label for="apellidoMaterno">Apellido materno:</label>
       <input type="text" name="apellidoMaterno" id="apellidoMaterno" class="form-control"
       placeholder="Escribe el apellido paterno del usuario." value="<?php print isset($datos['data']['apellidoMaterno'])?$datos['data']['apellidoMaterno']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
     </div>
 
-    <div class="form-group text-left">
+    <div class="form-group text-left mb-3">
       <label for="genero">* Género:</label>
       <select class="form-control" name="genero" id="genero" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
       <option value="void">---Selecciona un género---</option>
@@ -35,7 +35,7 @@
       </select>
     </div>
 
-    <div class="form-group text-left">
+    <div class="form-group text-left mb-3">
       <label for="idPais">* País de origen:</label>
       <select class="form-control" name="idPais" id="idPais" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
       <option value="void">---Selecciona el país de origen---</option>
