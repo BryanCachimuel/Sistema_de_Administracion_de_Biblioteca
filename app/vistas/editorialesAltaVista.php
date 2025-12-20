@@ -2,17 +2,17 @@
   <form action="<?php print RUTA; ?>editoriales/alta/" method="POST">
 
     <div class="form-group text-left">
-      <label for="editorial">* Nombre de la editorial:</label>
+      <label for="editorial">* <i class="fa-solid fa-book-open-reader"></i> Nombre de la editorial:</label>
       <input type="text" name="editorial" id="editorial" class="form-control" required value="<?php print isset($datos['data']['editorial'])?$datos['data']['editorial']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
     </div>
 
     <div class="form-group text-left">
-      <label for="pagina">Página web:</label>
+      <label for="pagina"><i class="fa-solid fa-globe"></i> Página web:</label>
       <input type="text" name="pagina" id="pagina" class="form-control" value="<?php print isset($datos['data']['pagina'])?$datos['data']['pagina']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?> placeholder="www.paginaweb.com">
     </div>
 
     <div class="form-group text-left">
-      <label for="idPais">* País:</label>
+      <label for="idPais">* <i class="fa-solid fa-earth-americas"></i> País:</label>
       <select class="form-control" name="idPais" id="idPais" 
       <?php
       if (isset($datos["baja"])) {
