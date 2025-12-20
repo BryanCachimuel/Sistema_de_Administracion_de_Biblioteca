@@ -16,8 +16,8 @@
       print "<td class='text-left'>".$datos["data"][$i]['idLibro']."</td>";
       print "<td class='text-left'>".$datos["data"][$i]['tema']."</td>";
       print "<td class='text-left'>".$datos["data"][$i]['titulo']."</td>";
-      print "<td><a href='".RUTA."autores/copias/".$datos["data"][$i]["idLibro"]."' class='btn btn-warning'>Copias</a></td>";
-      print "<td><a href='".RUTA."autores/autoresLibrosQuitar/".$datos["data"][$i]["id"]."/".$datos["idAutor"]."/".$datos["pag"]."' class='btn btn-danger'>Quitar</a></td>";
+      print "<td><a href='".RUTA."autores/copias/".$datos["data"][$i]["idLibro"]."' class='btn btn-warning'><i class='fa-solid fa-book-bookmark'></i></a></td>";
+      print "<td><a href='".RUTA."autores/autoresLibrosQuitar/".$datos["data"][$i]["id"]."/".$datos["idAutor"]."/".$datos["pag"]."' class='btn btn-danger'><i class='fa-solid fa-trash-can'></i></a></td>";
       print "</tr>";
     }
     ?>
