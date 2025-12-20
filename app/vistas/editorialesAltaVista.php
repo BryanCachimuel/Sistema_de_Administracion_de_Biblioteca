@@ -1,17 +1,17 @@
 <?php include_once("encabezado.php"); ?>
   <form action="<?php print RUTA; ?>editoriales/alta/" method="POST">
 
-    <div class="form-group text-left">
+    <div class="form-group text-left mb-3">
       <label for="editorial">* <i class="fa-solid fa-book-open-reader"></i> Nombre de la editorial:</label>
       <input type="text" name="editorial" id="editorial" class="form-control" required value="<?php print isset($datos['data']['editorial'])?$datos['data']['editorial']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
     </div>
 
-    <div class="form-group text-left">
+    <div class="form-group text-left mb-3">
       <label for="pagina"><i class="fa-solid fa-globe"></i> Página web:</label>
       <input type="text" name="pagina" id="pagina" class="form-control" value="<?php print isset($datos['data']['pagina'])?$datos['data']['pagina']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?> placeholder="www.paginaweb.com">
     </div>
 
-    <div class="form-group text-left">
+    <div class="form-group text-left mb-3">
       <label for="idPais">* <i class="fa-solid fa-earth-americas"></i> País:</label>
       <select class="form-control" name="idPais" id="idPais" 
       <?php
@@ -40,11 +40,11 @@
       <?php
       if (isset($datos["baja"])) { ?>
         <a href="<?php print RUTA; ?>editoriales/bajaLogica/<?php print $datos['data']['id'].'/'.$datos['pag']; ?>" class="btn btn-danger">Borrar</a>
-        <a href="<?php print RUTA.'editoriales/'.$datos['pag'];?>" class="btn btn-danger">Regresar</a>
+        <a href="<?php print RUTA.'editoriales/'.$datos['pag'];?>" class="btn btn-danger"> Regresar</a>
         <p><b>Advertencia: una vez borrado el registro, no podrá recuperar la información</b></p>
       <?php } else { ?> 
       <input type="submit" value="Enviar" class="btn btn-success">
-      <a href="<?php print RUTA.'editoriales/'.$datos['pag']; ?>" class="btn btn-success">Regresar</a>
+      <a href="<?php print RUTA.'editoriales/'.$datos['pag']; ?>" class="btn btn-success"><i class="fa-solid fa-angles-left"></i> Regresar</a>
     <?php } ?> 
 
     </div>
