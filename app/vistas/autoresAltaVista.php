@@ -2,25 +2,25 @@
   <form action="<?php print RUTA; ?>autores/alta/" method="POST">
 
     <div class="form-group text-left mb-3">
-      <label for="nombre">* Nombre(s):</label>
+      <label for="nombre">* <i class="fa-regular fa-id-card"></i> Nombre(s):</label>
       <input type="text" name="nombre" id="nombre" class="form-control"
       placeholder="Escribe el nombre del usuario." required value="<?php print isset($datos['data']['nombre'])?$datos['data']['nombre']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
     </div>
 
     <div class="form-group text-left mb-3">
-      <label for="apellidoPaterno">* Apellido paterno:</label>
+      <label for="apellidoPaterno">* <i class="fa-regular fa-id-card"></i> Apellido paterno:</label>
       <input type="text" name="apellidoPaterno" id="apellidoPaterno" class="form-control"
       placeholder="Escribe el apellido paterno del usuario." required value="<?php print isset($datos['data']['apellidoPaterno'])?$datos['data']['apellidoPaterno']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
     </div>
 
     <div class="form-group text-left mb-3">
-      <label for="apellidoMaterno">Apellido materno:</label>
+      <label for="apellidoMaterno"><i class="fa-regular fa-id-card"></i> Apellido materno:</label>
       <input type="text" name="apellidoMaterno" id="apellidoMaterno" class="form-control"
       placeholder="Escribe el apellido paterno del usuario." value="<?php print isset($datos['data']['apellidoMaterno'])?$datos['data']['apellidoMaterno']:''; ?>" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
     </div>
 
     <div class="form-group text-left mb-3">
-      <label for="genero">* Género:</label>
+      <label for="genero">* <i class="fa-solid fa-children"></i> Género:</label>
       <select class="form-control" name="genero" id="genero" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
       <option value="void">---Selecciona un género---</option>
         <?php
@@ -36,7 +36,7 @@
     </div>
 
     <div class="form-group text-left mb-3">
-      <label for="idPais">* País de origen:</label>
+      <label for="idPais">* <i class="fa-solid fa-earth-americas"></i> País de origen:</label>
       <select class="form-control" name="idPais" id="idPais" <?php if (isset($datos["baja"])) { print " disabled "; }?>>
       <option value="void">---Selecciona el país de origen---</option>
         <?php
